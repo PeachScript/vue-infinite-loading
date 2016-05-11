@@ -61,6 +61,9 @@ npm install
 
 # run dev-server
 npm run dev
+
+# test
+npm test
 ```
 
 ## Licence
