@@ -47,6 +47,8 @@ The distance from the footer of scroll parent that trigger loading function.(Uni
 
 #### on-infinite
 The loading function.
+
+Most of the time, you should broadcast `$InfiniteLoading:loaded` event in the loading function after request data completely, if not, the loading animation won't stop and the `InfiniteLoading` component can't continue to request loading function.
 ```
 - type      Function
 - required  false
