@@ -12,5 +12,8 @@
         "extensions": [".js", ".json", ".vue"]
       }
     }
+  },
+  "rules": {
+    "no-unused-expressions": 0
   }
 }
