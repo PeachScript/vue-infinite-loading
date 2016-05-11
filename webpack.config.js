@@ -86,7 +86,7 @@ if (process.env.NODE_ENV === 'production') {
   };
 } else {
   // development configurations
-  module.exports.output.filename = 'static/js/[name].js';
+  module.exports.output.filename = 'dist/[name].js';
 
   module.exports.module.loaders = module.exports.module.loaders.concat([
     {
