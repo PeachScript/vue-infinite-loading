@@ -2,13 +2,18 @@
   "name": "vue-infinite-loading",
   "version": "0.0.0",
   "description": "vue-infinite-loading project",
+  "main": "dist/vue-infinite-loading.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --quiet --port=8000",
     "build": "rm -rf build/ && NODE_ENV=production webpack --progress --hide-modules"
   },
-  "dependencies": {
-    "vue": "^1.0.21"
-  },
+  "keywords": [
+    "vue",
+    "vue components",
+    "infinite loading",
+    "infinite scroll",
+    "vue infinite"
+  ],
   "devDependencies": {
     "babel-core": "^6.7.7",
     "babel-loader": "^6.2.4",
@@ -35,6 +40,12 @@
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
   },
-  "author": "Peach<scdzwyxst@gmail.com>",
+  "peerDependencies": {
+    "vue": "^1.0.0"
+  },
+  "author": {
+    "name": "PeachScript",
+    "email": "scdzwyxst@gmail.com"
+  },
   "license": "MIT"
 }
