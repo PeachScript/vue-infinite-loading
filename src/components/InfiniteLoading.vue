@@ -1,9 +1,6 @@
 <template>
-  <div class="infinite-loading-container"
-      :class="{
-        hidden: !isLoading
-      }">
-    <i class="icon-loading"></i>
+  <div class="infinite-loading-container">
+    <i class="icon-loading" v-show="isLoading"></i>
   </div>
 </template>
 <script>
@@ -52,7 +49,7 @@
     },
     ready() {
       if (this.distance === undefined) {
-        this.$set('distance', 50);
+        this.$set('distance', 100);
       }
 
       scrollParent = getScrollParent(this.$el);
@@ -83,7 +80,7 @@
     },
   };
 </script>
-<style lang="less">
+<style lang="less" scoped>
   @font-face {font-family: "vue-infinite-loading";
     src: url('../assets/vue-infinite-loading.eot?t=1462930749'); /* IE9*/
     src: url('../assets/vue-infinite-loading.woff?t=1462930749') format('woff'), /* chrome, firefox */
@@ -101,21 +98,18 @@
 
   .infinite-loading-container{
     clear: both;
-    padding: 15px 0;
-    min-height: 40px;
     text-align: center;
     *[class^=icon-]{
       @size: 30px;
       display: inline-block;
+      margin: 15px 0;
       width: @size;
       height: @size;
       font-size: @size;
       line-height: @size;
       color: #999;
+      border-radius: 50%;
       animation: ease loading 1.5s infinite;
-    }
-    &.hidden{
-      display: none;
     }
   }
 
