@@ -33,8 +33,9 @@
     const scrollHeight = elm === window
                        ? document.body.scrollHeight
                        : elm.scrollHeight;
+    const scrollTop = isNaN(elm.scrollTop) ? elm.pageYOffset : elm.scrollTop;
 
-    return scrollHeight - innerHeight - (elm.scrollTop || elm.pageYOffset);
+    return scrollHeight - innerHeight - scrollTop;
   }
 
   export default {
