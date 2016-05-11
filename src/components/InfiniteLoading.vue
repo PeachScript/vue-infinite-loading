@@ -4,9 +4,6 @@
   </div>
 </template>
 <script>
-  let scrollParent;
-  let scrollHandler;
-
   /**
    * get the first scroll parent of an element
    * @param  {DOM} elm    the element which find scorll parent
@@ -42,6 +39,8 @@
     data() {
       return {
         isLoading: false,
+        scrollParent: null,
+        scrollHandler: null,
       };
     },
     props: {
@@ -53,22 +52,20 @@
         this.$set('distance', 100);
       }
 
-      scrollParent = getScrollParent(this.$el);
+      this.scrollParent = getScrollParent(this.$el);
 
-      scrollHandler = function scrollHandlerOriginal() {
-        const currentDistance = getCurrentDistance(scrollParent);
-        if (!this.isLoading) {
-          if (currentDistance <= this.distance) {
-            this.isLoading = true;
-            if (this.onInfinite) {
-              this.onInfinite.call();
-            }
+      this.scrollHandler = function scrollHandlerOriginal() {
+        const currentDistance = getCurrentDistance(this.scrollParent);
+        if (!this.isLoading && currentDistance <= this.distance) {
+          this.isLoading = true;
+          if (this.onInfinite) {
+            this.onInfinite.call();
           }
         }
       }.bind(this);
 
-      setTimeout(scrollHandler, 1);
-      scrollParent.addEventListener('scroll', scrollHandler);
+      setTimeout(this.scrollHandler, 1);
+      this.scrollParent.addEventListener('scroll', this.scrollHandler);
     },
     events: {
       // Hide the loading icon when data was loaded
@@ -77,7 +74,7 @@
       },
     },
     destroyed() {
-      scrollParent.removeEventListener('scroll', scrollHandler);
+      this.scrollParent.removeEventListener('scroll', this.scrollHandler);
     },
   };
 </script>
