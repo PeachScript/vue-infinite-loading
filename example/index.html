@@ -3,7 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <title>vue-infinite-loading</title>
+  <script src="../node_modules/vue/dist/vue.min.js"></script>
+  <script src="../dist/vue-infinite-loading.js"></script>
+  <style>
+    body{
+      margin: 0;
+    }
+    .example-list-item{
+      margin: 0;
+      padding: 0 10px;
+      font-size: 14px;
+      line-height: 40px;
+      color: #666;
+      background-color: #fafafa;
+      border-top: 1px solid #fff;
+      border-bottom: 1px solid #e3e3e3;
+    }
+    .example-list-item:before{
+      content: 'Line: ';
+    }
+  </style>
 </head>
 <body>
+  <div id="app">
+    <p class="example-list-item" v-for="item in list" v-text="item"></p>
+    <infinite-loading :on-infinite="onInfinite" :distance="distance" v-if="list.length < 300"></infinite-loading>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        distance: 100,
+        list: []
+      },
+      ready: function () {
+        for (var i = 0; i < 50; i++) {
+          this.list.push(i + 1);
+        }
+      },
+      methods: {
+        onInfinite: function () {
+          setTimeout(function () {
+            var temp = [];
+            for (var i = this.list.length; i <= this.list.length + 20; i++) {
+              temp.push(i);
+            }
+
+            this.list = this.list.concat(temp);
+            this.$broadcast('$InfiniteLoading:loaded');
+          }.bind(this), 1000);
+        }
+      }
+    });
+  </script>
 </body>
 </html>
