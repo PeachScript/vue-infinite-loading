@@ -8,7 +8,9 @@ module.exports = {
   },
   output: {
     path: './dist',
-    publicPath: '/'
+    publicPath: '/',
+    library: 'VueInfiniteLoading',
+    libraryTarget: 'umd'
   },
   resolve: {
     extensions: ['', '.js', '.vue']
@@ -62,7 +64,6 @@ module.exports = {
 // production configurations
 if (process.env.NODE_ENV === 'production') {
   module.exports.output.filename = '[name].js';
-  module.exports.output.chunkFilename = "[id].js";
 
   module.exports.plugins = [
     new webpack.DefinePlugin({
