@@ -1,3 +1,5 @@
+<p align="center"><img width="200"src="./doc/logo.png"></p>
+
 # vue-infinite-loading
 An infinite loading/scroll plugin for Vue.js
 
