@@ -1,7 +1,13 @@
-<p align="center"><img width="200"src="./doc/logo.png"></p>
+<p align="center"><img width="200" src="./doc/logo.png"></p>
 
 # vue-infinite-loading
 An infinite loading/scroll plugin for Vue.js
+
+## Demo
+
+<p align="center"><img src="./doc/vue_infinite_loading_demo.gif"></p>
+
+[Live demo(WIP)](https://github.com/PeachScript/vue-infinite-loading)
 
 ## Install
 ```bash
