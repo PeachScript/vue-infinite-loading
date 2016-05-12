@@ -3,6 +3,10 @@
   "version": "0.2.0",
   "description": "vue-infinite-loading project",
   "main": "dist/vue-infinite-loading.js",
+  "author": {
+    "name": "PeachScript",
+    "email": "scdzwyxst@gmail.com"
+  },
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --quiet --port=8000",
     "build": "rm -rf build/ && NODE_ENV=production webpack --progress --hide-modules",
@@ -15,6 +19,14 @@
     "infinite scroll",
     "vue infinite"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PeachScript/vue-infinite-loading.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PeachScript/vue-infinite-loading/issues"
+  },
+  "homepage": "https://github.com/PeachScript/vue-infinite-loading",
   "devDependencies": {
     "babel-core": "^6.7.7",
     "babel-loader": "^6.2.4",
@@ -54,10 +66,6 @@
   },
   "peerDependencies": {
     "vue": "^1.0.0"
-  },
-  "author": {
-    "name": "PeachScript",
-    "email": "scdzwyxst@gmail.com"
   },
   "license": "MIT"
 }
