@@ -5,7 +5,10 @@ An infinite loading/scroll plugin for Vue.js
 
 ## Demo
 
-<p align="center"><img src="./doc/vue_infinite_loading_demo.gif"></p>
+Picture demo
+
+![Live demo(WIP)](./doc/vue_infinite_loading_demo.gif)
+
 
 [Live demo(WIP)](https://github.com/PeachScript/vue-infinite-loading)
 
