@@ -2,110 +2,103 @@ import Vue from 'vue';
 import InfiniteLoading from '../../../src/components/InfiniteLoading';
 
 describe('InfiniteLoading.vue', () => {
-  it('should render loading icon', () => {
-    const vm = new Vue({
+  let vm;
+
+  // create new Vue instance for every test case
+  beforeEach(() => {
+    if (vm) {
+      vm.$destroy();
+    }
+
+    vm = new Vue({
+      data: {
+        list: [],
+        distance: 50,
+        isLoadedAll: false,
+        isDivScroll: true,
+      },
       template: `
-        <div>
-          <infinite-loading></infinite-loading>
+        <div style="height: 100px;"
+            :style="{
+              overflow: isDivScroll ? 'auto' : 'visible'
+            }">
+          <ul>
+            <li v-for="item in list" v-text="item"></li>
+          </ul>
+          <infinite-loading :distance="distance"
+                            :on-infinite="onInfinite"
+                            v-if="!isLoadedAll"></infinite-loading>
         </div>
       `,
       components: { InfiniteLoading },
-    }).$mount().$appendTo('body');
+      methods: {},
+    });
+  });
+
+  it('should render correct template', () => {
+    vm.isDivScroll = false;
+    vm.distance = undefined;
+
+    vm.$mount().$appendTo('body');
 
     expect(vm.$el.querySelector('.icon-loading')).to.be.ok;
   });
 
-  it('should render a fake list', (done) => {
-    const vm = new Vue({
-      data: {
-        list: [1, 2, 3, 4, 5],
-        distance: 50,
-      },
-      template: `
-        <div style="overflow: auto; height: 500px;">
-          <ul>
-            <li v-for="item in list" v-text="item"></li>
-          </ul>
-          <infinite-loading :distance="distance" :on-infinite="onInfinite"></infinite-loading>
-        </div>
-      `,
-      components: { InfiniteLoading },
-      methods: {
-        onInfinite() {
-          for (let i = 6; i <= 10; i++) {
-            this.list.push(i);
-          }
+  it('should appear a loading animation', (done) => {
+    vm.onInfinite = function test() {
+      Vue.nextTick(() => {
+        expect(vm.$el.querySelector('.icon-loading')
+                     .getAttribute('style')
+                     .indexOf('display: none') === -1)
+              .to.be.true;
 
-          Vue.nextTick(() => {
-            expect(vm.$el.querySelectorAll('ul li')).to.have.lengthOf(10);
-            done();
-          });
-        },
-      },
-    }).$mount().$appendTo('body');
+        this.$broadcast('$InfiniteLoading:loaded');
+
+        Vue.nextTick(() => {
+          expect(vm.$el.querySelector('.icon-loading')
+                       .getAttribute('style')
+                       .indexOf('display: none') >= -1)
+                .to.be.true;
+          done();
+        });
+      });
+    }.bind(vm);
+
+    vm.$mount().$appendTo('body');
   });
 
-  it('should stop loading animation', (done) => {
-    const vm = new Vue({
-      data: {
-        list: [],
-      },
-      template: `
-        <div style="overflow: auto; height: 500px;">
-          <ul>
-            <li v-for="item in list" v-text="item"></li>
-          </ul>
-          <infinite-loading :on-infinite="onInfinite"></infinite-loading>
-        </div>
-      `,
-      components: { InfiniteLoading },
-      methods: {
-        onInfinite() {
-          Vue.nextTick(() => {
-            expect(vm.$el.querySelector('.icon-loading')
-                         .getAttribute('style')
-                         .indexOf('display: none') === -1)
-                  .to.be.true;
+  it('should only load once', (done) => {
+    vm.onInfinite = function test() {
+      const length = this.list.length + 1;
+      for (let i = length; i < length + 20; i++) {
+        this.list.push(i);
+      }
 
-            this.$broadcast('$InfiniteLoading:loaded');
-
-            Vue.nextTick(() => {
-              expect(vm.$el.querySelector('.icon-loading')
-                           .getAttribute('style')
-                           .indexOf('display: none') >= -1)
-                    .to.be.true;
-              done();
-            });
-          });
-        },
-      },
-    }).$mount().$appendTo('body');
-  });
-
-  it('should be destroyed', (done) => {
-    const vm = new Vue({
-      data: {
-        list: [],
-        isLoadedAll: false,
-      },
-      template: `
-        <div style="overflow: auto; height: 500px;">
-          <ul>
-            <li v-for="item in list" v-text="item"></li>
-          </ul>
-          <infinite-loading :on-infinite="onInfinite" v-if="!isLoadedAll"></infinite-loading>
-        </div>
-      `,
-      components: { InfiniteLoading },
-      methods: {
-        onInfinite() {
-          this.isLoadedAll = true;
-          Vue.nextTick(() => {
-            expect(vm.$el.querySelector('.icon-loading')).to.not.be.ok;
+      Vue.nextTick(() => {
+        if (this.list.length === 20) {
+          vm.$el.addEventListener('scroll', () => {
+            expect(this.list).to.have.lengthOf(20);
             done();
           });
-        },
-      },
-    }).$mount().$appendTo('body');
+
+          // trigger scroll event
+          vm.$el.scrollTop = vm.$el.scrollHeight;
+        }
+      });
+    }.bind(vm);
+
+    vm.$mount().$appendTo('body');
+  });
+
+  it('should be destroyed completely', (done) => {
+    vm.onInfinite = function test() {
+      this.isLoadedAll = true;
+      Vue.nextTick(() => {
+        expect(vm.$el.querySelector('.icon-loading')).to.not.be.ok;
+        done();
+      });
+    }.bind(vm);
+
+    vm.$mount().$appendTo('body');
   });
 });
