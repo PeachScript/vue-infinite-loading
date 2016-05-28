@@ -5,12 +5,13 @@ An infinite loading/scroll plugin for Vue.js
 
 ## Demo
 
-Picture demo
+### Picture demo
 
-![Live demo(WIP)](./doc/demo.gif)
+![Picture demo](./doc/demo.gif)
 
+### Live demo
 
-[Live demo(WIP)](https://github.com/PeachScript/vue-infinite-loading)
+See [http://peachscript.github.io/vue-infinite-loading/](http://peachscript.github.io/vue-infinite-loading/)
 
 ## Install
 ```bash
