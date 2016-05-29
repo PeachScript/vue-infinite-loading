@@ -3,7 +3,7 @@
 # vue-infinite-loading
 An infinite loading/scroll plugin for Vue.js
 
-## Demo
+## Demos
 
 ### Picture demo
 
@@ -31,8 +31,19 @@ export default {
 }
 ```
 
+### CommonJS
+```js
+const InfiniteLoading = require('vue-infinite-loading');
+
+export default {
+  components: {
+    InfiniteLoading
+  }
+}
+```
+
 ### Others
-The `InfiniteLoading` component will add to global `Vue` automatically, so you just need import it into your APP like this way:
+The `InfiniteLoading` component will register with the global `Vue` automatically, so you just need import it into your APP like this way:
 ```html
 <script src="/path/to/vue-infinite-loading/dist/vue-infinite-loading.js"></script>
 ```
@@ -44,25 +55,33 @@ Template:
   <ul>
     <li v-for="item in list" v-text="item"></li>
   </ul>
-  <infinite-loading :distance="distance" :on-infinite="onInfinite" v-if="loadedAllData"></infinite-loading>
+  <infinite-loading :distance="distance" :on-infinite="onInfinite" v-if="isLoadedAllData"></infinite-loading>
 </body>
 ```
 ### Props
 
+#### on-infinite
+The callback use for scroll to specific distance from the bottom of scroll parent.
+
+Most of the time, you should broadcast `$InfiniteLoading:loaded` event in this callback after loaded data completely, if not, the loading animation won't stop and the `InfiniteLoading` component no longer call this function.
+```
+- type      Function
+- required  false
+```
+
 #### distance
-The distance from the footer of scroll parent that trigger loading function.(Unit: px)
+The critical value for scroll. If the distance from the bottom of scroll parent less than this property, the `on-infinite` callback will be called .
 ```
 - type      Number
 - required  false
 - default   100
+- unit      pixel
 ```
 
-#### on-infinite
-The loading function.
-
-Most of the time, you should broadcast `$InfiniteLoading:loaded` event in the loading function after request data completely, if not, the loading animation won't stop and the `InfiniteLoading` component can't continue to request loading function.
+#### v-if
+As you know, this property is an official directive of `Vue.js` for render element conditionally, so we can render or destroy the `InfiniteLoading` component by it.
 ```
-- type      Function
+- type      Boolean
 - required  false
 ```
 
