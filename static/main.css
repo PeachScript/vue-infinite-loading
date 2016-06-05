@@ -98,6 +98,9 @@ body{
 .footer a:hover{
   text-decoration: underline;
 }
+.hide{
+  display: none;
+}
 
 @keyframes logo{
   0%{
