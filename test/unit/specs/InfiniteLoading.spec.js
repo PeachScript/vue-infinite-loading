@@ -1,15 +1,17 @@
 import Vue from 'vue';
 import InfiniteLoading from '../../../src/components/InfiniteLoading';
 
+function isShow(elm) {
+  const styles = getComputedStyle(elm);
+
+  return styles.getPropertyValue('display') !== 'none';
+}
+
 describe('InfiniteLoading.vue', () => {
   let vm;
 
   // create new Vue instance for every test case
   beforeEach(() => {
-    if (vm) {
-      vm.$destroy();
-    }
-
     vm = new Vue({
       data: {
         list: [],
@@ -35,6 +37,10 @@ describe('InfiniteLoading.vue', () => {
     });
   });
 
+  afterEach(() => {
+    vm.$destroy();
+  });
+
   it('should render correct template', () => {
     vm.isDivScroll = false;
     vm.distance = undefined;
@@ -47,18 +53,12 @@ describe('InfiniteLoading.vue', () => {
   it('should appear a loading animation', (done) => {
     vm.onInfinite = function test() {
       Vue.nextTick(() => {
-        expect(vm.$el.querySelector('.icon-loading')
-                     .getAttribute('style')
-                     .indexOf('display: none') === -1)
-              .to.be.true;
+        expect(isShow(vm.$el.querySelector('.icon-loading'))).to.be.true;
 
         this.$broadcast('$InfiniteLoading:loaded');
 
         Vue.nextTick(() => {
-          expect(vm.$el.querySelector('.icon-loading')
-                       .getAttribute('style')
-                       .indexOf('display: none') >= -1)
-                .to.be.true;
+          expect(isShow(vm.$el.querySelector('.icon-loading'))).to.be.false;
           done();
         });
       });
@@ -95,6 +95,30 @@ describe('InfiniteLoading.vue', () => {
       this.isLoadedAll = true;
       Vue.nextTick(() => {
         expect(vm.$el.querySelector('.icon-loading')).to.not.be.ok;
+        done();
+      });
+    }.bind(vm);
+
+    vm.$mount().$appendTo('body');
+  });
+
+  it('should display no results tips', (done) => {
+    vm.onInfinite = function test() {
+      this.$broadcast('$InfiniteLoading:noResults');
+      Vue.nextTick(() => {
+        expect(isShow(vm.$el.querySelectorAll('.infinite-status-tips')[0])).to.be.true;
+        done();
+      });
+    }.bind(vm);
+
+    vm.$mount().$appendTo('body');
+  });
+
+  it('should display no more data tips', (done) => {
+    vm.onInfinite = function test() {
+      this.$broadcast('$InfiniteLoading:noMore');
+      Vue.nextTick(() => {
+        expect(isShow(vm.$el.querySelectorAll('.infinite-status-tips')[1])).to.be.true;
         done();
       });
     }.bind(vm);
