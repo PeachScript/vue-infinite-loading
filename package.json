@@ -1,6 +1,6 @@
 {
   "name": "vue-infinite-loading",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "vue-infinite-loading project",
   "main": "dist/vue-infinite-loading.js",
   "author": {
