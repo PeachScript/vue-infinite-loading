@@ -1,6 +1,12 @@
 <template>
   <div class="infinite-loading-container">
     <i class="icon-loading" v-show="isLoading"></i>
+    <div class="infinite-status-tips" v-show="!isLoading && isNoResults">
+      <slot name="no-results">No results :(</slot>
+    </div>
+    <div class="infinite-status-tips" v-show="!isLoading && isNoMore">
+      <slot name="no-more">No more data :)</slot>
+    </div>
   </div>
 </template>
 <script>
@@ -41,6 +47,8 @@
         isLoading: false,
         scrollParent: null,
         scrollHandler: null,
+        isNoResults: false,
+        isNoMore: false,
       };
     },
     props: {
@@ -72,9 +80,23 @@
       '$InfiniteLoading:loaded'() {
         this.isLoading = false;
       },
+      '$InfiniteLoading:noResults'() {
+        this.isLoading = false;
+        this.isNoMore = false;
+        this.isNoResults = true;
+        this.scrollParent.removeEventListener('scroll', this.scrollHandler);
+      },
+      '$InfiniteLoading:noMore'() {
+        this.isLoading = false;
+        this.isNoResults = false;
+        this.isNoMore = true;
+        this.scrollParent.removeEventListener('scroll', this.scrollHandler);
+      },
     },
     destroyed() {
-      this.scrollParent.removeEventListener('scroll', this.scrollHandler);
+      if (!this.isNoResults && !this.isNoMore) {
+        this.scrollParent.removeEventListener('scroll', this.scrollHandler);
+      }
     },
   };
 </script>
@@ -111,6 +133,13 @@
       border-radius: 50%;
       animation: ease loading 1.5s infinite;
     }
+  }
+
+  .infinite-status-tips{
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+    padding: 10px 0;
   }
 
   @keyframes loading{
