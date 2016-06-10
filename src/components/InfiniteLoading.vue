@@ -79,16 +79,18 @@
   };
 </script>
 <style lang="less" scoped>
-  @font-face {font-family: "vue-infinite-loading";
+  @font-face{
+    font-family: "vue-infinite-loading";
     src: url('../assets/vue-infinite-loading.eot?t=1462930749'); /* IE9*/
     src: url('../assets/vue-infinite-loading.woff?t=1462930749') format('woff'), /* chrome, firefox */
          url('../assets/vue-infinite-loading.ttf?t=1462930749') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
          url('../assets/vue-infinite-loading.svg?t=1462930749#vue-infinite-loading') format('svg'); /* iOS 4.1- */
   }
-  .icon-loading:before {
+
+  .icon-loading:before{
     content: "\e600";
-    font-family:"vue-infinite-loading" !important;
-    font-style:normal;
+    font-family: "vue-infinite-loading" !important;
+    font-style: normal;
     -webkit-font-smoothing: antialiased;
     -webkit-text-stroke-width: 0.2px;
     -moz-osx-font-smoothing: grayscale;
@@ -111,7 +113,7 @@
     }
   }
 
-  @keyframes loading {
+  @keyframes loading{
     0%{
       transform: rotate(-38deg);
     }
