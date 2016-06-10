@@ -85,6 +85,32 @@ As you know, this property is an official directive of `Vue.js` for render eleme
 - required  false
 ```
 
+### Events
+
+#### $InfiniteLoading:loaded
+When the `InfiniteLoading` component received this event, it will hide the loading animation and continue to wait the next trigger.
+
+#### $InfiniteLoading:noResults
+When the `InfiniteLoading` component received this event, it will display the no results tips.
+
+#### $InfiniteLoading:noMore
+When the `InfiniteLoading` component received this event, it will display the no more data tips.
+
+### Slots
+
+#### no-results
+This content will display when the `InfiniteLoading` component received `$InfiniteLoading:noResults` event.
+```
+- type      String
+- default   No results :(
+```
+
+#### no-more
+This content will display when the `InfiniteLoading` component received `$InfiniteLoading:noMore` event.
+```
+- type      String
+- default   No more data :)
+
 ## Development Setup
 ```bash
 # install dependencies
