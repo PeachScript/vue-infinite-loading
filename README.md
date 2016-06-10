@@ -110,6 +110,7 @@ This content will display when the `InfiniteLoading` component received `$Infini
 ```
 - type      String
 - default   No more data :)
+```
 
 ## Development Setup
 ```bash
