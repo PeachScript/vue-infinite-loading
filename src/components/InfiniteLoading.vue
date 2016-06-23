@@ -97,6 +97,8 @@
         this.isNoMore = false;
         this.isNoResults = false;
         this.scrollParent.addEventListener('scroll', this.scrollHandler);
+        
+        this.scrollHandler();
       },
     },
     destroyed() {
