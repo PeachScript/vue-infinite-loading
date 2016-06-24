@@ -125,4 +125,17 @@ describe('InfiniteLoading.vue', () => {
 
     vm.$mount().$appendTo('body');
   });
+
+  it('should reset component and call onInfinite again', (done) => {
+    let callCount = 0;
+    vm.onInfinite = function test() {
+      if (!callCount++) {
+        this.$broadcast('$InfiniteLoading:reset');
+      } else {
+        done();
+      }
+    }.bind(vm);
+
+    vm.$mount().$appendTo('body');
+  });
 });
