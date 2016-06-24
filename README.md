@@ -96,6 +96,9 @@ When the `InfiniteLoading` component received this event, it will display the no
 #### $InfiniteLoading:noMore
 When the `InfiniteLoading` component received this event, it will display the no more data tips.
 
+#### $InfiniteLoading:reset
+When the `InfiniteLoading` component received this event, it will reset itself, and the `on-infinite` function will be called.
+
 ### Slots
 
 #### no-results
