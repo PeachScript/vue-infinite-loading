@@ -123,11 +123,11 @@ npm install
 # run dev-server
 npm run dev
 
+# lint
+npm run lint
+
 # test
 npm test
-
-# lint
-npm lint
 ```
 
 ## Licence
