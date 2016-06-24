@@ -92,6 +92,14 @@
         this.isNoMore = true;
         this.scrollParent.removeEventListener('scroll', this.scrollHandler);
       },
+      '$InfiniteLoading:reset'() {
+        this.isLoading = false;
+        this.isNoMore = false;
+        this.isNoResults = false;
+        this.scrollParent.addEventListener('scroll', this.scrollHandler);
+        
+        this.scrollHandler();
+      },
     },
     destroyed() {
       if (!this.isNoResults && !this.isNoMore) {
