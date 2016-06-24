@@ -125,6 +125,9 @@ npm run dev
 
 # test
 npm test
+
+# lint
+npm lint
 ```
 
 ## Licence
