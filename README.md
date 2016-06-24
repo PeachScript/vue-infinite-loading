@@ -97,7 +97,7 @@ When the `InfiniteLoading` component received this event, it will display the no
 When the `InfiniteLoading` component received this event, it will display the no more data tips.
 
 #### $InfiniteLoading:reset
-When the `InfiniteLoading` component received this event, it will reset itself, and the `on-infinite` function will be called.
+When the `InfiniteLoading` component received this event, it will reset itself, and the `on-infinite` function will be called. Maybe you need it when you use the component in some UI component like filter tabs.
 
 ### Slots
 
