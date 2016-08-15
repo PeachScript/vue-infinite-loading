@@ -1,0 +1,33 @@
+.logo-generator(@logo-height){
+  @logo-width: @logo-height * 1.15333;
+  .logo-wrapper{
+    position: relative;
+    margin: 0 auto;
+    width: @logo-width;
+    height: @logo-height;
+    text-align: center;
+    outline: none;
+  }
+  .logo-wrapper:after{
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: -@logo-height;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: @logo-height solid transparent;
+    border-left: @logo-width/2 solid transparent;
+    border-right: @logo-width/2 solid transparent;
+    border-bottom: @logo-height solid rgba(255,255,255,.1);
+    transform-origin: @logo-width/2 @logo-height * 1.6667;
+    animation: 6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s logo infinite;
+  }
+  .logo{
+    position: relative;
+    z-index: 2;
+    margin-top: @logo-height * .466666667;
+    width: @logo-width/2;
+    height: @logo-width/2;
+  }
+}

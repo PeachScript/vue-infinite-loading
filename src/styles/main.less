@@ -1,0 +1,38 @@
+@import './variables';
+
+body{
+  margin: 0;
+  background-color: @c-deep-vue;
+}
+a, button{
+  outline: none;
+}
+
+.footer{
+  font-size: 14px;
+  color: #ccc;
+  text-align: center;
+  line-height: 50px;
+}
+.footer a{
+  color: #fff;
+  text-decoration: none;
+}
+.footer a:hover{
+  text-decoration: underline;
+}
+.hide{
+  display: none;
+}
+
+@keyframes logo{
+  0%{
+    transform: rotate(0deg);
+  }
+  20%{
+    transform: rotate(-120deg);
+  }
+  100%{
+    transform: rotate(-120deg);
+  }
+}
