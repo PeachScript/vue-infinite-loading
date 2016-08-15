@@ -4,7 +4,7 @@
     }">
     <div class="header">
       <div class="logo-wrapper">
-        <img src="https://github.com/PeachScript/vue-infinite-loading/raw/master/doc/logo.png" alt="LOGO" class="logo">
+        <img src="https://github.com/PeachScript/vue-infinite-loading/raw/master/doc/logo.png" alt="LOGO" class="logo" v-link="'/'">
       </div>
       <h1>Vue-infinite-loading</h1>
     </div>
@@ -83,6 +83,9 @@
       .logo-wrapper{
         float: left;
         margin: 10px 20px 0 0;
+        img{
+          cursor: pointer;
+        }
       }
       h1{
         margin: 0;
@@ -196,7 +199,6 @@
             text-decoration: none;
             &.v-link-active{
               color: @c-vue;
-              font-weight: bold;
             }
           }
           ul li a{

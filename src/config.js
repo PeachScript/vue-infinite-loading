@@ -8,6 +8,7 @@ const routes = [
     path: '/getting-started',
     name: 'gettingStarted',
     label: 'Getting started',
+    abstract: true,
     navs: [
       {
         path: '/basic',
