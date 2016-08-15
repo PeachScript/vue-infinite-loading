@@ -1,6 +1,6 @@
 const routes = [
   {
-    path: '/',
+    path: '/installation',
     name: 'installation',
     label: 'Installation',
   },

@@ -66,8 +66,7 @@
     background: url('../assets/images/phone.png') no-repeat;
     background-size: 100%;
     box-sizing: border-box;
-    transition: right .7s cubic-bezier(0.77, 0, 0.175, 1);
-    transition-delay: .1s;
+    transition: right .7s @a-normal;
   }
   .demo-inner{
     margin-left: 20px;

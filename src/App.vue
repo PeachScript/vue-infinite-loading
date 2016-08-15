@@ -2,6 +2,12 @@
   <div class="container" :class="{
       'getting-started': isGettingStarted
     }">
+    <div class="header">
+      <div class="logo-wrapper">
+        <img src="https://github.com/PeachScript/vue-infinite-loading/raw/master/doc/logo.png" alt="LOGO" class="logo">
+      </div>
+      <h1>Vue-infinite-loading</h1>
+    </div>
     <div class="side-menu">
       <ul>
         <li v-for="menu in sideMenus">
@@ -30,7 +36,7 @@
         <li>Mobile friendly</li>
       </ul>
       <div class="handle-bar">
-        <button @click="gettingStarted()">Getting started !</button>
+        <a class="highlight" v-link="{ name: 'installation' }">Getting started !</a>
         <a target="_blank" href="https://github.com/PeachScript/vue-infinite-loading">View on GitHub</a>
       </div>
     </div>
@@ -43,15 +49,15 @@
   export default {
     data() {
       return {
-        isGettingStarted: false,
         sideMenus: routes,
       };
     },
-    methods: {
-      gettingStarted() {
-        // this.isGettingStarted = true;
+    computed: {
+      isGettingStarted() {
+        return this.$route.path !== '/';
       },
     },
+    methods: {},
     components: {
       DemoPhone,
     },
@@ -62,15 +68,37 @@
   @import './styles/mixins';
 
   .container{
+    @header-height: 90px;
     position: relative;
-    margin-top: 80px;
-    min-height: 700px;
-    padding-top: 20px;
+    min-height: 800px;
+    .header{
+      padding-left: 40px;
+      height: @header-height;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,.3);
+      transform: translateY(-@header-height);
+      opacity: 0;
+      transition: all .3s @a-normal;
+      .logo-generator(60px);
+      .logo-wrapper{
+        float: left;
+        margin: 10px 20px 0 0;
+      }
+      h1{
+        margin: 0;
+        padding-top: 20px;
+        font-size: 36px;
+        font-weight: normal;
+        color: #eee;
+        text-shadow: 2px 3px 0 rgba(0,0,0,.2);
+      }
+    }
     .info-wrapper{
       display: inline-block;
       margin-left: @g-banner-divider;
       padding: 40px 60px 0;
       transition: opacity .3s, visibility .3s;
+      transition-delay: .5s;
       .logo-generator(120px);
       h1{
         margin: 30px 0 0;
@@ -119,15 +147,17 @@
           text-decoration: none;
           border: 1px solid rgba(255,255,255,.6);
           box-sizing: border-box;
+          background-color: transparent;
+          cursor: pointer;
         }
-        a:hover{
+        a:hover, button:hover{
           color: rgba(255,255,255,.9);
         }
-        a:active{
+        a:active, button:active{
           color: @c-deep-vue;
           background-color: #eee;
         }
-        button{
+        .highlight{
           color: #fff;
           font-size: 22px;
           background-color: @c-vue;
@@ -138,6 +168,7 @@
             border-color: lighten(@c-vue, 5%);
           }
           &:active{
+            color: #fff;
             background-color: darken(@c-vue, 5%);
             border-color: darken(@c-vue, 5%);
           }
@@ -146,16 +177,15 @@
     }
     .side-menu{
       position: absolute;
-      top: 0;
+      top: @header-height + 1;
       left: 0;
-      height: 100%;
+      bottom: 0;
       padding: 0 20px;
       border-right: 1px solid rgba(255,255,255,.3);
       opacity: 0;
       visibility: hidden;
       transform: translateX(-20px);
-      transition: all .3s cubic-bezier(0.77, 0, 0.175, 1);
-      transition-delay: .55s;
+      transition: all .3s @a-normal;
       ul{
         list-style: none;
         padding-left: 20px;
@@ -164,6 +194,10 @@
             color: #eee;
             font-size: 16px;
             text-decoration: none;
+            &.v-link-active{
+              color: @c-vue;
+              font-weight: bold;
+            }
           }
           ul li a{
             color: #ccc;
@@ -176,15 +210,34 @@
       .info-wrapper{
         opacity: 0;
         visibility: hidden;
+        transition-delay: 0s;
       }
       .demo-wrapper{
         right: 10%;
+        transition-delay: .1s;
       }
       .side-menu{
         opacity: 1;
         transform: translateX(0);
         visibility: visible;
+        transition-delay: .55s;
       }
+      .header{
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: .55s;
+      }
+    }
+  }
+  @keyframes logo{
+    0%{
+      transform: rotate(0deg);
+    }
+    20%{
+      transform: rotate(-120deg);
+    }
+    100%{
+      transform: rotate(-120deg);
     }
   }
 </style>

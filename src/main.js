@@ -14,5 +14,3 @@ configRouter(router);
 router.start(App, 'app');
 
 Vue.config.debug = process.env.NODE_ENV !== 'production';
-
-export { App };

@@ -90,7 +90,7 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWepackPlugin({
       filename: 'index.html',
-      template: 'index.html',
+      template: './src/index.html',
       minify: {
         removeComments: true,
         collapseWhitespace: true
