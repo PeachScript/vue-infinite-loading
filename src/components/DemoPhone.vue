@@ -1,7 +1,7 @@
 <template>
   <div class="demo-wrapper">
     <div class="demo-inner" v-el:scroll-container>
-      <p class="example-list-item" v-for="item in list" track-by="$index" v-text="item"></p>
+      <p class="example-list-item" v-for="item in list" v-text="item"></p>
       <infinite-loading :on-infinite="onInfinite"></infinite-loading>
     </div>
   </div>
@@ -16,8 +16,8 @@
       };
     },
     ready() {
-      for (let i = 0; i < 20; i++) {
-        this.list.push(i + 1);
+      for (let i = 1; i <= 20; i++) {
+        this.list.push(i);
       }
 
       // Disable double scroll for outer element
@@ -41,7 +41,7 @@
       onInfinite() {
         setTimeout(() => {
           const temp = [];
-          for (let i = this.list.length; i <= this.list.length + 20; i++) {
+          for (let i = this.list.length + 1; i <= this.list.length + 20; i++) {
             temp.push(i);
           }
           this.list = this.list.concat(temp);

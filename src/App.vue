@@ -39,7 +39,7 @@
         <li>Mobile friendly</li>
       </ul>
       <div class="handle-bar">
-        <a class="highlight" v-link="{ name: 'installation' }">Getting started !</a>
+        <a class="highlight" v-link="{ name: 'installation' }">Get started !</a>
         <a target="_blank" href="https://github.com/PeachScript/vue-infinite-loading">View on GitHub</a>
       </div>
     </div>
@@ -236,6 +236,11 @@
         font-size: 16px;
         line-height: 16px;
       }
+      code{
+        padding: 1px 5px;
+        background-color: rgba(255,255,255,.05);
+        border: 1px solid rgba(255,255,255,.3);
+      }
       pre{
         padding: 10px;
         font-size: 14px;
@@ -245,7 +250,10 @@
       }
       p{
         font-size: 16px;
-        line-height: 20px;
+        line-height: 28px;
+      }
+      ol{
+        line-height: 24px;
       }
     }
     &.getting-started{
