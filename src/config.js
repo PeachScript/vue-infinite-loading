@@ -43,6 +43,7 @@ const routes = [
     label: 'Events',
   },
   {
+    path: '/slots',
     name: 'slots',
     label: 'Slots',
   },

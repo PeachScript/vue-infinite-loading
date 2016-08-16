@@ -19,9 +19,9 @@ routes.forEach((route) => {
     if (index === 0 && route.abstract) {
       aliasMap[route.path] = `${route.path}${nav.path}`;
     }
-    routerMap[route.path].subRoutes[`${nav.path}`] = {
+    routerMap[`${route.path}${nav.path}`] = {
       name: nav.name,
-      component: components(`./${capitalize(route.name)}.vue`),
+      component: components(`./${capitalize(nav.name)}.vue`),
     };
   });
 });
