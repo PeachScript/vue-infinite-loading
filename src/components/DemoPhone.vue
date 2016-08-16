@@ -55,18 +55,13 @@
   };
 </script>
 <style lang="less">
-  @import '../styles/variables';
-
   .demo-wrapper{
-    position: absolute;
-    right: 100% - @g-banner-divider;
     width: 301px;
     height: 636px;
     padding-top: 80px;
     background: url('../assets/images/phone.png') no-repeat;
     background-size: 100%;
     box-sizing: border-box;
-    transition: right .7s @a-normal;
   }
   .demo-inner{
     margin-left: 20px;

@@ -21,6 +21,9 @@
       </ul>
     </div>
     <demo-phone></demo-phone>
+    <div class="content">
+      <router-view></router-view>
+    </div>
     <div class="info-wrapper">
       <div class="logo-wrapper">
         <img src="https://github.com/PeachScript/vue-infinite-loading/raw/master/doc/logo.png" alt="LOGO" class="logo">
@@ -71,6 +74,7 @@
     @header-height: 90px;
     position: relative;
     min-height: 800px;
+    overflow: hidden;
     .header{
       padding-left: 40px;
       height: @header-height;
@@ -96,9 +100,17 @@
         text-shadow: 2px 3px 0 rgba(0,0,0,.2);
       }
     }
+    .demo-wrapper{
+      position: absolute;
+      top: @header-height + 30px;
+      right: 100% - @g-banner-divider;
+      transition: right .7s @a-normal;
+    }
     .info-wrapper{
+      position: absolute;
       display: inline-block;
-      margin-left: @g-banner-divider;
+      top: @header-height + 30px;
+      left: @g-banner-divider;
       padding: 40px 60px 0;
       transition: opacity .3s, visibility .3s;
       transition-delay: .5s;
@@ -208,6 +220,34 @@
         }
       }
     }
+    .content{
+      margin-left: 240px;
+      margin-right: 520px;
+      color: #eee;
+      transform: translateY(50px);
+      opacity: 0;
+      transition: all .3s @a-normal;
+      h3{
+        font-size: 20px;
+        line-height: 20px;
+      }
+      h4{
+        margin: 20px 0 10px;
+        font-size: 16px;
+        line-height: 16px;
+      }
+      pre{
+        padding: 10px;
+        font-size: 14px;
+        line-height: 18px;
+        background-color: rgba(255,255,255,.05);
+        border: 1px solid rgba(255,255,255,.3);
+      }
+      p{
+        font-size: 16px;
+        line-height: 20px;
+      }
+    }
     &.getting-started{
       .info-wrapper{
         opacity: 0;
@@ -215,7 +255,7 @@
         transition-delay: 0s;
       }
       .demo-wrapper{
-        right: 10%;
+        right: 180px;
         transition-delay: .1s;
       }
       .side-menu{
@@ -224,7 +264,7 @@
         visibility: visible;
         transition-delay: .55s;
       }
-      .header{
+      .header, .content{
         opacity: 1;
         transform: translateY(0);
         transition-delay: .55s;
