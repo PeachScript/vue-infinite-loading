@@ -1,10 +1,10 @@
 {
-  "name": "vue-infinite-loading-gh",
-  "version": "0.1.0",
-  "description": "gh of vue-infinite-loading project",
+  "name": "vue-infinite-loading-gh-pages",
+  "version": "0.3.2",
+  "description": "Gh-pages of vue-infinite-loading project",
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --quiet",
-    "build": "rm -rf static/ && NODE_ENV=production webpack --progress --hide-modules"
+    "build": "rm -rf static/ index.html && NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
     "highlight.js": "^9.6.0",

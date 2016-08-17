@@ -62,6 +62,7 @@ module.exports = {
 
 // production configurations
 if (process.env.NODE_ENV === 'production') {
+  module.exports.output.publicPath = '/vue-infinite-loading/';
   module.exports.output.filename = 'static/js/[name]_[chunkhash].js';
   module.exports.output.chunkFilename = "static/js/[id]_[chunkhash].js";
 
