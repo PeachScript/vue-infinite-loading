@@ -21,14 +21,9 @@ const routes = [
         label: 'Hacker News',
       },
       {
-        path: '/custom-messages',
-        name: 'customMessages',
-        label: 'Custom messages',
-      },
-      {
-        path: '/with-tabs',
-        name: 'withTabs',
-        label: 'Use with tabs',
+        path: '/with-filter',
+        name: 'withFilter',
+        label: 'Use with filter',
       },
     ],
   },

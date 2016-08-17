@@ -1,0 +1,74 @@
+<template>
+  <h3>Hacker News</h3>
+  <p>In this case, we will clone a Hacker News but with <code>infiniteLoading</code> instead of paginations.</p>
+  <p>Before create it, we need to prepare the following things:</p>
+  <ol>
+    <li>Hacker News API, we used <a target="_blank" href="https://hn.algolia.com/api">HN Search API</a> in this case;</li>
+    <li>Import <a target="_blank" href="https://github.com/vuejs/vue-resource">vue-resource</a> plugin to request news data.</li>
+  </ol>
+  <h4>Template</h4>
+  <pre v-highlightjs>&lt;div class=&quot;hacker-news-list&quot;&gt;
+  &lt;div class=&quot;hacker-news-header&quot;&gt;
+    &lt;a target=&quot;_blank&quot; href=&quot;http://www.ycombinator.com/&quot;&gt;
+      &lt;img src=&quot;https://news.ycombinator.com/y18.gif&quot;&gt;
+    &lt;/a&gt;
+    &lt;span&gt;Hacker News&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;hacker-news-item&quot; v-for=&quot;item in list&quot;&gt;
+    &lt;span class=&quot;num&quot; v-text=&quot;$index + 1&quot;&gt;&lt;/span&gt;
+    &lt;p&gt;
+      &lt;a target=&quot;_blank&quot; :href=&quot;item.url&quot; v-text=&quot;item.title&quot;&gt;&lt;/a&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;small&gt;
+        &lt;span v-text=&quot;item.points&quot;&gt;&lt;/span&gt;
+        points by
+        &lt;a target=&quot;_blank&quot; :href=&quot;'https://news.ycombinator.com/user?id=' + item.author&quot;
+           v-text=&quot;item.author&quot;&gt;&lt;/a&gt;
+        |
+        &lt;a target=&quot;_blank&quot; :href=&quot;'https://news.ycombinator.com/item?id=' + item.objectID&quot;
+           v-text=&quot;item.num_comments + ' comments'&quot;&gt;&lt;/a&gt;
+      &lt;/small&gt;
+    &lt;/p&gt;
+  &lt;/div&gt;
+  &lt;infinite-loading :on-infinite=&quot;onInfinite&quot;&gt;
+    &lt;span slot=&quot;no-more&quot;&gt;
+      There is no more Hacker News :(
+    &lt;/span&gt;
+  &lt;/infinite-loading&gt;
+&lt;/div&gt;</pre>
+  <p>In the template, we create a header and a list for Hacker News. For <code>infiniteLoading</code> component in this case, unlike the basic use, we customized the content of the no more data prompt base on <code>slot</code>.</p>
+  <h4>Script</h4>
+  <pre v-highlightjs>import InfiniteLoading from 'vue-infinite-loading';
+
+const api = 'http://hn.algolia.com/api/v1/search_by_date?tags=story';
+
+export default {
+  data() {
+    return {
+      list: [],
+    };
+  },
+  methods: {
+    onInfinite() {
+      this.$http.get(api, {
+        params: {
+          page: this.list.length / 20 + 1,
+        },
+      }).then((res) =&gt; {
+        this.list = this.list.concat(res.data.hits);
+        this.$broadcast('$InfiniteLoading:loaded');
+        if (this.list.length / 20 === 10) {
+          this.$broadcast('$InfiniteLoading:noMore');
+        }
+      });
+    },
+  },
+  components: {
+    InfiniteLoading,
+  },
+};</pre>
+  <p>
+    In the <code>onInfinite</code> function, we request a page of news and pushed them into list everytime, if we had been requested 10 pages of news, <code>$broadcast</code> an <code>$InfiniteLoading:noMore</code> event to tell the <code>infiniteLoading</code> component that there is no more data now, it will display the no more data prompt that we customized in template for user.
+  </p>
+</template>

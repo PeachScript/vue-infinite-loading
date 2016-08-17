@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import VueResource from 'vue-resource';
 import hljs from 'highlight.js';
 import app from './App';
 import { configRouter } from './route';
@@ -7,6 +8,7 @@ import { configRouter } from './route';
 require('./styles/main.less');
 
 Vue.use(VueRouter);
+Vue.use(VueResource);
 
 function highlightBlock() {
   hljs.highlightBlock(this.el);

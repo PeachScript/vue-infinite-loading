@@ -45,7 +45,7 @@ export default {
   },
 };</pre>
   <p>
-    In the <code>onInfinite</code> function, we pushed 20 numbers into the list everytime, and we simulate async request by <code>setTimeout</code>. Finally, don't forget <code>$broadcast</code> a <code>$InfiniteLoading:loaded</code> event, it will tell the <code>infiniteLoading</code> component that the data was loaded successfully.
+    In the <code>onInfinite</code> function, we pushed 20 numbers into the list everytime, and we simulate async request by <code>setTimeout</code>. Finally, don't forget <code>$broadcast</code> an <code>$InfiniteLoading:loaded</code> event, it will tell the <code>infiniteLoading</code> component that the data was loaded successfully.
   </p>
   <p>Now, we get a infinite list like the demo on the right!</p>
 </template>

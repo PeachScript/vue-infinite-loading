@@ -10,6 +10,7 @@
     "highlight.js": "^9.6.0",
     "vue": "^1.0.21",
     "vue-infinite-loading": "^0.3.1",
+    "vue-resource": "^0.9.3",
     "vue-router": "^0.7.13"
   },
   "devDependencies": {
