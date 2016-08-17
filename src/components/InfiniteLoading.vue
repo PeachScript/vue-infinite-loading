@@ -108,35 +108,36 @@
   };
 </script>
 <style lang="less" scoped>
-  @font-face{
-    font-family: "vue-infinite-loading";
-    src: url('../assets/vue-infinite-loading.eot?t=1462930749'); /* IE9*/
-    src: url('../assets/vue-infinite-loading.woff?t=1462930749') format('woff'), /* chrome, firefox */
-         url('../assets/vue-infinite-loading.ttf?t=1462930749') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-         url('../assets/vue-infinite-loading.svg?t=1462930749#vue-infinite-loading') format('svg'); /* iOS 4.1- */
-  }
-
-  .icon-loading:before{
-    content: "\e600";
-    font-family: "vue-infinite-loading" !important;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    -webkit-text-stroke-width: 0.2px;
-    -moz-osx-font-smoothing: grayscale;
+  .icon-loading{
+    position: relative;
+    border: 1px solid #999;
+    &:before{
+      @size: 6px;
+      content: '';
+      position: absolute;
+      display: block;
+      top: 0;
+      left: 50%;
+      margin-top: -@size/2;
+      margin-left: -@size/2;
+      width: @size;
+      height: @size;
+      background-color: #999;
+      border-radius: 50%;
+    }
   }
 
   .infinite-loading-container{
     clear: both;
     text-align: center;
     *[class^=icon-]{
-      @size: 30px;
+      @size: 28px;
       display: inline-block;
       margin: 15px 0;
       width: @size;
       height: @size;
       font-size: @size;
       line-height: @size;
-      color: #999;
       border-radius: 50%;
       animation: ease loading 1.5s infinite;
     }
@@ -151,10 +152,10 @@
 
   @keyframes loading{
     0%{
-      transform: rotate(-38deg);
+      transform: rotate(0);
     }
     100%{
-      transform: rotate(322deg);
+      transform: rotate(360deg);
     }
   }
 </style>
