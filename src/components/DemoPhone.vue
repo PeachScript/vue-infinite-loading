@@ -27,7 +27,7 @@
 <script>
   import InfiniteLoading from 'vue-infinite-loading';
 
-  const api = 'http://hn.algolia.com/api/v1/search_by_date?tags=story';
+  const api = `${window.location.protocol}//hn.algolia.com/api/v1/search_by_date?tags=story`;
 
   export default {
     data() {
