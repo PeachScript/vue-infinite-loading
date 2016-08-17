@@ -1,5 +1,5 @@
 <template>
-  <div class="demo-wrapper">
+  <div class="demo-wrapper" v-show="demoType">
     <div class="demo-inner" v-el:scroll-container>
       <div v-if="demoType === 'basic'">
         <p class="basic-list-item" v-for="item in list" v-text="item"></p>

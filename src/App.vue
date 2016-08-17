@@ -230,13 +230,15 @@
       opacity: 0;
       transition: all .3s @a-normal;
       h3{
-        font-size: 20px;
+        font-size: 24px;
         line-height: 20px;
+        color: #fff;
       }
       h4{
-        margin: 20px 0 10px;
-        font-size: 16px;
+        margin: 40px 0 10px;
+        font-size: 20px;
         line-height: 16px;
+        color: #fff;
       }
       a{
         color: #eee;
