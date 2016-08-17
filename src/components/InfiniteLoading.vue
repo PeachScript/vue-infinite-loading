@@ -97,7 +97,7 @@
         this.isNoMore = false;
         this.isNoResults = false;
         this.scrollParent.addEventListener('scroll', this.scrollHandler);
-        this.scrollHandler();
+        setTimeout(this.scrollHandler, 1);
       },
     },
     destroyed() {
