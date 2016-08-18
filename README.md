@@ -1,119 +1,22 @@
 <p align="center"><img width="200" src="./doc/logo.png"></p>
 
-# vue-infinite-loading
-An infinite loading/scroll plugin for Vue.js
+<p align="center"><img src="./doc/demo.gif"></p>
 
-## Demos
+## Intro
+This plugin is an infinite scroll plugin for Vue.js, it can help you create an infinite scroll list fastly.
 
-### Picture demo
+### Features
+- Light-weight, only 7.18 KB
+- Mobile friendly
+- Compatible with any scrollable element
+- Loading animation
+- Support result display after loading
 
-![Picture demo](./doc/demo.gif)
+## Usage & Guide
+To check out live examples and docs, visit [Vue-infinite-loading GitHub Pages](https://peachscript.github.io/vue-infinite-loading/).
 
-### Live demo
-
-See [http://peachscript.github.io/vue-infinite-loading/](http://peachscript.github.io/vue-infinite-loading/)
-
-## Install
-```bash
-npm install vue-infinite-loading --save
-```
-
-## Import
-
-### ES6
-```js
-import InfiniteLoading from 'vue-infinite-loading';
-
-export default {
-  components: {
-    InfiniteLoading
-  }
-}
-```
-
-### CommonJS
-```js
-const InfiniteLoading = require('vue-infinite-loading');
-
-export default {
-  components: {
-    InfiniteLoading
-  }
-}
-```
-
-### Others
-The `InfiniteLoading` component will register with the global `Vue` automatically, so you just need import it into your APP like this way:
-```html
-<script src="/path/to/vue-infinite-loading/dist/vue-infinite-loading.js"></script>
-```
-
-## Usage
-Template:
-```html
-<body>
-  <ul>
-    <li v-for="item in list" v-text="item"></li>
-  </ul>
-  <infinite-loading :distance="distance" :on-infinite="onInfinite" v-if="isLoadedAllData"></infinite-loading>
-</body>
-```
-### Props
-
-#### on-infinite
-The callback use for scroll to specific distance from the bottom of scroll parent.
-
-Most of the time, you should broadcast `$InfiniteLoading:loaded` event in this callback after loaded data completely, if not, the loading animation won't stop and the `InfiniteLoading` component no longer call this function.
-```
-- type      Function
-- required  false
-```
-
-#### distance
-The critical value for scroll. If the distance from the bottom of scroll parent less than this property, the `on-infinite` callback will be called .
-```
-- type      Number
-- required  false
-- default   100
-- unit      pixel
-```
-
-#### v-if
-As you know, this property is an official directive of `Vue.js` for render element conditionally, so we can render or destroy the `InfiniteLoading` component by it.
-```
-- type      Boolean
-- required  false
-```
-
-### Events
-
-#### $InfiniteLoading:loaded
-When the `InfiniteLoading` component received this event, it will hide the loading animation and continue to wait the next trigger.
-
-#### $InfiniteLoading:noResults
-When the `InfiniteLoading` component received this event, it will display the no results tips.
-
-#### $InfiniteLoading:noMore
-When the `InfiniteLoading` component received this event, it will display the no more data tips.
-
-#### $InfiniteLoading:reset
-When the `InfiniteLoading` component received this event, it will reset itself, and the `on-infinite` function will be called. Maybe you need it when you use the component in some UI component like filter tabs.
-
-### Slots
-
-#### no-results
-This content will display when the `InfiniteLoading` component received `$InfiniteLoading:noResults` event.
-```
-- type      String
-- default   No results :(
-```
-
-#### no-more
-This content will display when the `InfiniteLoading` component received `$InfiniteLoading:noMore` event.
-```
-- type      String
-- default   No more data :)
-```
+## Changelog
+Details changes for each release are documented in the [release notes](https://github.com/PeachScript/vue-infinite-loading/releases).
 
 ## Development Setup
 ```bash
