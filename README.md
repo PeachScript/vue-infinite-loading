@@ -1,5 +1,9 @@
 <p align="center"><img width="200" src="./doc/logo.png"></p>
-
+<p align="center">
+  <a href="https://www.npmjs.com/package/vue-infinite-loading"><img src="https://img.shields.io/npm/v/vue-infinite-loading.svg"></a>
+  <a href="https://www.npmjs.com/package/vue-infinite-loading"><img src="https://img.shields.io/npm/l/vue-infinite-loading.svg"></a>
+  <a href="https://david-dm.org/PeachScript/vue-infinite-loading?type=dev"><img src="https://img.shields.io/david/dev/PeachScript/vue-infinite-loading.svg"></a>
+</p>
 <p align="center"><img src="./doc/demo.gif"></p>
 
 ## Intro
