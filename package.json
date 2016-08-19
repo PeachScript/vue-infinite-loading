@@ -11,7 +11,7 @@
     "dev": "webpack-dev-server --inline --hot --quiet --port=8000",
     "build": "rm -rf build/ && NODE_ENV=production webpack --progress --hide-modules",
     "test": "karma start --single-run",
-    "lint": "eslint ./src/**/*.vue ./src/**/*.js"
+    "lint": "eslint './src/**(vue|js)'"
   },
   "keywords": [
     "vue",
