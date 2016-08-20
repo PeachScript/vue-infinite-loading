@@ -9,5 +9,8 @@
         "extensions": [".js", ".json", ".vue"]
       }
     }
+  },
+  "env": {
+    "browser": true
   }
 }

@@ -77,22 +77,22 @@
     },
     events: {
       // Hide the loading icon when data was loaded
-      '$InfiniteLoading:loaded'() {
+      '$InfiniteLoading:loaded': function loaded() {
         this.isLoading = false;
       },
-      '$InfiniteLoading:noResults'() {
+      '$InfiniteLoading:noResults': function noResults() {
         this.isLoading = false;
         this.isNoMore = false;
         this.isNoResults = true;
         this.scrollParent.removeEventListener('scroll', this.scrollHandler);
       },
-      '$InfiniteLoading:noMore'() {
+      '$InfiniteLoading:noMore': function noMore() {
         this.isLoading = false;
         this.isNoResults = false;
         this.isNoMore = true;
         this.scrollParent.removeEventListener('scroll', this.scrollHandler);
       },
-      '$InfiniteLoading:reset'() {
+      '$InfiniteLoading:reset': function reset() {
         this.isLoading = false;
         this.isNoMore = false;
         this.isNoResults = false;
