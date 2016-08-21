@@ -3,8 +3,8 @@
   <p>In this case, we will create a basic infinite list like the demo on the right, with three steps:</p>
   <ol>
     <li>Create a list base on <code>v-for</code> in your template;</li>
-    <li>Put the <code>infiniteLoading</code> component on the bottom of the list;</li>
-    <li>Create and bind a loading callback function for <code>infiniteLoading</code> component.</li>
+    <li>Put the <code>InfiniteLoading</code> component on the bottom of the list;</li>
+    <li>Create and bind a loading callback function for <code>InfiniteLoading</code> component.</li>
   </ol>
   <h4>Template</h4>
   <pre v-highlightjs>&lt;div&gt;
@@ -45,7 +45,7 @@ export default {
   },
 };</pre>
   <p>
-    In the <code>onInfinite</code> function, we pushed 20 numbers into the list everytime, and we simulate async request by <code>setTimeout</code>. Finally, don't forget <code>$broadcast</code> an <code>$InfiniteLoading:loaded</code> event, it will tell the <code>infiniteLoading</code> component that the data was loaded successfully.
+    In the <code>onInfinite</code> function, we pushed 20 numbers into the list everytime, and we simulate async request by <code>setTimeout</code>. Finally, don't forget <code>$broadcast</code> an <code>$InfiniteLoading:loaded</code> event, it will tell the <code>InfiniteLoading</code> component that the data was loaded successfully.
   </p>
   <p>Now, we get a infinite list like the demo on the right!</p>
 </template>

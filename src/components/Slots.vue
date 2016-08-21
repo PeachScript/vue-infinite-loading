@@ -7,13 +7,13 @@
 &lt;/span&gt;</pre>
 
   <h4>no-results</h4>
-  <p>This content will be display when the <code>infiniteLoading</code> component received <code>$InfiniteLoading:noResults</code> event.</p>
+  <p>This content will be display when the <code>InfiniteLoading</code> component received <code>$InfiniteLoading:noResults</code> event.</p>
   <pre>
 - type      String
 - default   No results :(</pre>
 
   <h4>no-more</h4>
-  <p>This content will be display when the <code>infiniteLoading</code> component received <code>$InfiniteLoading:noMore</code> event.</p>
+  <p>This content will be display when the <code>InfiniteLoading</code> component received <code>$InfiniteLoading:noMore</code> event.</p>
   <pre>
 - type      String
 - default   No more data :)</pre>

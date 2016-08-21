@@ -79,6 +79,6 @@ export default {
   },
 };</pre>
   <p>
-    In the <code>changeFilter</code> function, we clear the list and wait for the DOM to update, then we send an <code>$InfiniteLoading:reset</code> event to let the <code>infiniteLoading</code> component back to the original state, it will request new data right now.
+    In the <code>changeFilter</code> function, we clear the list and wait for the DOM to update, then we send an <code>$InfiniteLoading:reset</code> event to let the <code>InfiniteLoading</code> component back to the original state, it will request new data right now.
   </p>
 </template>

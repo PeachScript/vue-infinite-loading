@@ -1,6 +1,6 @@
 <template>
   <h3>Hacker News</h3>
-  <p>In this case, we will clone a Hacker News but with <code>infiniteLoading</code> instead of paginations.</p>
+  <p>In this case, we will clone a Hacker News but with <code>InfiniteLoading</code> instead of paginations.</p>
   <p>Before create it, we need to prepare the following things:</p>
   <ol>
     <li>Hacker News API, we used <a target="_blank" href="https://hn.algolia.com/api">HN Search API</a> in this case;</li>
@@ -37,7 +37,7 @@
     &lt;/span&gt;
   &lt;/infinite-loading&gt;
 &lt;/div&gt;</pre>
-  <p>In the template, we create a header and a list for Hacker News. For <code>infiniteLoading</code> component in this case, unlike the basic use, we customized the content of the no more data prompt base on <code>slot</code>.</p>
+  <p>In the template, we create a header and a list for Hacker News. For <code>InfiniteLoading</code> component in this case, unlike the basic use, we customized the content of the no more data prompt base on <code>slot</code>.</p>
   <h4>Script</h4>
   <pre v-highlightjs>import InfiniteLoading from 'vue-infinite-loading';
 
@@ -69,6 +69,6 @@ export default {
   },
 };</pre>
   <p>
-    In the <code>onInfinite</code> function, we request a page of news and pushed them into list everytime, if we had been requested 10 pages of news, <code>$broadcast</code> an <code>$InfiniteLoading:noMore</code> event to tell the <code>infiniteLoading</code> component that there is no more data now, it will display the no more data prompt that we customized in template for user.
+    In the <code>onInfinite</code> function, we request a page of news and pushed them into list everytime, if we had been requested 10 pages of news, <code>$broadcast</code> an <code>$InfiniteLoading:noMore</code> event to tell the <code>InfiniteLoading</code> component that there is no more data now, it will display the no more data prompt that we customized in template for user.
   </p>
 </template>

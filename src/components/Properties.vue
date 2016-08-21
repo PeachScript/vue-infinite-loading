@@ -17,7 +17,7 @@
 - unit      pixel</pre>
 
   <h4>v-if</h4>
-  <p>As you know, this property is an official directive of Vue.js for render element conditionally, so we can render or destroy the InfiniteLoading component by it.</p>
+  <p>As you know, this property is an official directive of Vue.js for render element conditionally, so we can render or destroy the <code>InfiniteLoading</code> component by it.</p>
   <pre>
 - type      Boolean
 - required  false</pre>
