@@ -5,10 +5,17 @@
         <p class="basic-list-item" v-for="item in list" v-text="item"></p>
         <infinite-loading :on-infinite="onInfinite"></infinite-loading>
       </div>
-      <div class="hacker-news-list" v-if="demoType === 'hackerNews'">
+      <div class="hacker-news-list" v-if="['hackerNews', 'withFilter'].indexOf(demoType) > -1">
         <div class="hacker-news-header">
           <a target="_blank" href="http://www.ycombinator.com/"><img src="https://news.ycombinator.com/y18.gif"></a>
           <span>Hacker News</span>
+          <select v-if="demoType === 'withFilter'" v-model="tag" @change="initInfiniteLoading()">
+            <option value="story">Story</option>
+            <option value="poll">Poll</option>
+            <option value="show_hn">Show hn</option>
+            <option value="ask_hn">Ask hn</option>
+            <option value="front_page">Front page</option>
+          </select>
         </div>
         <div class="hacker-news-item" v-for="item in list">
           <span class="num" v-text="$index + 1"></span>
@@ -27,7 +34,7 @@
 <script>
   import InfiniteLoading from 'vue-infinite-loading';
 
-  const api = `${window.location.protocol}//hn.algolia.com/api/v1/search_by_date?tags=story`;
+  const api = `${window.location.protocol}//hn.algolia.com/api/v1/search_by_date`;
 
   export default {
     data() {
@@ -39,8 +46,10 @@
           '/getting-started': 'basic',
           '/getting-started/basic': 'basic',
           '/getting-started/hacker-news': 'hackerNews',
+          '/getting-started/with-filter': 'withFilter',
         },
         timer: null,
+        tag: 'story',
       };
     },
     computed: {
@@ -85,10 +94,27 @@
           case 'hackerNews':
             this.$http.get(api, {
               params: {
-                page: this.list.length / 20 + 1,
+                tags: 'story',
+                page: (this.list.length / 20) + 1,
               },
             }).then((res) => {
               if (this.demoType === 'hackerNews') {
+                this.list = this.list.concat(res.data.hits);
+                this.$broadcast('$InfiniteLoading:loaded');
+                if (this.list.length / 20 === 10) {
+                  this.$broadcast('$InfiniteLoading:noMore');
+                }
+              }
+            });
+            break;
+          case 'withFilter':
+            this.$http.get(api, {
+              params: {
+                tags: this.tag,
+                page: (this.list.length / 20) + 1,
+              },
+            }).then((res) => {
+              if (this.demoType === 'withFilter') {
                 this.list = this.list.concat(res.data.hits);
                 this.$broadcast('$InfiniteLoading:loaded');
                 if (this.list.length / 20 === 10) {
@@ -101,9 +127,11 @@
         }
       },
       initInfiniteLoading() {
-        this.$broadcast('$InfiniteLoading:reset');
         this.list = [];
         clearTimeout(this.timer);
+        this.$nextTick(() => {
+          this.$broadcast('$InfiniteLoading:reset');
+        });
       },
     },
     components: {
@@ -150,17 +178,24 @@
     }
     .hacker-news-header{
       padding: 2px;
-      font-family: Verdana, Geneva, sans-serif;
-      font-size: 14px;
       line-height: 14px;
-      font-weight: bold;
       background-color: #FF6600;
       img{
         border: 1px solid #fff;
         vertical-align: middle;
       }
       span{
+        font-family: Verdana, Geneva, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
         vertical-align: middle;
+      }
+      select{
+        float: right;
+        color: #fff;
+        background-color: transparent;
+        border: 1px solid #fff;
+        outline: none;
       }
     }
     .hacker-news-item{
