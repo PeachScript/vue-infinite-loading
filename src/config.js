@@ -44,4 +44,6 @@ const routes = [
   },
 ];
 
-export { routes };
+module.exports = {
+  routes,
+};

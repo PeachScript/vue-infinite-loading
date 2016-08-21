@@ -26,7 +26,9 @@ routes.forEach((route) => {
   });
 });
 
-export function configRouter(router) {
-  router.map(routerMap);
-  router.alias(aliasMap);
-}
+module.exports = {
+  configRouter(router) {
+    router.map(routerMap);
+    router.alias(aliasMap);
+  },
+};
