@@ -111,6 +111,7 @@
   .icon-loading{
     position: relative;
     border: 1px solid #999;
+    animation: ease loading 1.5s infinite;
     &:before{
       @size: 6px;
       content: '';
@@ -126,6 +127,100 @@
       border-radius: 50%;
     }
   }
+  .icon-wave-dots{
+    position: relative;
+    &:before{
+      @size: 8px;
+      @wave: -6px;
+      @near-wave: -4px;
+      @after-wave: 2px;
+      @c-wave: #999;
+      @c-near-wave: #bbb;
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -@size/2;
+      margin-top: -@size/2;
+      width: @size;
+      height: @size;
+      background-color: @c-near-wave;
+      border-radius: 50%;
+      animation: linear wave-dots 2.8s infinite;
+      @keyframes wave-dots{
+        0%{
+          box-shadow: -@size * 4 0 0 @c-near-wave,
+                      -@size * 2 0 0 @c-near-wave,
+                      @size * 2 0 0 @c-near-wave,
+                      @size * 4 0 0 @c-near-wave;
+        }
+        5%{
+          box-shadow: -@size * 4 @near-wave 0 @c-near-wave,
+                      -@size * 2 0 0 @c-near-wave,
+                      @size * 2 0 0 @c-near-wave,
+                      @size * 4 0 0 @c-near-wave;
+          transform: translateY(0);
+        }
+        10%{
+          box-shadow: -@size * 4 @wave 0 @c-wave,
+                      -@size * 2 @near-wave 0 @c-near-wave,
+                      @size * 2 0 0 @c-near-wave,
+                      @size * 4 0 0 @c-near-wave;
+          transform: translateY(0);
+        }
+        15%{
+          box-shadow: -@size * 4 @after-wave 0 @c-near-wave,
+                      -@size * 2 @wave - @near-wave 0 @c-wave,
+                      @size * 2 -@near-wave 0 @c-near-wave,
+                      @size * 4 -@near-wave 0 @c-near-wave;
+          transform: translateY(@near-wave);
+          background-color: @c-near-wave;
+        }
+        20%{
+          box-shadow: -@size * 4 -@wave 0 @c-near-wave,
+                      -@size * 2 @near-wave - @wave + @after-wave 0 @c-near-wave,
+                      @size * 2 @near-wave - @wave 0 @c-near-wave,
+                      @size * 4 -@wave 0 @c-near-wave;
+          transform: translateY(@wave);
+          background-color: @c-wave;
+        }
+        25%{
+          @offset: @near-wave + @after-wave;
+          box-shadow: -@size * 4 -@offset 0 @c-near-wave,
+                      -@size * 2 -@offset 0 @c-near-wave,
+                      @size * 2 @wave - @offset 0 @c-wave,
+                      @size * 4 @near-wave - @offset 0 @c-near-wave;
+          transform: translateY(@offset);
+          background-color: @c-near-wave;
+        }
+        30%{
+          box-shadow: -@size * 4 0 0 @c-near-wave,
+                      -@size * 2 0 0 @c-near-wave,
+                      @size * 2 @near-wave + @after-wave 0 @c-near-wave,
+                      @size * 4 @wave 0 @c-wave;
+          transform: translateY(0);
+        }
+        35%{
+          box-shadow: -@size * 4 0 0 @c-near-wave,
+                      -@size * 2 0 0 @c-near-wave,
+                      @size * 2 0 0 @c-near-wave,
+                      @size * 4 @near-wave + @after-wave 0 @c-near-wave;
+        }
+        40%{
+          box-shadow: -@size * 4 0 0 @c-near-wave,
+                      -@size * 2 0 0 @c-near-wave,
+                      @size * 2 0 0 @c-near-wave,
+                      @size * 4 0 0 @c-near-wave;
+        }
+        100%{
+          box-shadow: -@size * 4 0 0 @c-near-wave,
+                      -@size * 2 0 0 @c-near-wave,
+                      @size * 2 0 0 @c-near-wave,
+                      @size * 4 0 0 @c-near-wave;
+        }
+      }
+    }
+  }
 
   .infinite-loading-container{
     clear: both;
@@ -139,7 +234,6 @@
       font-size: @size;
       line-height: @size;
       border-radius: 50%;
-      animation: ease loading 1.5s infinite;
     }
   }
 
