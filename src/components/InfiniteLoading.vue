@@ -111,7 +111,7 @@
   .icon-loading{
     position: relative;
     border: 1px solid #999;
-    animation: ease loading 1.5s infinite;
+    animation: ease icon-rotating 1.5s infinite;
     &:before{
       @size: 6px;
       content: '';
@@ -146,8 +146,8 @@
       height: @size;
       background-color: @c-near-wave;
       border-radius: 50%;
-      animation: linear wave-dots 2.8s infinite;
-      @keyframes wave-dots{
+      animation: linear icon-wave-dots 2.8s infinite;
+      @keyframes icon-wave-dots{
         0%{
           box-shadow: -@size * 4 0 0 @c-near-wave,
                       -@size * 2 0 0 @c-near-wave,
@@ -222,6 +222,12 @@
     }
   }
 
+  .icon-spiral{
+    border: 2px solid #777;
+    border-right-color: transparent;
+    animation: linear icon-rotating .85s infinite;
+  }
+
   .infinite-loading-container{
     clear: both;
     text-align: center;
@@ -244,7 +250,7 @@
     padding: 10px 0;
   }
 
-  @keyframes loading{
+  @keyframes icon-rotating{
     0%{
       transform: rotate(0);
     }
