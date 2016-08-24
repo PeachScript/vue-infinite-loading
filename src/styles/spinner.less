@@ -1,0 +1,37 @@
+@import './wave-dots';
+@import './circles';
+
+.icon-loading{
+  position: relative;
+  border: 1px solid #999;
+  animation: ease icon-rotating 1.5s infinite;
+  &:before{
+    @size: 6px;
+    content: '';
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 50%;
+    margin-top: -@size/2;
+    margin-left: -@size/2;
+    width: @size;
+    height: @size;
+    background-color: #999;
+    border-radius: 50%;
+  }
+}
+
+.icon-spiral{
+  border: 2px solid #777;
+  border-right-color: transparent;
+  animation: linear icon-rotating .85s infinite;
+}
+
+@keyframes icon-rotating{
+  0%{
+    transform: rotate(0);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}

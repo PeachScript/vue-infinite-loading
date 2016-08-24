@@ -1,10 +1,10 @@
 <template>
   <div class="infinite-loading-container">
     <i class="icon-loading" v-show="isLoading"></i>
-    <div class="infinite-status-tips" v-show="!isLoading && isNoResults">
+    <div class="infinite-status-prompt" v-show="!isLoading && isNoResults">
       <slot name="no-results">No results :(</slot>
     </div>
-    <div class="infinite-status-tips" v-show="!isLoading && isNoMore">
+    <div class="infinite-status-prompt" v-show="!isLoading && isNoMore">
       <slot name="no-more">No more data :)</slot>
     </div>
   </div>
@@ -108,237 +108,7 @@
   };
 </script>
 <style lang="less" scoped>
-  .icon-loading{
-    position: relative;
-    border: 1px solid #999;
-    animation: ease icon-rotating 1.5s infinite;
-    &:before{
-      @size: 6px;
-      content: '';
-      position: absolute;
-      display: block;
-      top: 0;
-      left: 50%;
-      margin-top: -@size/2;
-      margin-left: -@size/2;
-      width: @size;
-      height: @size;
-      background-color: #999;
-      border-radius: 50%;
-    }
-  }
-  .icon-wave-dots{
-    position: relative;
-    &:before{
-      @size: 8px;
-      @wave: -6px;
-      @near-wave: -4px;
-      @after-wave: 2px;
-      @c-wave: #999;
-      @c-near-wave: #bbb;
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-left: -@size/2;
-      margin-top: -@size/2;
-      width: @size;
-      height: @size;
-      background-color: @c-near-wave;
-      border-radius: 50%;
-      animation: linear icon-wave-dots 2.8s infinite;
-      @keyframes icon-wave-dots{
-        0%{
-          box-shadow: -@size * 4 0 0 @c-near-wave,
-                      -@size * 2 0 0 @c-near-wave,
-                      @size * 2 0 0 @c-near-wave,
-                      @size * 4 0 0 @c-near-wave;
-        }
-        5%{
-          box-shadow: -@size * 4 @near-wave 0 @c-near-wave,
-                      -@size * 2 0 0 @c-near-wave,
-                      @size * 2 0 0 @c-near-wave,
-                      @size * 4 0 0 @c-near-wave;
-          transform: translateY(0);
-        }
-        10%{
-          box-shadow: -@size * 4 @wave 0 @c-wave,
-                      -@size * 2 @near-wave 0 @c-near-wave,
-                      @size * 2 0 0 @c-near-wave,
-                      @size * 4 0 0 @c-near-wave;
-          transform: translateY(0);
-        }
-        15%{
-          box-shadow: -@size * 4 @after-wave 0 @c-near-wave,
-                      -@size * 2 @wave - @near-wave 0 @c-wave,
-                      @size * 2 -@near-wave 0 @c-near-wave,
-                      @size * 4 -@near-wave 0 @c-near-wave;
-          transform: translateY(@near-wave);
-          background-color: @c-near-wave;
-        }
-        20%{
-          box-shadow: -@size * 4 -@wave 0 @c-near-wave,
-                      -@size * 2 @near-wave - @wave + @after-wave 0 @c-near-wave,
-                      @size * 2 @near-wave - @wave 0 @c-near-wave,
-                      @size * 4 -@wave 0 @c-near-wave;
-          transform: translateY(@wave);
-          background-color: @c-wave;
-        }
-        25%{
-          @offset: @near-wave + @after-wave;
-          box-shadow: -@size * 4 -@offset 0 @c-near-wave,
-                      -@size * 2 -@offset 0 @c-near-wave,
-                      @size * 2 @wave - @offset 0 @c-wave,
-                      @size * 4 @near-wave - @offset 0 @c-near-wave;
-          transform: translateY(@offset);
-          background-color: @c-near-wave;
-        }
-        30%{
-          box-shadow: -@size * 4 0 0 @c-near-wave,
-                      -@size * 2 0 0 @c-near-wave,
-                      @size * 2 @near-wave + @after-wave 0 @c-near-wave,
-                      @size * 4 @wave 0 @c-wave;
-          transform: translateY(0);
-        }
-        35%{
-          box-shadow: -@size * 4 0 0 @c-near-wave,
-                      -@size * 2 0 0 @c-near-wave,
-                      @size * 2 0 0 @c-near-wave,
-                      @size * 4 @near-wave + @after-wave 0 @c-near-wave;
-        }
-        40%{
-          box-shadow: -@size * 4 0 0 @c-near-wave,
-                      -@size * 2 0 0 @c-near-wave,
-                      @size * 2 0 0 @c-near-wave,
-                      @size * 4 0 0 @c-near-wave;
-        }
-        100%{
-          box-shadow: -@size * 4 0 0 @c-near-wave,
-                      -@size * 2 0 0 @c-near-wave,
-                      @size * 2 0 0 @c-near-wave,
-                      @size * 4 0 0 @c-near-wave;
-        }
-      }
-    }
-  }
-
-  .icon-spiral{
-    border: 2px solid #777;
-    border-right-color: transparent;
-    animation: linear icon-rotating .85s infinite;
-  }
-
-  .icon-circles{
-    position: relative;
-    &:before{
-      @size: 5px;
-      @radius: 12px;
-      @shallow: 8%;
-      @c-base: #505050;
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      margin-top: -@size/2;
-      margin-left: -@size/2;
-      width: @size;
-      height: @size;
-      border-radius: 50%;
-      animation: linear icon-circles .75s infinite;
-      @keyframes icon-circles{
-        0%{
-          box-shadow: 0 -@radius 0 @c-base,
-                      @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow),
-                      @radius 0 0 lighten(@c-base, @shallow * 2),
-                      @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 3),
-                      0 @radius 0 lighten(@c-base, @shallow * 4),
-                      -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 5),
-                      -@radius 0 0 lighten(@c-base, @shallow * 6),
-                      -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 7);
-        }
-        12.5%{
-          box-shadow: 0 -@radius 0 lighten(@c-base, @shallow * 7),
-                      @radius * 0.71 -@radius * 0.71 0 @c-base,
-                      @radius 0 0 lighten(@c-base, @shallow * 1),
-                      @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 2),
-                      0 @radius 0 lighten(@c-base, @shallow * 3),
-                      -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 4),
-                      -@radius 0 0 lighten(@c-base, @shallow * 5),
-                      -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 6);
-        }
-        25%{
-          box-shadow: 0 -@radius 0 lighten(@c-base, @shallow * 6),
-                      @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 7),
-                      @radius 0 0 @c-base,
-                      @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 1),
-                      0 @radius 0 lighten(@c-base, @shallow * 2),
-                      -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 3),
-                      -@radius 0 0 lighten(@c-base, @shallow * 4),
-                      -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 5);
-        }
-        37.5%{
-          box-shadow: 0 -@radius 0 lighten(@c-base, @shallow * 5),
-                      @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 6),
-                      @radius 0 0 lighten(@c-base, @shallow * 7),
-                      @radius * 0.71 @radius * 0.71 0 @c-base,
-                      0 @radius 0 lighten(@c-base, @shallow * 1),
-                      -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 2),
-                      -@radius 0 0 lighten(@c-base, @shallow * 3),
-                      -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 4);
-        }
-        50%{
-          box-shadow: 0 -@radius 0 lighten(@c-base, @shallow * 4),
-                      @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 5),
-                      @radius 0 0 lighten(@c-base, @shallow * 6),
-                      @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 7),
-                      0 @radius 0 @c-base,
-                      -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 1),
-                      -@radius 0 0 lighten(@c-base, @shallow * 2),
-                      -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 3);
-        }
-        62.5%{
-          box-shadow: 0 -@radius 0 lighten(@c-base, @shallow * 3),
-                      @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 4),
-                      @radius 0 0 lighten(@c-base, @shallow * 5),
-                      @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 6),
-                      0 @radius 0 lighten(@c-base, @shallow * 7),
-                      -@radius * 0.71 @radius * 0.71 0 @c-base,
-                      -@radius 0 0 lighten(@c-base, @shallow * 1),
-                      -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 2);
-        }
-        75%{
-          box-shadow: 0 -@radius 0 lighten(@c-base, @shallow * 2),
-                      @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 3),
-                      @radius 0 0 lighten(@c-base, @shallow * 4),
-                      @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 5),
-                      0 @radius 0 lighten(@c-base, @shallow * 6),
-                      -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 7),
-                      -@radius 0 0 @c-base,
-                      -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 1);
-        }
-        87.5%{
-          box-shadow: 0 -@radius 0 lighten(@c-base, @shallow * 1),
-                      @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 2),
-                      @radius 0 0 lighten(@c-base, @shallow * 3),
-                      @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 4),
-                      0 @radius 0 lighten(@c-base, @shallow * 5),
-                      -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 6),
-                      -@radius 0 0 lighten(@c-base, @shallow * 7),
-                      -@radius * 0.71 -@radius * 0.71 0 @c-base;
-        }
-        100%{
-          box-shadow: 0 -@radius 0 @c-base,
-                      @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow),
-                      @radius 0 0 lighten(@c-base, @shallow * 2),
-                      @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 3),
-                      0 @radius 0 lighten(@c-base, @shallow * 4),
-                      -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 5),
-                      -@radius 0 0 lighten(@c-base, @shallow * 6),
-                      -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 7);
-        }
-      }
-    }
-  }
+  @import '../styles/spinner';
 
   .infinite-loading-container{
     clear: both;
@@ -355,19 +125,10 @@
     }
   }
 
-  .infinite-status-tips{
+  .infinite-status-prompt{
     color: #666;
     font-size: 14px;
     text-align: center;
     padding: 10px 0;
-  }
-
-  @keyframes icon-rotating{
-    0%{
-      transform: rotate(0);
-    }
-    100%{
-      transform: rotate(360deg);
-    }
   }
 </style>
