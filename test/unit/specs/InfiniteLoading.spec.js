@@ -102,11 +102,11 @@ describe('InfiniteLoading.vue', () => {
     vm.$mount().$appendTo('body');
   });
 
-  it('should display no results tips', (done) => {
+  it('should display no results prompt', (done) => {
     vm.onInfinite = function test() {
       this.$broadcast('$InfiniteLoading:noResults');
       Vue.nextTick(() => {
-        expect(isShow(vm.$el.querySelectorAll('.infinite-status-tips')[0])).to.be.true;
+        expect(isShow(vm.$el.querySelectorAll('.infinite-status-prompt')[0])).to.be.true;
         done();
       });
     }.bind(vm);
@@ -114,11 +114,11 @@ describe('InfiniteLoading.vue', () => {
     vm.$mount().$appendTo('body');
   });
 
-  it('should display no more data tips', (done) => {
+  it('should display no more data prompt', (done) => {
     vm.onInfinite = function test() {
       this.$broadcast('$InfiniteLoading:noMore');
       Vue.nextTick(() => {
-        expect(isShow(vm.$el.querySelectorAll('.infinite-status-tips')[1])).to.be.true;
+        expect(isShow(vm.$el.querySelectorAll('.infinite-status-prompt')[1])).to.be.true;
         done();
       });
     }.bind(vm);
