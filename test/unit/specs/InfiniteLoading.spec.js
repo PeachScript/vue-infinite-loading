@@ -47,18 +47,18 @@ describe('InfiniteLoading.vue', () => {
 
     vm.$mount().$appendTo('body');
 
-    expect(vm.$el.querySelector('.icon-loading')).to.be.ok;
+    expect(vm.$el.querySelector('.loading-default')).to.be.ok;
   });
 
   it('should appear a loading animation', (done) => {
     vm.onInfinite = function test() {
       Vue.nextTick(() => {
-        expect(isShow(vm.$el.querySelector('.icon-loading'))).to.be.true;
+        expect(isShow(vm.$el.querySelector('.loading-default'))).to.be.true;
 
         this.$broadcast('$InfiniteLoading:loaded');
 
         Vue.nextTick(() => {
-          expect(isShow(vm.$el.querySelector('.icon-loading'))).to.be.false;
+          expect(isShow(vm.$el.querySelector('.loading-default'))).to.be.false;
           done();
         });
       });
@@ -94,7 +94,7 @@ describe('InfiniteLoading.vue', () => {
     vm.onInfinite = function test() {
       this.isLoadedAll = true;
       Vue.nextTick(() => {
-        expect(vm.$el.querySelector('.icon-loading')).to.not.be.ok;
+        expect(vm.$el.querySelector('.loading-default')).to.not.be.ok;
         done();
       });
     }.bind(vm);
