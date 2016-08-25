@@ -1,0 +1,111 @@
+.loading-bubbles{
+  @size: 1px;
+  @radius: 12px;
+  @shallow: .4px;
+  @c-base: #666;
+  position: relative;
+  &:before{
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -@size/2;
+    margin-left: -@size/2;
+    width: @size;
+    height: @size;
+    border-radius: 50%;
+    animation: linear loading-bubbles .85s infinite;
+  }
+  @keyframes loading-bubbles{
+    0%{
+      box-shadow: 0 -@radius 0 (@shallow * 1) @c-base,
+                  @radius * 0.71 -@radius * 0.71 0 (@shallow * 2) @c-base,
+                  @radius 0 0 (@shallow * 3) @c-base,
+                  @radius * 0.71 @radius * 0.71 0 (@shallow * 4) @c-base,
+                  0 @radius 0 (@shallow * 5) @c-base,
+                  -@radius * 0.71 @radius * 0.71 0 (@shallow * 6) @c-base,
+                  -@radius 0 0 (@shallow * 7) @c-base,
+                  -@radius * 0.71 -@radius * 0.71 0 (@shallow * 8) @c-base;
+    }
+    12.5%{
+      box-shadow: 0 -@radius 0 (@shallow * 8) @c-base,
+                  @radius * 0.71 -@radius * 0.71 0 (@shallow * 1) @c-base,
+                  @radius 0 0 (@shallow * 2) @c-base,
+                  @radius * 0.71 @radius * 0.71 0 (@shallow * 3) @c-base,
+                  0 @radius 0 (@shallow * 4) @c-base,
+                  -@radius * 0.71 @radius * 0.71 0 (@shallow * 5) @c-base,
+                  -@radius 0 0 (@shallow * 6) @c-base,
+                  -@radius * 0.71 -@radius * 0.71 0 (@shallow * 7) @c-base;
+    }
+    25%{
+      box-shadow: 0 -@radius 0 (@shallow * 7) @c-base,
+                  @radius * 0.71 -@radius * 0.71 0 (@shallow * 8) @c-base,
+                  @radius 0 0 (@shallow * 1) @c-base,
+                  @radius * 0.71 @radius * 0.71 0 (@shallow * 2) @c-base,
+                  0 @radius 0 (@shallow * 3) @c-base,
+                  -@radius * 0.71 @radius * 0.71 0 (@shallow * 4) @c-base,
+                  -@radius 0 0 (@shallow * 5) @c-base,
+                  -@radius * 0.71 -@radius * 0.71 0 (@shallow * 6) @c-base;
+    }
+    37.5%{
+      box-shadow: 0 -@radius 0 (@shallow * 6) @c-base,
+                  @radius * 0.71 -@radius * 0.71 0 (@shallow * 7) @c-base,
+                  @radius 0 0 (@shallow * 8) @c-base,
+                  @radius * 0.71 @radius * 0.71 0 (@shallow * 1) @c-base,
+                  0 @radius 0 (@shallow * 2) @c-base,
+                  -@radius * 0.71 @radius * 0.71 0 (@shallow * 3) @c-base,
+                  -@radius 0 0 (@shallow * 4) @c-base,
+                  -@radius * 0.71 -@radius * 0.71 0 (@shallow * 5) @c-base;
+    }
+    50%{
+      box-shadow: 0 -@radius 0 (@shallow * 5) @c-base,
+                  @radius * 0.71 -@radius * 0.71 0 (@shallow * 6) @c-base,
+                  @radius 0 0 (@shallow * 7) @c-base,
+                  @radius * 0.71 @radius * 0.71 0 (@shallow * 8) @c-base,
+                  0 @radius 0 (@shallow * 1) @c-base,
+                  -@radius * 0.71 @radius * 0.71 0 (@shallow * 2) @c-base,
+                  -@radius 0 0 (@shallow * 3) @c-base,
+                  -@radius * 0.71 -@radius * 0.71 0 (@shallow * 4) @c-base;
+    }
+    62.5%{
+      box-shadow: 0 -@radius 0 (@shallow * 4) @c-base,
+                  @radius * 0.71 -@radius * 0.71 0 (@shallow * 5) @c-base,
+                  @radius 0 0 (@shallow * 6) @c-base,
+                  @radius * 0.71 @radius * 0.71 0 (@shallow * 7) @c-base,
+                  0 @radius 0 (@shallow * 8) @c-base,
+                  -@radius * 0.71 @radius * 0.71 0 (@shallow * 1) @c-base,
+                  -@radius 0 0 (@shallow * 2) @c-base,
+                  -@radius * 0.71 -@radius * 0.71 0 (@shallow * 3) @c-base;
+    }
+    75%{
+      box-shadow: 0 -@radius 0 (@shallow * 3) @c-base,
+                  @radius * 0.71 -@radius * 0.71 0 (@shallow * 4) @c-base,
+                  @radius 0 0 (@shallow * 5) @c-base,
+                  @radius * 0.71 @radius * 0.71 0 (@shallow * 6) @c-base,
+                  0 @radius 0 (@shallow * 7) @c-base,
+                  -@radius * 0.71 @radius * 0.71 0 (@shallow * 8) @c-base,
+                  -@radius 0 0 (@shallow * 1) @c-base,
+                  -@radius * 0.71 -@radius * 0.71 0 (@shallow * 2) @c-base;
+    }
+    87.5%{
+      box-shadow: 0 -@radius 0 (@shallow * 2) @c-base,
+                  @radius * 0.71 -@radius * 0.71 0 (@shallow * 3) @c-base,
+                  @radius 0 0 (@shallow * 4) @c-base,
+                  @radius * 0.71 @radius * 0.71 0 (@shallow * 5) @c-base,
+                  0 @radius 0 (@shallow * 6) @c-base,
+                  -@radius * 0.71 @radius * 0.71 0 (@shallow * 7) @c-base,
+                  -@radius 0 0 (@shallow * 8) @c-base,
+                  -@radius * 0.71 -@radius * 0.71 0 (@shallow * 1) @c-base;
+    }
+    100%{
+      box-shadow: 0 -@radius 0 (@shallow * 1) @c-base,
+                  @radius * 0.71 -@radius * 0.71 0 (@shallow * 2) @c-base,
+                  @radius 0 0 (@shallow * 3) @c-base,
+                  @radius * 0.71 @radius * 0.71 0 (@shallow * 4) @c-base,
+                  0 @radius 0 (@shallow * 5) @c-base,
+                  -@radius * 0.71 @radius * 0.71 0 (@shallow * 6) @c-base,
+                  -@radius 0 0 (@shallow * 7) @c-base,
+                  -@radius * 0.71 -@radius * 0.71 0 (@shallow * 8) @c-base;
+    }
+  }
+}
