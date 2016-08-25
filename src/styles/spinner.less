@@ -2,10 +2,10 @@
 @import './circles';
 @import './bubbles';
 
-.icon-loading{
+.loading-default{
   position: relative;
   border: 1px solid #999;
-  animation: ease icon-rotating 1.5s infinite;
+  animation: ease loading-rotating 1.5s infinite;
   &:before{
     @size: 6px;
     content: '';
@@ -22,13 +22,13 @@
   }
 }
 
-.icon-spiral{
+.loading-spiral{
   border: 2px solid #777;
   border-right-color: transparent;
-  animation: linear icon-rotating .85s infinite;
+  animation: linear loading-rotating .85s infinite;
 }
 
-@keyframes icon-rotating{
+@keyframes loading-rotating{
   0%{
     transform: rotate(0);
   }

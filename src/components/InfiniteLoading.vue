@@ -1,6 +1,6 @@
 <template>
   <div class="infinite-loading-container">
-    <i class="icon-loading" v-show="isLoading"></i>
+    <i class="loading-default" v-show="isLoading"></i>
     <div class="infinite-status-prompt" v-show="!isLoading && isNoResults">
       <slot name="no-results">No results :(</slot>
     </div>
@@ -113,7 +113,7 @@
   .infinite-loading-container{
     clear: both;
     text-align: center;
-    *[class^=icon-]{
+    *[class^=loading-]{
       @size: 28px;
       display: inline-block;
       margin: 15px 0;
