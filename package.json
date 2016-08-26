@@ -3,6 +3,10 @@
   "version": "0.3.2",
   "description": "An infinite loading/scroll plugin for Vue.js",
   "main": "dist/vue-infinite-loading.js",
+  "files": [
+    "dist/vue-infinite-loading.js",
+    "src"
+  ],
   "author": {
     "name": "PeachScript",
     "email": "scdzwyxst@gmail.com"
