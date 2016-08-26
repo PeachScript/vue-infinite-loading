@@ -104,7 +104,7 @@ describe('InfiniteLoading.vue', () => {
 
   it('should display no results prompt', (done) => {
     vm.onInfinite = function test() {
-      this.$broadcast('$InfiniteLoading:noResults');
+      this.$broadcast('$InfiniteLoading:complete');
       Vue.nextTick(() => {
         expect(isShow(vm.$el.querySelectorAll('.infinite-status-prompt')[0])).to.be.true;
         done();
@@ -116,7 +116,8 @@ describe('InfiniteLoading.vue', () => {
 
   it('should display no more data prompt', (done) => {
     vm.onInfinite = function test() {
-      this.$broadcast('$InfiniteLoading:noMore');
+      this.$broadcast('$InfiniteLoading:loaded');
+      this.$broadcast('$InfiniteLoading:complete');
       Vue.nextTick(() => {
         expect(isShow(vm.$el.querySelectorAll('.infinite-status-prompt')[1])).to.be.true;
         done();
