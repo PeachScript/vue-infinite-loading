@@ -1,6 +1,6 @@
 <template>
   <div class="infinite-loading-container">
-    <i class="loading-default" v-show="isLoading"></i>
+    <i :class="spinnerType" v-show="isLoading"></i>
     <div class="infinite-status-prompt" v-show="!isLoading && isNoResults">
       <slot name="no-results">No results :(</slot>
     </div>
@@ -10,6 +10,14 @@
   </div>
 </template>
 <script>
+  const spinnerMapping = {
+    bubbles: 'loading-bubbles',
+    circles: 'loading-circles',
+    default: 'loading-default',
+    spiral: 'loading-spiral',
+    waveDots: 'loading-wave-dots',
+  };
+
   /**
    * get the first scroll parent of an element
    * @param  {DOM} elm    the element which find scorll parent
@@ -51,9 +59,15 @@
         isNoMore: false,
       };
     },
+    computed: {
+      spinnerType() {
+        return spinnerMapping[this.spinner] || spinnerMapping.default;
+      },
+    },
     props: {
       distance: Number,
       onInfinite: Function,
+      spinner: String,
     },
     ready() {
       if (this.distance === undefined) {
