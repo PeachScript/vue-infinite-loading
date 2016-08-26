@@ -1,10 +1,10 @@
 <template>
   <div class="infinite-loading-container">
     <i :class="spinnerType" v-show="isLoading"></i>
-    <div class="infinite-status-prompt" v-show="!isLoading && isNoResults">
+    <div class="infinite-status-prompt" v-show="!isLoading && isComplete && isFirstLoad">
       <slot name="no-results">No results :(</slot>
     </div>
-    <div class="infinite-status-prompt" v-show="!isLoading && isNoMore">
+    <div class="infinite-status-prompt" v-show="!isLoading && isComplete && !isFirstLoad">
       <slot name="no-more">No more data :)</slot>
     </div>
   </div>
@@ -52,11 +52,11 @@
   export default {
     data() {
       return {
-        isLoading: false,
         scrollParent: null,
         scrollHandler: null,
-        isNoResults: false,
-        isNoMore: false,
+        isLoading: false,
+        isComplete: false,
+        isFirstLoad: true, // save the current loading whether it is the first loading
       };
     },
     computed: {
@@ -90,32 +90,25 @@
       this.scrollParent.addEventListener('scroll', this.scrollHandler);
     },
     events: {
-      // Hide the loading icon when data was loaded
       '$InfiniteLoading:loaded': function loaded() {
         this.isLoading = false;
+        this.isFirstLoad = false;
       },
-      '$InfiniteLoading:noResults': function noResults() {
+      '$InfiniteLoading:complete': function complete() {
         this.isLoading = false;
-        this.isNoMore = false;
-        this.isNoResults = true;
-        this.scrollParent.removeEventListener('scroll', this.scrollHandler);
-      },
-      '$InfiniteLoading:noMore': function noMore() {
-        this.isLoading = false;
-        this.isNoResults = false;
-        this.isNoMore = true;
+        this.isComplete = true;
         this.scrollParent.removeEventListener('scroll', this.scrollHandler);
       },
       '$InfiniteLoading:reset': function reset() {
         this.isLoading = false;
-        this.isNoMore = false;
-        this.isNoResults = false;
+        this.isComplete = false;
+        this.isFirstLoad = true;
         this.scrollParent.addEventListener('scroll', this.scrollHandler);
         setTimeout(this.scrollHandler, 1);
       },
     },
     destroyed() {
-      if (!this.isNoResults && !this.isNoMore) {
+      if (!this.isComplete) {
         this.scrollParent.removeEventListener('scroll', this.scrollHandler);
       }
     },
