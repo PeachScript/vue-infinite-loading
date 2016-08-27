@@ -353,7 +353,7 @@
         &.active:after{
           content: '✔';
           position: absolute;
-          right: 2px;
+          right: 3px;
           bottom: 0;
           color: @c-vue;
           font-size: 14px;
