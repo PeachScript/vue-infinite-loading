@@ -39,7 +39,7 @@
 &lt;/div&gt;</pre>
   <p>In the template, we create a header and a list for Hacker News. For <code>InfiniteLoading</code> component in this case, unlike the basic use, we customized the content of the no more data prompt base on <code>slot</code>.</p>
   <h4>Script</h4>
-  <pre v-highlightjs>import InfiniteLoading from 'vue-infinite-loading';
+  <pre v-highlightjs v-if="$parent.docVersion < 1">import InfiniteLoading from 'vue-infinite-loading';
 
 const api = 'http://hn.algolia.com/api/v1/search_by_date?tags=story';
 
@@ -68,7 +68,36 @@ export default {
     InfiniteLoading,
   },
 };</pre>
+  <pre v-highlightjs v-if="$parent.docVersion >= 1">import InfiniteLoading from 'vue-infinite-loading';
+
+const api = 'http://hn.algolia.com/api/v1/search_by_date?tags=story';
+
+export default {
+  data() {
+    return {
+      list: [],
+    };
+  },
+  methods: {
+    onInfinite() {
+      this.$http.get(api, {
+        params: {
+          page: this.list.length / 20 + 1,
+        },
+      }).then((res) =&gt; {
+        this.list = this.list.concat(res.data.hits);
+        this.$broadcast('$InfiniteLoading:loaded');
+        if (this.list.length / 20 === 10) {
+          this.$broadcast('$InfiniteLoading:complete');
+        }
+      });
+    },
+  },
+  components: {
+    InfiniteLoading,
+  },
+};</pre>
   <p>
-    In the <code>onInfinite</code> function, we request a page of news and pushed them into list everytime, if we had been requested 10 pages of news, <code>$broadcast</code> an <code>$InfiniteLoading:noMore</code> event to tell the <code>InfiniteLoading</code> component that there is no more data now, it will display the no more data prompt that we customized in template for user.
+    In the <code>onInfinite</code> function, we request a page of news and pushed them into list everytime, if we had been requested 10 pages of news, <code>$broadcast</code> an <code v-show="$parent.docVersion < 1">$InfiniteLoading:noMore</code><code v-show="$parent.docVersion >= 1">$InfiniteLoading:complete</code> event to tell the <code>InfiniteLoading</code> component that there is no more data now, it will display the no more data prompt that we customized in template for user.
   </p>
 </template>

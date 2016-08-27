@@ -107,7 +107,7 @@
                 this.list = this.list.concat(res.data.hits);
                 this.$broadcast('$InfiniteLoading:loaded');
                 if (this.list.length / 20 === 10) {
-                  this.$broadcast('$InfiniteLoading:noMore');
+                  this.$broadcast('$InfiniteLoading:complete');
                 }
               }
             });
@@ -123,7 +123,7 @@
                 this.list = this.list.concat(res.data.hits);
                 this.$broadcast('$InfiniteLoading:loaded');
                 if (this.list.length / 20 === 10) {
-                  this.$broadcast('$InfiniteLoading:noMore');
+                  this.$broadcast('$InfiniteLoading:complete');
                 }
               }
             });
@@ -133,6 +133,7 @@
       },
       initInfiniteLoading() {
         this.list = [];
+        this.spinner = 'default';
         clearTimeout(this.timer);
         this.$nextTick(() => {
           this.$broadcast('$InfiniteLoading:reset');

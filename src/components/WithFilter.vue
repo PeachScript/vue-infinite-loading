@@ -41,7 +41,7 @@
   &lt;/infinite-loading&gt;
 &lt;/div&gt;</pre>
   <h4>Script</h4>
-  <pre v-highlightjs>import InfiniteLoading from 'vue-infinite-loading';
+  <pre v-highlightjs v-if="$parent.docVersion < 1">import InfiniteLoading from 'vue-infinite-loading';
 
 const api = 'http://hn.algolia.com/api/v1/search_by_date';
 
@@ -64,6 +64,43 @@ export default {
         this.$broadcast('$InfiniteLoading:loaded');
         if (this.list.length / 20 === 10) {
           this.$broadcast('$InfiniteLoading:noMore');
+        }
+      });
+    },
+    changeFilter() {
+      this.list = [];
+      this.$nextTick(() =&gt; {
+        this.$broadcast('$InfiniteLoading:reset');
+      });
+    },
+  },
+  components: {
+    InfiniteLoading,
+  },
+};</pre>
+  <pre v-highlightjs v-if="$parent.docVersion >= 1">import InfiniteLoading from 'vue-infinite-loading';
+
+const api = 'http://hn.algolia.com/api/v1/search_by_date';
+
+export default {
+  data() {
+    return {
+      list: [],
+      tag: 'story',
+    };
+  },
+  methods: {
+    onInfinite() {
+      this.$http.get(api, {
+        params: {
+          tags: this.tag,
+          page: this.list.length / 20 + 1,
+        },
+      }).then((res) =&gt; {
+        this.list = this.list.concat(res.data.hits);
+        this.$broadcast('$InfiniteLoading:loaded');
+        if (this.list.length / 20 === 10) {
+          this.$broadcast('$InfiniteLoading:complete');
         }
       });
     },
