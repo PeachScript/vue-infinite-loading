@@ -80,7 +80,8 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.plugins = [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"'
+        NODE_ENV: '"production"',
+        VERSION: "'" + process.env.VERSION + "'"
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
@@ -125,6 +126,11 @@ if (process.env.NODE_ENV === 'production') {
   ]);
 
   module.exports.plugins = [
+    new webpack.DefinePlugin({
+      'process.env': {
+        VERSION: "'" + process.env.VERSION + "'"
+      }
+    }),
     new HtmlWepackPlugin({
       filename: 'index.html',
       template: './src/index.html'

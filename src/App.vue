@@ -40,13 +40,12 @@
       <h1>
         Vue-infinite-loading
         <small>An infinite scroll plugin for Vue.js</small>
-        <span>Currently v0.3.2</span>
+        <span>Currently v{{ currentVersion }}</span>
       </h1>
       <ul>
-        <li>Light-weight, only 7.18 KB</li>
         <li>Mobile friendly</li>
         <li>Compatible with any scrollable element</li>
-        <li>Loading animation</li>
+        <li>Diverse spinners as loading animation</li>
         <li>Support result display after loading</li>
       </ul>
       <div class="handle-bar">
@@ -64,6 +63,7 @@
     data() {
       return {
         docVersion: '1',
+        currentVersion: process.env.VERSION,
       };
     },
     computed: {
@@ -131,7 +131,7 @@
       display: inline-block;
       top: @header-height + 30px;
       left: @g-banner-divider;
-      padding: 30px 60px 0;
+      padding: 40px 60px 0;
       transition: opacity .3s, visibility .3s;
       transition-delay: .5s;
       .logo-generator(120px);
