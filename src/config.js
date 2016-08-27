@@ -42,6 +42,12 @@ const routes = [
     name: 'slots',
     label: 'Slots',
   },
+  {
+    path: '/spinners',
+    name: 'spinners',
+    label: 'Spinners',
+    version: '1',
+  },
 ];
 
 module.exports = {

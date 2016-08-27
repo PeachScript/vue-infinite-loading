@@ -9,6 +9,15 @@
       <h1>Vue-infinite-loading</h1>
     </div>
     <div class="side-menu">
+      <div class="version-select">
+        Doc version:
+        <span class="select-wrapper">
+          <select v-model="docVersion">
+            <option value="1">v1.*</option>
+            <option value="0">v0.*</option>
+          </select>
+        </span>
+      </div>
       <ul>
         <li v-for="menu in sideMenus">
           <a v-link="{ name: menu.name }" v-text="menu.label"></a>
@@ -54,12 +63,22 @@
   export default {
     data() {
       return {
-        sideMenus: routes,
+        docVersion: '1',
       };
     },
     computed: {
       isGettingStarted() {
         return this.$route.path !== '/';
+      },
+      sideMenus() {
+        const menus = [];
+        routes.forEach((route) => {
+          if (route.version === undefined || route.version === this.docVersion) {
+            menus.push(route);
+          }
+        });
+
+        return menus;
       },
     },
     methods: {},
@@ -203,6 +222,46 @@
       visibility: hidden;
       transform: translateX(-20px);
       transition: all .3s @a-normal;
+      .version-select{
+        margin: 0 -20px;
+        padding: 8px 0;
+        font-size: 14px;
+        line-height: 20px;
+        color: #fff;
+        text-align: center;
+        background-color: rgba(255,255,255,.1);
+        border-bottom: 1px solid rgba(255,255,255,.3);
+        .select-wrapper{
+          position: relative;
+          display: inline-block;
+          background-color: @c-vue;
+          &:hover{
+            background-color: lighten(@c-vue, 5%);
+          }
+          &:after{
+            @size: 4px;
+            content: '';
+            position: absolute;
+            z-index: 0;
+            top: 50%;
+            right: 5px;
+            margin-top: -@size/2 + 1;
+            border: @size solid transparent;
+            border-top-color: #fff;
+          }
+          select{
+            position: relative;
+            z-index: 1;
+            padding: 0 20px 0 15px;
+            color: #fff;
+            border: 0;
+            background-color: transparent;
+            appearance: none;
+            outline: none;
+            cursor: pointer;
+          }
+        }
+      }
       ul{
         list-style: none;
         padding-left: 20px;
