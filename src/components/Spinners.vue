@@ -27,7 +27,7 @@
     methods: {
       changeSpinner(spinner) {
         this.currentSpinner = spinner;
-        this.$parent.$dispatch('$demoPhone:changeSpinner', spinner);
+        this.$parent.$broadcast('$DemoPhone:changeSpinner', spinner);
       },
     },
   };

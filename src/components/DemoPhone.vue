@@ -140,7 +140,7 @@
       },
     },
     events: {
-      '$demoPhone:changeSpinner': function changeSpinner(spinner) {
+      '$DemoPhone:changeSpinner': function changeSpinner(spinner) {
         this.spinner = spinner;
       },
     },
