@@ -21,4 +21,13 @@
   <pre>
 - type      Boolean
 - required  false</pre>
+
+  <div v-show="$parent.docVersion >= 1">
+    <h4>spinner</h4>
+    <p>You can choose your favorite spinner as loading animation by this property, <a v-link="{ name: 'spinners' }">click here</a> to see all available spinners.</p>
+    <pre>
+- type      String
+- required  false
+- default   'default'</pre>
+  </div>
 </template>

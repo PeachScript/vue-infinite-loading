@@ -81,7 +81,6 @@
         return menus;
       },
     },
-    methods: {},
     components: {
       DemoPhone,
     },
@@ -326,6 +325,45 @@
       }
       ol{
         line-height: 24px;
+      }
+      button{
+        position: relative;
+        margin-right: 10px;
+        padding: 10px 20px;
+        color: #fff;
+        font-size: 16px;
+        background-color: @c-vue;
+        border: 0;
+        cursor: pointer;
+        &:hover{
+          background-color: lighten(@c-vue, 5%);
+        }
+        &:active{
+          background-color: darken(@c-vue, 5%);
+        }
+        &.active:before{
+          content: '';
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          border: 14px solid transparent;
+          border-right-color: #fff;
+          border-bottom-color: #fff;
+        }
+        &.active:after{
+          content: '✔';
+          position: absolute;
+          right: 2px;
+          bottom: 0;
+          color: @c-vue;
+          font-size: 14px;
+        }
+      }
+      .warning-prompt{
+        padding: 5px 10px;
+        font-size: 14px;
+        color: #F18D4B;
+        background-color: #FFEDD6;
       }
     }
     &.getting-started{

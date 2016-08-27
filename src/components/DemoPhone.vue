@@ -28,6 +28,9 @@
           </span>
         </infinite-loading>
       </div>
+      <div v-if="demoType === 'spinners'">
+        <infinite-loading :on-infinite="onInfinite" :spinner="spinner"></infinite-loading>
+      </div>
     </div>
   </div>
 </template>
@@ -47,9 +50,11 @@
           '/getting-started/basic': 'basic',
           '/getting-started/hacker-news': 'hackerNews',
           '/getting-started/with-filter': 'withFilter',
+          '/spinners': 'spinners',
         },
         timer: null,
         tag: 'story',
+        spinner: 'default',
       };
     },
     computed: {
@@ -132,6 +137,11 @@
         this.$nextTick(() => {
           this.$broadcast('$InfiniteLoading:reset');
         });
+      },
+    },
+    events: {
+      '$demoPhone:changeSpinner': function changeSpinner(spinner) {
+        this.spinner = spinner;
       },
     },
     components: {

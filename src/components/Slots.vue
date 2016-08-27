@@ -2,7 +2,7 @@
   <h3>Slots</h3>
   <p>You can customize the prompt's content by <code>slot</code>, you also can use the default content if you like it:</p>
   <pre>
-&lt;span slot=&quot;{slot name}&quot;&gt;
+&lt;span slot=&quot;{ slot name }&quot;&gt;
   { Your content }
 &lt;/span&gt;</pre>
 
