@@ -12,10 +12,9 @@
 This plugin is an infinite scroll plugin for Vue.js, it can help you create an infinite scroll list fastly.
 
 ### Features
-- Light-weight, only 7.18 KB
 - Mobile friendly
 - Compatible with any scrollable element
-- Loading animation
+- Diverse spinners as loading animation
 - Support result display after loading
 
 ## Usage & Guide
