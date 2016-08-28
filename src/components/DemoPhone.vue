@@ -46,10 +46,9 @@
         demoTypes: {
           '/': 'hackerNews',
           '/installation': 'hackerNews',
-          '/getting-started': 'basic',
-          '/getting-started/basic': 'basic',
-          '/getting-started/hacker-news': 'hackerNews',
-          '/getting-started/with-filter': 'withFilter',
+          '/basicUse': 'basic',
+          '/hackerNews': 'hackerNews',
+          '/withFilter': 'withFilter',
           '/spinners': 'spinners',
         },
         timer: null,
@@ -59,7 +58,7 @@
     },
     computed: {
       demoType() {
-        return this.demoTypes[this.$route.path];
+        return this.demoTypes[`/${this.$route.name || ''}`];
       },
     },
     ready() {

@@ -68,7 +68,7 @@
     },
     computed: {
       isGettingStarted() {
-        return this.$route.path !== '/';
+        return this.$route.name !== undefined;
       },
       sideMenus() {
         const menus = [];
