@@ -5,7 +5,7 @@
   </div>
   <p>You can choose your favorite spinner as loading animation by <code>spinner</code> property:</p>
   <pre>
-&lt;infinite-loading spinner=&quot;{ spinner name }&quot;&gt;
+&lt;infinite-loading spinner=&quot;<span v-text="'{{'"></span> spinner name <span v-text="'}}'"></span>&quot;&gt;
 &lt;/infinite-loading&gt;</pre>
   <h4>Available spinners</h4>
   <p>The button's name is available spinner name, and you can preview all available spinners on the right by clicking on the following buttons.</p>
