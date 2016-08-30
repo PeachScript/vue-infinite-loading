@@ -7,13 +7,15 @@
 &lt;/span&gt;</pre>
 
   <h4>no-results</h4>
-  <p>This content will be display when the <code>InfiniteLoading</code> component received <code>$InfiniteLoading:noResults</code> event.</p>
+  <p v-if="$parent.docVersion < 1">This content will be display when the <code>InfiniteLoading</code> component received <code>$InfiniteLoading:noResults</code> event.</p>
+  <p v-if="$parent.docVersion >= 1">This content will be display when the <code>InfiniteLoading</code> component received <code>$InfiniteLoading:complete</code> event and it never received <code>$InfiniteLoading:loaded</code> event.</p>
   <pre>
 - type      String
 - default   No results :(</pre>
 
   <h4>no-more</h4>
-  <p>This content will be display when the <code>InfiniteLoading</code> component received <code>$InfiniteLoading:noMore</code> event.</p>
+  <p v-if="$parent.docVersion < 1">This content will be display when the <code>InfiniteLoading</code> component received <code>$InfiniteLoading:noMore</code> event.</p>
+  <p v-if="$parent.docVersion >= 1">This content will be display when the <code>InfiniteLoading</code> component received <code>$InfiniteLoading:complete</code> event and it has been received <code>$InfiniteLoading:loaded</code> event.</p>
   <pre>
 - type      String
 - default   No more data :)</pre>
