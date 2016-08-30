@@ -85,9 +85,13 @@ export default {
           page: this.list.length / 20 + 1,
         },
       }).then((res) =&gt; {
-        this.list = this.list.concat(res.data.hits);
-        this.$broadcast('$InfiniteLoading:loaded');
-        if (this.list.length / 20 === 10) {
+        if (res.data.hits.length) {
+          this.list = this.list.concat(res.data.hits);
+          this.$broadcast('$InfiniteLoading:loaded');
+          if (this.list.length / 20 === 10) {
+            this.$broadcast('$InfiniteLoading:complete');
+          }
+        } else {
           this.$broadcast('$InfiniteLoading:complete');
         }
       });
