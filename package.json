@@ -1,6 +1,6 @@
 {
   "name": "vue-infinite-loading-gh-pages",
-  "version": "0.3.2",
+  "version": "1.0.0",
   "description": "Gh-pages of vue-infinite-loading project",
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --quiet",

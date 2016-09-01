@@ -13,8 +13,8 @@
         Doc version:
         <span class="select-wrapper">
           <select v-model="docVersion">
-            <option value="1">v1.*</option>
-            <option value="0">v0.*</option>
+            <option value="1">v1.0.0</option>
+            <option value="0">v0.3.2</option>
           </select>
         </span>
       </div>
