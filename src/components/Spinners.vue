@@ -8,6 +8,9 @@
 &lt;infinite-loading spinner=&quot;<span v-text="'{{'"></span> spinner name <span v-text="'}}'"></span>&quot;&gt;
 &lt;/infinite-loading&gt;</pre>
   <h4>Available spinners</h4>
+  <div class="warning-prompt">
+    Notice: All spinners compatible with Chrome, Safari, Firefox, Edge and IE10+ browsers.
+  </div>
   <p>The button's name is available spinner name, and you can preview all available spinners on the right by clicking on the following buttons.</p>
   <button v-for="spinner in availableSpinners"
           v-text="spinner"
