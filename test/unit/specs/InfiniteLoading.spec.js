@@ -41,7 +41,7 @@ describe('InfiniteLoading.vue', () => {
     vm.$destroy();
   });
 
-  it('should render correct template', () => {
+  it('should render a basic template', () => {
     vm.isDivScroll = false;
     vm.distance = undefined;
 
@@ -50,27 +50,21 @@ describe('InfiniteLoading.vue', () => {
     expect(vm.$el.querySelector('.loading-default')).to.be.ok;
   });
 
-  it('should appear a loading animation', (done) => {
+  it('should execute callback and display a spinner immediately after initialize', (done) => {
     vm.onInfinite = function test() {
       Vue.nextTick(() => {
         expect(isShow(vm.$el.querySelector('.loading-default'))).to.be.true;
-
-        this.$broadcast('$InfiniteLoading:loaded');
-
-        Vue.nextTick(() => {
-          expect(isShow(vm.$el.querySelector('.loading-default'))).to.be.false;
-          done();
-        });
+        done();
       });
-    }.bind(vm);
+    };
 
     vm.$mount().$appendTo('body');
   });
 
-  it('should only load once', (done) => {
+  it('should not to execute callback if the previous loading has not be completed', (done) => {
     vm.onInfinite = function test() {
-      const length = this.list.length + 1;
-      for (let i = length; i < length + 20; i++) {
+      const len = this.list.length + 1;
+      for (let i = len; i < len + 20; i++) {
         this.list.push(i);
       }
 
@@ -81,7 +75,7 @@ describe('InfiniteLoading.vue', () => {
             done();
           });
 
-          // trigger scroll event
+          // trigger scroll event manually
           vm.$el.scrollTop = vm.$el.scrollHeight;
         }
       });
@@ -90,7 +84,7 @@ describe('InfiniteLoading.vue', () => {
     vm.$mount().$appendTo('body');
   });
 
-  it('should be destroyed completely', (done) => {
+  it('should be destroyed completely by v-if', (done) => {
     vm.onInfinite = function test() {
       this.isLoadedAll = true;
       Vue.nextTick(() => {
