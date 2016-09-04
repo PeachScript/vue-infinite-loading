@@ -46,7 +46,7 @@ const routes = [
     path: '/spinners',
     name: 'spinners',
     label: 'Spinners',
-    version: '1',
+    version: 1,
   },
 ];
 

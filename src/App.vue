@@ -13,6 +13,7 @@
         Doc version:
         <span class="select-wrapper">
           <select v-model="docVersion">
+            <option value="1.1">v1.1.0</option>
             <option value="1">v1.0.0</option>
             <option value="0">v0.3.2</option>
           </select>
@@ -73,7 +74,7 @@
       sideMenus() {
         const menus = [];
         routes.forEach((route) => {
-          if (route.version === undefined || route.version === this.docVersion) {
+          if (route.version === undefined || route.version <= this.docVersion) {
             menus.push(route);
           }
         });

@@ -12,6 +12,7 @@
     Notice: All spinners compatible with Chrome, Safari, Firefox, Edge and IE10+ browsers.
   </div>
   <p>The button's name is available spinner name, and you can preview all available spinners on the right by clicking on the following buttons.</p>
+  <p v-show="$parent.docVersion > 1">If you don't like the preset spinners or you want to compatible with old browsers, you can customize your own spinner with <a v-link="{ name: 'slots' }">spinner slots</a>.</p>
   <button v-for="spinner in availableSpinners"
           v-text="spinner"
           :class="{
