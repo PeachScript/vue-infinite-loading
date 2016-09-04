@@ -18,6 +18,7 @@ describe('InfiniteLoading.vue', () => {
         distance: 50,
         isLoadedAll: false,
         isDivScroll: true,
+        isCustomSpinner: false,
       },
       template: `
         <div style="height: 100px;"
@@ -29,7 +30,9 @@ describe('InfiniteLoading.vue', () => {
           </ul>
           <infinite-loading :distance="distance"
                             :on-infinite="onInfinite"
-                            v-if="!isLoadedAll"></infinite-loading>
+                            v-if="!isLoadedAll">
+            <span slot="spinner" v-if="isCustomSpinner"><i class="custom-spinner"></i></span>
+          </infinite-loading>
         </div>
       `,
       components: { InfiniteLoading },
@@ -132,5 +135,15 @@ describe('InfiniteLoading.vue', () => {
     }.bind(vm);
 
     vm.$mount().$appendTo('body');
+  });
+
+  it('should display the custom spinner if customize it with slot', () => {
+    vm.isCustomSpinner = true;
+    vm.isDivScroll = false;
+    vm.distance = undefined;
+
+    vm.$mount().$appendTo('body');
+
+    expect(vm.$el.querySelector('.custom-spinner')).to.be.ok;
   });
 });
