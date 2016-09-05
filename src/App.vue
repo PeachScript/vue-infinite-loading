@@ -63,7 +63,7 @@
   export default {
     data() {
       return {
-        docVersion: '1',
+        docVersion: 1.1,
         currentVersion: process.env.VERSION,
       };
     },
