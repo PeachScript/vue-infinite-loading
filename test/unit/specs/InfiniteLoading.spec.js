@@ -41,16 +41,15 @@ describe('InfiniteLoading.vue', () => {
   });
 
   afterEach(() => {
-    vm.$destroy();
+    vm.$destroy(true);
   });
 
-  it('should render a basic template', () => {
-    vm.isDivScroll = false;
-    vm.distance = undefined;
-
-    vm.$mount().$appendTo('body');
-
-    expect(vm.$el.querySelector('.loading-default')).to.be.ok;
+  it('should render a basic template', (done) => {
+    setTimeout(() => {
+      vm.$mount().$appendTo('body');
+      expect(vm.$el.querySelector('.loading-default')).to.be.ok;
+      done();
+    }, 1);
   });
 
   it('should execute callback and display a spinner immediately after initialize', (done) => {
