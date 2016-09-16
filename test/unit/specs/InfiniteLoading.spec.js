@@ -9,48 +9,84 @@ function isShow(elm) {
 
 describe('InfiniteLoading.vue', () => {
   let vm;
-
-  // create new Vue instance for every test case
-  beforeEach(() => {
-    vm = new Vue({
-      data: {
+  const initConf = {
+    data() {
+      return {
         list: [],
         distance: 50,
         isLoadedAll: false,
         isDivScroll: true,
         isCustomSpinner: false,
-      },
-      template: `
-        <div style="height: 100px;"
-            :style="{
-              overflow: isDivScroll ? 'auto' : 'visible'
-            }">
-          <ul>
-            <li v-for="item in list" v-text="item"></li>
-          </ul>
-          <infinite-loading :distance="distance"
-                            :on-infinite="onInfinite"
-                            v-if="!isLoadedAll">
-            <span slot="spinner" v-if="isCustomSpinner"><i class="custom-spinner"></i></span>
-          </infinite-loading>
-        </div>
-      `,
-      components: { InfiniteLoading },
-      methods: {},
-    });
+      };
+    },
+    render(createElement) {
+      return createElement(
+        'div',
+        {
+          style: {
+            height: '100px',
+            overflow: this.isDivScroll ? 'auto' : 'visible',
+          },
+        },
+        [
+          createElement('ul', this.list.map((item) => createElement('li', item))),
+          this.isLoadedAll ? undefined : createElement(InfiniteLoading,
+            {
+              props: {
+                distance: this.distance,
+                onInfinite: this.onInfinite,
+              },
+              ref: 'infiniteLoading',
+            },
+            [
+              this.isCustomSpinner ? createElement('span',
+                {
+                  slot: 'spinner',
+                },
+                [
+                  createElement('i', {
+                    attrs: {
+                      class: 'custom-spinner',
+                    },
+                  }),
+                ]
+              ) : undefined,
+            ]
+          ),
+        ]
+      );
+    },
+  };
+
+  // create new Vue instance for every test case
+  beforeEach(() => {
+    const container = document.createElement('div');
+    container.setAttribute('id', 'app');
+    document.body.appendChild(container);
+
+    vm = new Vue(initConf);
   });
 
   afterEach(() => {
-    vm.$destroy();
+    /**
+     * because of call the $destroy method of parent cannot trigger
+     * destroy event for child component in Vue.js 2.0.0-rc6
+     */
+    vm.$refs.infiniteLoading && vm.$refs.infiniteLoading.$destroy();
+    vm.$destroy(true);
+    /**
+     * because of pass true as the argument for destroy method cannot
+     * remove element from DOM in Vue.js 2.0.0-rc6
+     */
+    vm.$el && vm.$el.remove();
   });
 
-  it('should render a basic template', () => {
-    vm.isDivScroll = false;
-    vm.distance = undefined;
-
-    vm.$mount().$appendTo('body');
-
-    expect(vm.$el.querySelector('.loading-default')).to.be.ok;
+  it('should render a basic template', (done) => {
+    setTimeout(() => {
+      vm.$mount('#app');
+      expect(vm.$el.querySelector('.loading-default')).to.be.ok;
+      done();
+    }, 1);
   });
 
   it('should execute callback and display a spinner immediately after initialize', (done) => {
@@ -61,7 +97,7 @@ describe('InfiniteLoading.vue', () => {
       });
     };
 
-    vm.$mount().$appendTo('body');
+    vm.$mount('#app');
   });
 
   it('should not to execute callback if the previous loading has not be completed', (done) => {
@@ -84,7 +120,7 @@ describe('InfiniteLoading.vue', () => {
       });
     }.bind(vm);
 
-    vm.$mount().$appendTo('body');
+    vm.$mount('#app');
   });
 
   it('should be destroyed completely by v-if', (done) => {
@@ -96,53 +132,52 @@ describe('InfiniteLoading.vue', () => {
       });
     }.bind(vm);
 
-    vm.$mount().$appendTo('body');
+    vm.$mount('#app');
   });
 
   it('should display no results prompt', (done) => {
     vm.onInfinite = function test() {
-      this.$broadcast('$InfiniteLoading:complete');
+      this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
       Vue.nextTick(() => {
         expect(isShow(vm.$el.querySelectorAll('.infinite-status-prompt')[0])).to.be.true;
         done();
       });
     }.bind(vm);
 
-    vm.$mount().$appendTo('body');
+    vm.$mount('#app');
   });
 
   it('should display no more data prompt', (done) => {
     vm.onInfinite = function test() {
-      this.$broadcast('$InfiniteLoading:loaded');
-      this.$broadcast('$InfiniteLoading:complete');
+      this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+      this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
       Vue.nextTick(() => {
         expect(isShow(vm.$el.querySelectorAll('.infinite-status-prompt')[1])).to.be.true;
         done();
       });
     }.bind(vm);
 
-    vm.$mount().$appendTo('body');
+    vm.$mount('#app');
   });
 
   it('should reset component and call onInfinite again', (done) => {
     let callCount = 0;
     vm.onInfinite = function test() {
       if (!callCount++) {
-        this.$broadcast('$InfiniteLoading:reset');
+        this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
       } else {
         done();
       }
     }.bind(vm);
 
-    vm.$mount().$appendTo('body');
+    vm.$mount('#app');
   });
 
   it('should display the custom spinner if customize it with slot', () => {
     vm.isCustomSpinner = true;
     vm.isDivScroll = false;
-    vm.distance = undefined;
-
-    vm.$mount().$appendTo('body');
+    delete vm.distance;
+    vm.$mount('#app');
 
     expect(vm.$el.querySelector('.custom-spinner')).to.be.ok;
   });
