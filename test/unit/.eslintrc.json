@@ -7,6 +7,9 @@
   "globals": {
     "expect": true
   },
+  "plugins": [
+    "html"
+  ],
   "settings": {
     "import/resolver": {
       "node": {

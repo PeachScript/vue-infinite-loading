@@ -8,6 +8,9 @@ webpackConfig.vue = {
   }
 }
 
+// remove eslint
+delete webpackConfig.module.preLoaders;
+
 // Karma configuration
 module.exports = function(config) {
   config.set({
