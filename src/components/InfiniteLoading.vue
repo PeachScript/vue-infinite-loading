@@ -67,15 +67,14 @@
       },
     },
     props: {
-      distance: Number,
+      distance: {
+        type: Number,
+        default: 100,
+      },
       onInfinite: Function,
       spinner: String,
     },
     ready() {
-      if (this.distance === undefined) {
-        this.$set('distance', 100);
-      }
-
       this.scrollParent = getScrollParent(this.$el);
 
       this.scrollHandler = function scrollHandlerOriginal() {
