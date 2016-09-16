@@ -82,6 +82,7 @@ describe('InfiniteLoading.vue', () => {
   });
 
   it('should render a basic template', (done) => {
+    vm.isDivScroll = false;
     setTimeout(() => {
       vm.$mount('#app');
       expect(vm.$el.querySelector('.loading-default')).to.be.ok;
@@ -175,7 +176,6 @@ describe('InfiniteLoading.vue', () => {
 
   it('should display the custom spinner if customize it with slot', () => {
     vm.isCustomSpinner = true;
-    vm.isDivScroll = false;
     delete vm.distance;
     vm.$mount('#app');
 
