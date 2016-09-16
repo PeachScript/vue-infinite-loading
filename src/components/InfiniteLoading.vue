@@ -67,15 +67,14 @@
       },
     },
     props: {
-      distance: Number,
+      distance: {
+        type: Number,
+        default: 100,
+      },
       onInfinite: Function,
       spinner: String,
     },
-    ready() {
-      if (this.distance === undefined) {
-        this.$set('distance', 100);
-      }
-
+    mounted() {
       this.scrollParent = getScrollParent(this.$el);
 
       this.scrollHandler = function scrollHandlerOriginal() {
@@ -90,24 +89,23 @@
 
       setTimeout(this.scrollHandler, 1);
       this.scrollParent.addEventListener('scroll', this.scrollHandler);
-    },
-    events: {
-      '$InfiniteLoading:loaded': function loaded() {
+
+      this.$on('$InfiniteLoading:loaded', () => {
         this.isLoading = false;
         this.isFirstLoad = false;
-      },
-      '$InfiniteLoading:complete': function complete() {
+      });
+      this.$on('$InfiniteLoading:complete', () => {
         this.isLoading = false;
         this.isComplete = true;
         this.scrollParent.removeEventListener('scroll', this.scrollHandler);
-      },
-      '$InfiniteLoading:reset': function reset() {
+      });
+      this.$on('$InfiniteLoading:reset', () => {
         this.isLoading = false;
         this.isComplete = false;
         this.isFirstLoad = true;
         this.scrollParent.addEventListener('scroll', this.scrollHandler);
         setTimeout(this.scrollHandler, 1);
-      },
+      });
     },
     destroyed() {
       if (!this.isComplete) {
