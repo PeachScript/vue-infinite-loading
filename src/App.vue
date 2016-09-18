@@ -13,6 +13,7 @@
         Doc version:
         <span class="select-wrapper">
           <select v-model="docVersion">
+            <option value="2.0">v2.0.0-rc.1</option>
             <option value="1.1">v1.1.0</option>
             <option value="1">v1.0.0</option>
             <option value="0">v0.3.2</option>
@@ -32,6 +33,12 @@
     </div>
     <demo-phone></demo-phone>
     <div class="content">
+      <div class="warning-prompt" v-show="docVersion < 2">
+        Notice: This version only can be used with <strong>Vue.js 1.0</strong>, if you want to use this plugin with Vue.js 2.0, <a href="javascript:;" @click="docVersion = 2.0">switch to v2.0.0-rc.1</a>.
+      </div>
+      <div class="warning-prompt" v-show="docVersion >= 2">
+        Notice: This version only can be used with <strong>Vue.js 2.0</strong>, if you want to use this plugin with Vue.js 1.0, <a href="javascript:;" @click="docVersion = 1.1">switch to v1.1.0</a>.
+      </div>
       <router-view></router-view>
     </div>
     <div class="info-wrapper">
@@ -48,6 +55,7 @@
         <li>Compatible with any scrollable element</li>
         <li>Diverse spinners as loading animation</li>
         <li>Support result display after loading</li>
+        <li>Support Vue.js 2.0<sup> Only v2.0.0-rc.1 and later</sup></li>
       </ul>
       <div class="handle-bar">
         <a class="highlight" v-link="{ name: 'installation' }">Get started !</a>
@@ -224,7 +232,7 @@
       transition: all .3s @a-normal;
       .version-select{
         margin: 0 -20px;
-        padding: 8px 0;
+        padding: 8px 10px;
         font-size: 14px;
         line-height: 20px;
         color: #fff;
@@ -365,6 +373,9 @@
         font-size: 14px;
         color: #F18D4B;
         background-color: #FFEDD6;
+        a{
+          color: #F16B03;
+        }
       }
     }
     &.getting-started{

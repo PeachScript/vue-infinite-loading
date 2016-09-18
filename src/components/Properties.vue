@@ -30,4 +30,12 @@
 - required  false
 - default   'default'</pre>
   </div>
+
+  <div v-show="$parent.docVersion >= 2">
+    <h4>ref</h4>
+    <p>As you know, this property is an official directive of Vue.js to get the instance of child component, we need get the instance of <code>InfiniteLoading</code> component to send event for it. You can get the instance by this way: <code>this.$refs[the value of ref attribute]</code>.</p>
+    <pre>
+- type      String
+- required  true</pre>
+  </div>
 </template>
