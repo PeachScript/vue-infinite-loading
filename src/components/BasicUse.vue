@@ -31,11 +31,6 @@ export default {
       list: [],
     };
   },
-  ready() {
-    for (let i = 1; i &lt;= 20; i++) {
-      this.list.push(i);
-    }
-  },
   methods: {
     onInfinite() {
       setTimeout(() =&gt; {
@@ -59,11 +54,6 @@ export default {
     return {
       list: [],
     };
-  },
-  mounted() {
-    for (let i = 1; i &lt;= 20; i++) {
-      this.list.push(i);
-    }
   },
   methods: {
     onInfinite() {
