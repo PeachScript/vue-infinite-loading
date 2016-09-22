@@ -36,7 +36,9 @@ describe('InfiniteLoading.vue', () => {
         </div>
       `,
       components: { InfiniteLoading },
-      methods: {},
+      methods: {
+        onInfinite() {},
+      },
     });
   });
 
