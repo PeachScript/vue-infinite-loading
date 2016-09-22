@@ -6,7 +6,7 @@
   <p>Usually, you should to send the <code>$InfiniteLoading:loaded</code> event in this function after loaded data completely.</p>
   <pre>
 - type      Function
-- required  false</pre>
+- required  true</pre>
 
   <h4>distance</h4>
   <p>This is a critical value for scroll. If the distance from the bottom of scroll parent less than this property, the <code>on-infinite</code> callback will be called.</p>
