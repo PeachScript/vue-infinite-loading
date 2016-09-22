@@ -40,15 +40,18 @@
    * @return {Number}     distance
    */
   function getCurrentDistance(elm) {
+    const styles = getComputedStyle(elm);
     const innerHeight = elm === window
                       ? window.innerHeight
-                      : parseInt(getComputedStyle(elm).height, 10);
+                      : parseInt(styles.height, 10);
     const scrollHeight = elm === window
                        ? document.body.scrollHeight
                        : elm.scrollHeight;
     const scrollTop = isNaN(elm.scrollTop) ? elm.pageYOffset : elm.scrollTop;
+    const paddingTop = parseInt(styles.paddingTop, 10);
+    const paddingBottom = parseInt(styles.paddingBottom, 10);
 
-    return scrollHeight - innerHeight - scrollTop;
+    return scrollHeight - innerHeight - scrollTop - paddingTop - paddingBottom;
   }
 
   export default {
