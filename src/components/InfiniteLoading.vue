@@ -74,7 +74,10 @@
         type: Number,
         default: 100,
       },
-      onInfinite: Function,
+      onInfinite: {
+        type: Function,
+        required: true,
+      },
       spinner: String,
     },
     ready() {
@@ -84,9 +87,7 @@
         const currentDistance = getCurrentDistance(this.scrollParent);
         if (!this.isLoading && currentDistance <= this.distance) {
           this.isLoading = true;
-          if (this.onInfinite) {
-            this.onInfinite.call();
-          }
+          this.onInfinite.call();
         }
       }.bind(this);
 
