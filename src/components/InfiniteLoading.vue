@@ -40,7 +40,7 @@
    * @return {Number}     distance
    */
   function getCurrentDistance(elm) {
-    const styles = getComputedStyle(elm);
+    const styles = getComputedStyle(elm === window ? document.body : elm);
     const innerHeight = elm === window
                       ? window.innerHeight
                       : parseInt(styles.height, 10);
