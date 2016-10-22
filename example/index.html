@@ -19,6 +19,14 @@
       border-top: 1px solid #fff;
       border-bottom: 1px solid #e3e3e3;
     }
+    .example-list-item.bounce-transition{
+      transition: all .3s;
+      opacity: 1;
+    }
+    .example-list-item.bounce-enter, .example-list-item.bounce-leave{
+      opacity: 0;
+      transform: translateX(20px);
+    }
     .example-list-item:before{
       content: 'Line: ';
     }
@@ -26,26 +34,25 @@
 </head>
 <body>
   <div id="app">
-    <p class="example-list-item" v-for="item in list" v-text="item"></p>
-    <infinite-loading :on-infinite="onInfinite" :distance="distance" v-if="list.length < 300"></infinite-loading>
+    <p class="example-list-item" v-for="item in list" v-text="item" transition="bounce" stagger="100"></p>
+    <infinite-loading :on-infinite="onInfinite" :distance="distance" v-if="list.length < 300" :transition="bounce" :stagger-count="list.length"></infinite-loading>
   </div>
   <script>
     new Vue({
       el: '#app',
       data: {
         distance: 100,
-        list: []
+        list: [],
+        bounce: null,
       },
       ready: function () {
-        for (var i = 0; i < 50; i++) {
-          this.list.push(i + 1);
-        }
+        this.bounce = this.$options.transitions.bounce = { type: 'transition' };
       },
       methods: {
         onInfinite: function () {
           setTimeout(function () {
             var temp = [];
-            for (var i = this.list.length; i <= this.list.length + 20; i++) {
+            for (var i = this.list.length; i <= this.list.length + 30; i++) {
               temp.push(i);
             }
 
