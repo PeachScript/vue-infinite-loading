@@ -1,7 +1,7 @@
 <template>
   <div class="infinite-loading-container">
     <slot name="spinner">
-      <i :class="spinnerType" v-show="isLoading && !isTransitioning"></i>
+      <i :class="spinnerType" v-show="isLoading"></i>
     </slot>
     <div class="infinite-status-prompt" v-show="!isLoading && isComplete && isFirstLoad">
       <slot name="no-results">No results :(</slot>
@@ -62,8 +62,6 @@
         isLoading: false,
         isComplete: false,
         isFirstLoad: true, // save the current loading whether it is the first loading
-        isTransitioning: false, // save transition status
-        loadedCount: 0,
       };
     },
     computed: {
@@ -81,13 +79,6 @@
         required: true,
       },
       spinner: String,
-      transition: {
-        type: Object, // Must be a Vue transition object
-      },
-      staggerCount: {
-        type: Number,
-        default: null,
-      },
     },
     ready() {
       this.scrollParent = getScrollParent(this.$el);
@@ -103,59 +94,22 @@
       setTimeout(this.scrollHandler, 1);
       this.scrollParent.addEventListener('scroll', this.scrollHandler);
     },
-    methods: {
-      listenTransitionEndOnce(callback, isReset = false) {
-        if (this.transition) {
-          const type = isReset ? 'afterLeave' : 'afterEnter';
-          const originalListener = this.transition[type];
-          let staggerIndex = 0;
-
-          this.isTransitioning = true;
-          this.transition[type] = () => {
-            // has no stagger or complete all stagger
-            if (this.staggerCount === null ||
-                ++staggerIndex === Math.abs(this.staggerCount - this.loadedCount)) {
-              // restore original hook
-              if (typeof originalListener === 'function') {
-                originalListener.call(this);
-                this.transition[type] = originalListener;
-              } else {
-                delete this.transition[type];
-              }
-              this.loadedCount = this.staggerCount; // save current count
-              this.isTransitioning = false;
-              callback.call(this);
-            } else if (typeof originalListener === 'function') {
-              originalListener.call(this);
-            }
-          };
-        } else {
-          callback.call(this);
-        }
-      },
-    },
     events: {
       '$InfiniteLoading:loaded': function loaded() {
-        this.listenTransitionEndOnce(() => {
-          this.isLoading = false;
-          this.isFirstLoad = false;
-        });
+        this.isLoading = false;
+        this.isFirstLoad = false;
       },
       '$InfiniteLoading:complete': function complete() {
-        this.listenTransitionEndOnce(() => {
-          this.isLoading = false;
-          this.isComplete = true;
-          this.scrollParent.removeEventListener('scroll', this.scrollHandler);
-        });
+        this.isLoading = false;
+        this.isComplete = true;
+        this.scrollParent.removeEventListener('scroll', this.scrollHandler);
       },
       '$InfiniteLoading:reset': function reset() {
-        this.listenTransitionEndOnce(() => {
-          this.isLoading = false;
-          this.isComplete = false;
-          this.isFirstLoad = true;
-          this.scrollParent.addEventListener('scroll', this.scrollHandler);
-          setTimeout(this.scrollHandler, 1);
-        }, true);
+        this.isLoading = false;
+        this.isComplete = false;
+        this.isFirstLoad = true;
+        this.scrollParent.addEventListener('scroll', this.scrollHandler);
+        setTimeout(this.scrollHandler, 1);
       },
     },
     destroyed() {
