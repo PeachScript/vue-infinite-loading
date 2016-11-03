@@ -19,19 +19,27 @@ describe('InfiniteLoading.vue', () => {
         isLoadedAll: false,
         isDivScroll: true,
         isCustomSpinner: false,
+        listContainerHeight: 100,
+        listItemHeight: 10,
+        customSpinnerHeight: 10
       },
       template: `
-        <div style="height: 100px;"
+        <div style="margin: 0; padding: 0;"
             :style="{
-              overflow: isDivScroll ? 'auto' : 'visible'
+              overflow: isDivScroll ? 'auto' : 'visible',
+              height: listContainerHeight + 'px'
             }">
-          <ul>
-            <li v-for="item in list" v-text="item"></li>
+          <ul style="margin: 0; padding: 0; font-size: 5px;">
+            <li v-for="item in list" v-text="item" style="height: 10px; margin: 0; padding: 0;" :style="{
+              height: listItemHeight + 'px'
+            }"></li>
           </ul>
           <infinite-loading :distance="distance"
                             :on-infinite="onInfinite"
                             v-if="!isLoadedAll">
-            <span slot="spinner" v-if="isCustomSpinner"><i class="custom-spinner"></i></span>
+            <span slot="spinner" v-if="isCustomSpinner"><i class="custom-spinner" style="display: inline-block; width: 10px;" :style="{
+              height: customSpinnerHeight + 'px'
+            }"></i></span>
           </infinite-loading>
         </div>
       `,
@@ -103,10 +111,12 @@ describe('InfiniteLoading.vue', () => {
 
   it('should display no results prompt', (done) => {
     vm.onInfinite = function test() {
-      this.$broadcast('$InfiniteLoading:complete');
       Vue.nextTick(() => {
-        expect(isShow(vm.$el.querySelectorAll('.infinite-status-prompt')[0])).to.be.true;
-        done();
+        this.$broadcast('$InfiniteLoading:complete');
+        Vue.nextTick(() => {
+          expect(isShow(vm.$el.querySelectorAll('.infinite-status-prompt')[0])).to.be.true;
+          done();
+        });
       });
     }.bind(vm);
 
@@ -114,12 +124,46 @@ describe('InfiniteLoading.vue', () => {
   });
 
   it('should display no more data prompt', (done) => {
+    let i = 0;
     vm.onInfinite = function test() {
-      this.$broadcast('$InfiniteLoading:loaded');
-      this.$broadcast('$InfiniteLoading:complete');
+      this.list.push(++i);
       Vue.nextTick(() => {
-        expect(isShow(vm.$el.querySelectorAll('.infinite-status-prompt')[1])).to.be.true;
-        done();
+        this.$broadcast('$InfiniteLoading:loaded');
+        this.$broadcast('$InfiniteLoading:complete');
+        Vue.nextTick(() => {
+          expect(isShow(vm.$el.querySelectorAll('.infinite-status-prompt')[1])).to.be.true;
+          done();
+        });
+      });
+    }.bind(vm);
+
+    vm.$mount().$appendTo('body');
+  });
+
+  it('should load results to fill up the container', function (done) {
+    const TEST_TIMEOUT = 2000;
+    let mocha = this;
+    let i = 0;
+    vm.listContainerHeight = 100;
+    vm.listItemHeight = 10;
+    vm.distance = 10;
+    vm.isCustomSpinner = true;
+    vm.customSpinnerHeight = 10;
+    let expectedCount = Math.floor(vm.listContainerHeight / vm.listItemHeight);
+    vm.onInfinite = function test() {
+      this.list.push(++i);
+      Vue.nextTick(() => {
+        this.$broadcast('$InfiniteLoading:loaded');
+        if (i == expectedCount) {
+          mocha.timeout(TEST_TIMEOUT + 100);
+          setTimeout(function () {
+            if (i == expectedCount) {
+              done();
+            } else {
+              done(new Error('Unexpected number of items added'));
+            }
+          }, TEST_TIMEOUT);
+        }
       });
     }.bind(vm);
 
