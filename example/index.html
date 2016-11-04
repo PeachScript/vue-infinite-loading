@@ -50,7 +50,9 @@
             }
 
             this.list = this.list.concat(temp);
-            this.$broadcast('$InfiniteLoading:loaded');
+            this.$nextTick(function () {
+              this.$broadcast('$InfiniteLoading:loaded');
+            });
           }.bind(this), 1000);
         }
       }
