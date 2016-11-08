@@ -54,8 +54,8 @@
       &lt;option value=&quot;front_page&quot;&gt;Front page&lt;/option&gt;
     &lt;/select&gt;
   &lt;/div&gt;
-  &lt;div class=&quot;hacker-news-item&quot; v-for=&quot;item in list&quot;&gt;
-    &lt;span class=&quot;num&quot; v-text=&quot;$index + 1&quot;&gt;&lt;/span&gt;
+  &lt;div class=&quot;hacker-news-item&quot; v-for=&quot;(item, key) in list&quot;&gt;
+    &lt;span class=&quot;num&quot; v-text=&quot;key + 1&quot;&gt;&lt;/span&gt;
     &lt;p&gt;
       &lt;a target=&quot;_blank&quot; :href=&quot;item.url&quot; v-text=&quot;item.title&quot;&gt;&lt;/a&gt;
     &lt;/p&gt;
