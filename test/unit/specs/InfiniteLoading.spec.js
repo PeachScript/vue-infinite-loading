@@ -21,7 +21,7 @@ describe('InfiniteLoading.vue', () => {
         isCustomSpinner: false,
         listContainerHeight: 100,
         listItemHeight: 10,
-        customSpinnerHeight: 10
+        customSpinnerHeight: 10,
       },
       template: `
         <div style="margin: 0; padding: 0;"
@@ -30,16 +30,21 @@ describe('InfiniteLoading.vue', () => {
               height: listContainerHeight + 'px'
             }">
           <ul style="margin: 0; padding: 0; font-size: 5px;">
-            <li v-for="item in list" v-text="item" style="height: 10px; margin: 0; padding: 0;" :style="{
-              height: listItemHeight + 'px'
+            <li v-for="item in list" v-text="item"
+                style="height: 10px; margin: 0; padding: 0;"
+                :style="{
+                  height: listItemHeight + 'px'
             }"></li>
           </ul>
           <infinite-loading :distance="distance"
                             :on-infinite="onInfinite"
                             v-if="!isLoadedAll">
-            <span slot="spinner" v-if="isCustomSpinner"><i class="custom-spinner" style="display: inline-block; width: 10px;" :style="{
-              height: customSpinnerHeight + 'px'
-            }"></i></span>
+            <span slot="spinner" v-if="isCustomSpinner">
+              <i class="custom-spinner" style="display: inline-block; width: 10px;"
+                 :style="{
+                   height: customSpinnerHeight + 'px'
+              }"></i>
+            </span>
           </infinite-loading>
         </div>
       `,
@@ -140,24 +145,25 @@ describe('InfiniteLoading.vue', () => {
     vm.$mount().$appendTo('body');
   });
 
-  it('should load results to fill up the container', function (done) {
+  it('should load results to fill up the container', function fillUpTest(done) {
     const TEST_TIMEOUT = 2000;
-    let mocha = this;
+    const mocha = this;
     let i = 0;
     vm.listContainerHeight = 100;
     vm.listItemHeight = 10;
     vm.distance = 10;
     vm.isCustomSpinner = true;
     vm.customSpinnerHeight = 10;
-    let expectedCount = Math.floor(vm.listContainerHeight / vm.listItemHeight);
+    const expectedCount = Math.floor(vm.listContainerHeight / vm.listItemHeight);
+
     vm.onInfinite = function test() {
       this.list.push(++i);
       Vue.nextTick(() => {
         this.$broadcast('$InfiniteLoading:loaded');
-        if (i == expectedCount) {
+        if (i === expectedCount) {
           mocha.timeout(TEST_TIMEOUT + 100);
-          setTimeout(function () {
-            if (i == expectedCount) {
+          setTimeout(() => {
+            if (i === expectedCount) {
               done();
             } else {
               done(new Error('Unexpected number of items added'));
