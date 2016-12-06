@@ -19,9 +19,8 @@ describe('InfiniteLoading.vue', () => {
         isLoadedAll: false,
         isDivScroll: true,
         isCustomSpinner: false,
-        listContainerHeight: 100,
-        listItemHeight: 10,
-        customSpinnerHeight: 10,
+        listContainerHeight: 200,
+        listItemHeight: 20,
       },
       template: `
         <div style="margin: 0; padding: 0;"
@@ -29,21 +28,16 @@ describe('InfiniteLoading.vue', () => {
               overflow: isDivScroll ? 'auto' : 'visible',
               height: listContainerHeight + 'px'
             }">
-          <ul style="margin: 0; padding: 0; font-size: 5px;">
+          <ul style="margin: 0; padding: 0;">
             <li v-for="item in list" v-text="item"
-                style="height: 10px; margin: 0; padding: 0;"
-                :style="{
-                  height: listItemHeight + 'px'
+                :style="{ height: listItemHeight + 'px' }"
             }"></li>
           </ul>
           <infinite-loading :distance="distance"
                             :on-infinite="onInfinite"
                             v-if="!isLoadedAll">
             <span slot="spinner" v-if="isCustomSpinner">
-              <i class="custom-spinner" style="display: inline-block; width: 10px;"
-                 :style="{
-                   height: customSpinnerHeight + 'px'
-              }"></i>
+              <i class="custom-spinner"></i>
             </span>
           </infinite-loading>
         </div>
@@ -145,32 +139,24 @@ describe('InfiniteLoading.vue', () => {
     vm.$mount().$appendTo('body');
   });
 
-  it('should load results to fill up the container', function fillUpTest(done) {
-    const TEST_TIMEOUT = 2000;
-    const mocha = this;
-    let i = 0;
-    vm.listContainerHeight = 100;
-    vm.listItemHeight = 10;
-    vm.distance = 10;
-    vm.isCustomSpinner = true;
-    vm.customSpinnerHeight = 10;
+  it('should load results to fill up the container', (done) => {
     const expectedCount = Math.floor(vm.listContainerHeight / vm.listItemHeight);
+    let i = 0;
+    let timer;
 
     vm.onInfinite = function test() {
-      this.list.push(++i);
-      Vue.nextTick(() => {
+      setTimeout(() => {
+        this.list.push(++i);
         this.$broadcast('$InfiniteLoading:loaded');
-        if (i === expectedCount) {
-          mocha.timeout(TEST_TIMEOUT + 100);
-          setTimeout(() => {
-            if (i === expectedCount) {
-              done();
-            } else {
-              done(new Error('Unexpected number of items added'));
-            }
-          }, TEST_TIMEOUT);
-        }
-      });
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          if (i >= expectedCount) {
+            done();
+          } else {
+            done(new Error('List not be fill up!'));
+          }
+        }, 100);
+      }, 1);
     }.bind(vm);
 
     vm.$mount().$appendTo('body');

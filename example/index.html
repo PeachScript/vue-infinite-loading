@@ -40,14 +40,12 @@
         onInfinite: function () {
           setTimeout(function () {
             var temp = [];
-            for (var i = this.list.length; i <= this.list.length + 20; i++) {
+            for (var i = this.list.length; i <= this.list.length + 10; i++) {
               temp.push(i);
             }
 
             this.list = this.list.concat(temp);
-            this.$nextTick(function () {
-              this.$broadcast('$InfiniteLoading:loaded');
-            });
+            this.$broadcast('$InfiniteLoading:loaded');
           }.bind(this), 1000);
         }
       }
