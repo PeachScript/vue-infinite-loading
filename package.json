@@ -62,16 +62,17 @@
     "phantomjs-prebuilt": "^2.1.7",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "vue": "^2.0.0-rc.6",
+    "vue": "^2.1.7",
     "vue-hot-reload-api": "^1.3.3",
     "vue-html-loader": "^1.2.2",
-    "vue-loader": "^9.4.2",
+    "vue-loader": "^10.0.0",
     "vue-style-loader": "^1.0.0",
+    "vue-template-compiler": "^2.1.7",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
   },
   "peerDependencies": {
-    "vue": "^2.0.0-rc"
+    "vue": "^2.1.7"
   },
   "license": "MIT"
 }
