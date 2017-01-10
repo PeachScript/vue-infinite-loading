@@ -76,18 +76,45 @@
         type: Number,
         default: 100,
       },
+      functional: {
+        type: Boolean,
+        default: false,
+      },
       onInfinite: Function,
       spinner: String,
     },
     mounted() {
+      const actions = {
+        capture: () => {
+          this.isLoading = true;
+        },
+        loaded: () => {
+          this.isLoading = false;
+          this.isFirstLoad = false;
+        },
+        complete: () => {
+          this.isLoading = false;
+          this.isComplete = true;
+          this.scrollParent.removeEventListener('scroll', this.scrollHandler);
+        },
+        reset: () => {
+          this.isLoading = false;
+          this.isComplete = false;
+          this.isFirstLoad = true;
+          this.scrollParent.addEventListener('scroll', this.scrollHandler);
+          setTimeout(this.scrollHandler, 1);
+        },
+      };
       this.scrollParent = getScrollParent(this.$el);
 
       this.scrollHandler = function scrollHandlerOriginal() {
         const currentDistance = getCurrentDistance(this.scrollParent);
         if (!this.isLoading && currentDistance <= this.distance) {
-          this.isLoading = true;
-          if (this.onInfinite) {
-            this.onInfinite.call();
+          if (this.functional !== true) {
+            this.isLoading = true;
+          }
+          if (typeof (this.onInfinite) === 'function') {
+            this.onInfinite(actions);
           }
         }
       }.bind(this);
@@ -95,22 +122,9 @@
       setTimeout(this.scrollHandler, 1);
       this.scrollParent.addEventListener('scroll', this.scrollHandler);
 
-      this.$on('$InfiniteLoading:loaded', () => {
-        this.isLoading = false;
-        this.isFirstLoad = false;
-      });
-      this.$on('$InfiniteLoading:complete', () => {
-        this.isLoading = false;
-        this.isComplete = true;
-        this.scrollParent.removeEventListener('scroll', this.scrollHandler);
-      });
-      this.$on('$InfiniteLoading:reset', () => {
-        this.isLoading = false;
-        this.isComplete = false;
-        this.isFirstLoad = true;
-        this.scrollParent.addEventListener('scroll', this.scrollHandler);
-        setTimeout(this.scrollHandler, 1);
-      });
+      this.$on('$InfiniteLoading:loaded', () => actions.loaded());
+      this.$on('$InfiniteLoading:complete', () => actions.complete());
+      this.$on('$InfiniteLoading:reset', () => actions.reset());
     },
     destroyed() {
       if (!this.isComplete) {
