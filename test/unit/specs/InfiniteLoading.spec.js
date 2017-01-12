@@ -129,6 +129,7 @@ describe('InfiniteLoading.vue', () => {
       Vue.nextTick(() => {
         this.$broadcast('$InfiniteLoading:loaded');
         this.$broadcast('$InfiniteLoading:complete');
+        this.$broadcast('$InfiniteLoading:loaded'); // test for whether trigger again after complete
         Vue.nextTick(() => {
           expect(isShow(vm.$el.querySelectorAll('.infinite-status-prompt')[1])).to.be.true;
           done();
