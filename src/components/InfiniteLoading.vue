@@ -98,7 +98,7 @@
       '$InfiniteLoading:loaded': function loaded() {
         this.isFirstLoad = false;
         if (this.isLoading) {
-          this.attemptLoad();
+          this.$nextTick(this.attemptLoad);
         }
       },
       '$InfiniteLoading:complete': function complete() {
