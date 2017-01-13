@@ -38,22 +38,31 @@
 
   /**
    * get current distance from footer
-   * @param  {DOM} elm    scroll element
-   * @return {Number}     distance
+   * @param  {DOM}    elm   scroll element
+   * @param  {String} dir   calculate direction
+   * @return {Number}       distance
    */
-  function getCurrentDistance(elm) {
-    const styles = getComputedStyle(elm === window ? document.body : elm);
-    const innerHeight = elm === window
-                      ? window.innerHeight
-                      : parseInt(styles.height, 10);
-    const scrollHeight = elm === window
-                       ? document.body.scrollHeight
-                       : elm.scrollHeight;
+  function getCurrentDistance(elm, dir) {
+    let distance;
     const scrollTop = isNaN(elm.scrollTop) ? elm.pageYOffset : elm.scrollTop;
-    const paddingTop = parseInt(styles.paddingTop, 10);
-    const paddingBottom = parseInt(styles.paddingBottom, 10);
 
-    return scrollHeight - innerHeight - scrollTop - paddingTop - paddingBottom;
+    if (dir === 'top') {
+      distance = scrollTop;
+    } else {
+      const styles = getComputedStyle(elm === window ? document.body : elm);
+      const innerHeight = elm === window
+                        ? window.innerHeight
+                        : parseInt(styles.height, 10);
+      const scrollHeight = elm === window
+                         ? document.body.scrollHeight
+                         : elm.scrollHeight;
+      const paddingTop = parseInt(styles.paddingTop, 10);
+      const paddingBottom = parseInt(styles.paddingBottom, 10);
+
+      distance = scrollHeight - innerHeight - scrollTop - paddingTop - paddingBottom;
+    }
+
+    return distance;
   }
 
   export default {
@@ -81,6 +90,10 @@
         required: true,
       },
       spinner: String,
+      direction: {
+        type: String,
+        default: 'bottom',
+      },
     },
     ready() {
       this.scrollParent = getScrollParent(this.$el);
@@ -116,7 +129,7 @@
     },
     methods: {
       attemptLoad() {
-        const currentDistance = getCurrentDistance(this.scrollParent);
+        const currentDistance = getCurrentDistance(this.scrollParent, this.direction);
         if (!this.isComplete && currentDistance <= this.distance) {
           this.isLoading = true;
           this.onInfinite.call();
