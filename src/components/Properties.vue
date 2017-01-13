@@ -32,4 +32,15 @@
 - type      String
 - required  true</pre>
   </div>
+
+  <div v-show="$parent.docVersion >= 1.3 && $parent.docVersion < 2">
+    <h4>direction</h4>
+    <p>If you set this propery to <code>top</code>, this componet will call the <code>on-infinite</code> function when you scroll to top.</p>
+    <div class="warning-prompt">
+      Warning: You must set the <code>scrollTop</code> of the scroll parent to correct value <strong>manually</strong> after load data, if not, this component will call the <code>on-infinite</code> function again and again.
+    </div>
+    <pre>
+- type      String
+- default   'bottom'</pre>
+  </div>
 </template>
