@@ -21,6 +21,7 @@ describe('InfiniteLoading.vue', () => {
         isCustomSpinner: false,
         listContainerHeight: 200,
         listItemHeight: 20,
+        direction: 'bottom',
       },
       template: `
         <div style="margin: 0; padding: 0;"
@@ -34,6 +35,7 @@ describe('InfiniteLoading.vue', () => {
             }"></li>
           </ul>
           <infinite-loading :distance="distance"
+                            :direction="direction"
                             :on-infinite="onInfinite"
                             v-if="!isLoadedAll">
             <span slot="spinner" v-if="isCustomSpinner">
@@ -183,5 +185,17 @@ describe('InfiniteLoading.vue', () => {
     vm.$mount().$appendTo('body');
 
     expect(vm.$el.querySelector('.custom-spinner')).to.be.ok;
+  });
+
+  it('should load data when scroll top (direction attribute)', (done) => {
+    vm.direction = 'top';
+    vm.onInfinite = function test() {
+      Vue.nextTick(() => {
+        expect(isShow(vm.$el.querySelector('.loading-default'))).to.be.true;
+        done();
+      });
+    };
+
+    vm.$mount().$appendTo('body');
   });
 });
