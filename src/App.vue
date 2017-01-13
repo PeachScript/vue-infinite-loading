@@ -54,9 +54,9 @@
       </h1>
       <ul>
         <li>Mobile friendly</li>
-        <li>Compatible with any scrollable element</li>
         <li>Diverse spinners as loading animation</li>
         <li>Support result display after loading</li>
+        <li>Support two direction load</li>
         <li>Support Vue.js 2.0<sup> Only v2.0.0-rc.1 and later</sup></li>
       </ul>
       <div class="handle-bar">
