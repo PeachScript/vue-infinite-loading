@@ -5,8 +5,7 @@
   "main": "dist/vue-infinite-loading.js",
   "files": [
     "dist/vue-infinite-loading.js",
-    "src",
-    "doc"
+    "src"
   ],
   "author": {
     "name": "PeachScript",
