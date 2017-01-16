@@ -83,12 +83,8 @@
       this.scrollParent = getScrollParent(this.$el);
 
       this.scrollHandler = function scrollHandlerOriginal() {
-        const currentDistance = getCurrentDistance(this.scrollParent);
-        if (!this.isLoading && currentDistance <= this.distance) {
-          this.isLoading = true;
-          if (this.onInfinite) {
-            this.onInfinite.call();
-          }
+        if (!this.isLoading) {
+          this.attemptLoad();
         }
       }.bind(this);
 
@@ -96,8 +92,10 @@
       this.scrollParent.addEventListener('scroll', this.scrollHandler);
 
       this.$on('$InfiniteLoading:loaded', () => {
-        this.isLoading = false;
         this.isFirstLoad = false;
+        if (this.isLoading) {
+          this.$nextTick(this.attemptLoad);
+        }
       });
       this.$on('$InfiniteLoading:complete', () => {
         this.isLoading = false;
@@ -111,6 +109,17 @@
         this.scrollParent.addEventListener('scroll', this.scrollHandler);
         setTimeout(this.scrollHandler, 1);
       });
+    },
+    methods: {
+      attemptLoad() {
+        const currentDistance = getCurrentDistance(this.scrollParent, this.direction);
+        if (!this.isComplete && currentDistance <= this.distance) {
+          this.isLoading = true;
+          this.onInfinite.call();
+        } else {
+          this.isLoading = false;
+        }
+      },
     },
     destroyed() {
       if (!this.isComplete) {
