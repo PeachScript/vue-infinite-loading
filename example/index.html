@@ -36,16 +36,11 @@
         distance: 100,
         list: []
       },
-      ready: function () {
-        for (var i = 0; i < 50; i++) {
-          this.list.push(i + 1);
-        }
-      },
       methods: {
         onInfinite: function () {
           setTimeout(function () {
             var temp = [];
-            for (var i = this.list.length; i <= this.list.length + 20; i++) {
+            for (var i = this.list.length; i <= this.list.length + 10; i++) {
               temp.push(i);
             }
 
