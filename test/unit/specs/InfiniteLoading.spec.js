@@ -17,6 +17,8 @@ describe('InfiniteLoading.vue', () => {
         isLoadedAll: false,
         isDivScroll: true,
         isCustomSpinner: false,
+        listContainerHeight: 200,
+        listItemHeight: 20,
       };
     },
     render(createElement) {
@@ -24,12 +26,21 @@ describe('InfiniteLoading.vue', () => {
         'div',
         {
           style: {
-            height: '100px',
+            height: `${this.listContainerHeight}px`,
             overflow: this.isDivScroll ? 'auto' : 'visible',
           },
         },
         [
-          createElement('ul', this.list.map((item) => createElement('li', item))),
+          createElement('ul', {
+            style: {
+              margin: 0,
+              padding: 0,
+            },
+          }, this.list.map((item) => createElement('li', {
+            style: {
+              height: `${this.listItemHeight}px`,
+            },
+          }, item))),
           this.isLoadedAll ? undefined : createElement(InfiniteLoading,
             {
               props: {
@@ -152,10 +163,35 @@ describe('InfiniteLoading.vue', () => {
     vm.onInfinite = function test() {
       this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
       this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+      // test for whether trigger again after complete
+      this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
       Vue.nextTick(() => {
         expect(isShow(vm.$el.querySelectorAll('.infinite-status-prompt')[1])).to.be.true;
         done();
       });
+    }.bind(vm);
+
+    vm.$mount('#app');
+  });
+
+  it('should load results to fill up the container', (done) => {
+    const expectedCount = Math.floor(vm.listContainerHeight / vm.listItemHeight);
+    let i = 0;
+    let timer;
+
+    vm.onInfinite = function test() {
+      setTimeout(() => {
+        this.list.push(++i);
+        this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          if (i >= expectedCount) {
+            done();
+          } else {
+            done(new Error('List not be fill up!'));
+          }
+        }, 100);
+      }, 1);
     }.bind(vm);
 
     vm.$mount('#app');
