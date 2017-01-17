@@ -16,7 +16,7 @@ This plugin is an infinite scroll plugin for Vue.js, it can help you create an i
 - Compatible with any scrollable element
 - Diverse spinners as loading animation
 - Support result display after loading
-- Support Vue.js 2.0 <sup>Only v2.0.0-rc.1 and later</sup>
+- Support two direction load
 
 ## Usage & Guide
 To check out live examples and docs, visit [Vue-infinite-loading GitHub Pages](https://peachscript.github.io/vue-infinite-loading/).
