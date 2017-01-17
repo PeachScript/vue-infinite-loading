@@ -21,7 +21,7 @@ then
   npm version $VERSION -m "Upgrade to $VERSION"
 
   # publish
-  npm publish --tag next
+  npm publish
   echo "Publish $VERSION successfully!"
 
   read -p "Upgrade GitHub Pages? (y/n)" -n 1 -r
