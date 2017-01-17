@@ -19,6 +19,7 @@ describe('InfiniteLoading.vue', () => {
         isCustomSpinner: false,
         listContainerHeight: 200,
         listItemHeight: 20,
+        direction: 'bottom',
       };
     },
     render(createElement) {
@@ -46,6 +47,7 @@ describe('InfiniteLoading.vue', () => {
               props: {
                 distance: this.distance,
                 onInfinite: this.onInfinite,
+                direction: this.direction,
               },
               ref: 'infiniteLoading',
             },
@@ -216,5 +218,17 @@ describe('InfiniteLoading.vue', () => {
     vm.$mount('#app');
 
     expect(vm.$el.querySelector('.custom-spinner')).to.be.ok;
+  });
+
+  it('should load data when scroll top (direction attribute)', (done) => {
+    vm.direction = 'top';
+    vm.onInfinite = function test() {
+      Vue.nextTick(() => {
+        expect(isShow(vm.$el.querySelector('.loading-default'))).to.be.true;
+        done();
+      });
+    };
+
+    vm.$mount('#app');
   });
 });
