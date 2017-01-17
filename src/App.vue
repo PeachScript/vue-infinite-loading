@@ -4,7 +4,7 @@
     }">
     <div class="header">
       <div class="logo-wrapper">
-        <img src="https://github.com/PeachScript/vue-infinite-loading/raw/master/doc/logo.png" alt="LOGO" class="logo" v-link="'/'">
+        <img src="./assets/images/logo.png" alt="LOGO" class="logo" v-link="'/'">
       </div>
       <h1>Vue-infinite-loading</h1>
     </div>
@@ -45,7 +45,7 @@
     </div>
     <div class="info-wrapper">
       <div class="logo-wrapper">
-        <img src="https://github.com/PeachScript/vue-infinite-loading/raw/master/doc/logo.png" alt="LOGO" class="logo">
+        <img src="./assets/images/logo.png" alt="LOGO" class="logo">
       </div>
       <h1>
         Vue-infinite-loading
