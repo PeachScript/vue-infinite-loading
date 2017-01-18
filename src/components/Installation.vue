@@ -1,8 +1,9 @@
 <template>
   <h3>Installation</h3>
   <pre v-highlightjs v-if="$parent.docVersion < 1">npm install vue-infinite-loading@^0 --save</pre>
-  <pre v-highlightjs v-if="$parent.docVersion >= 1 && $parent.docVersion < 2">npm install vue-infinite-loading --save</pre>
-  <pre v-highlightjs v-if="$parent.docVersion >= 2">npm install vue-infinite-loading@next --save</pre>
+  <pre v-highlightjs v-if="$parent.docVersion >= 1 && $parent.docVersion < 2">npm install vue-infinite-loading@^1 --save</pre>
+  <pre v-if="$parent.docVersion == 2.0">npm install vue-infinite-loading@2.0.0-rc.5 --save</pre>
+  <pre v-highlightjs v-if="$parent.docVersion >= 2.01">npm install vue-infinite-loading --save</pre>
   <h3>Import</h3>
   <h4>ES6</h4>
   <pre v-highlightjs>import InfiniteLoading from 'vue-infinite-loading';

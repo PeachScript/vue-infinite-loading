@@ -13,12 +13,17 @@
         Doc version:
         <span class="select-wrapper">
           <select v-model="docVersion">
-            <option value="2.0">v2.0-rc</option>
-            <option value="1.3">v1.3</option>
-            <option value="1.1">v1.2</option>
-            <option value="1.1">v1.1</option>
-            <option value="1">v1.0</option>
-            <option value="0">v0.3</option>
+            <optgroup label="For Vue.js 2.0">
+              <option value="2.01">v2.0</option>
+              <option value="2.00">v2.0-rc</option>
+            </optgroup>
+            <optgroup label="For Vue.js 1.0">
+              <option value="1.3">v1.3</option>
+              <option value="1.1">v1.2</option>
+              <option value="1.1">v1.1</option>
+              <option value="1">v1.0</option>
+              <option value="0">v0.3</option>
+            </optgroup>
           </select>
         </span>
       </div>
@@ -36,7 +41,7 @@
     <demo-phone></demo-phone>
     <div class="content">
       <div class="warning-prompt" v-show="docVersion < 2">
-        Notice: This version only can be used with <strong>Vue.js 1.0</strong>, if you want to use this plugin with Vue.js 2.0, <a href="javascript:;" @click="docVersion = 2.0">switch to v2.0-rc</a>.
+        Notice: This version only can be used with <strong>Vue.js 1.0</strong>, if you want to use this plugin with Vue.js 2.0, <a href="javascript:;" @click="docVersion = 2.01">switch to v2.0</a>.
       </div>
       <div class="warning-prompt" v-show="docVersion >= 2">
         Notice: This version only can be used with <strong>Vue.js 2.0</strong>, if you want to use this plugin with Vue.js 1.0, <a href="javascript:;" @click="docVersion = 1.1">switch to v1.3</a>.
@@ -54,10 +59,10 @@
       </h1>
       <ul>
         <li>Mobile friendly</li>
+        <li>Compatible with any scrollable element</li>
         <li>Diverse spinners as loading animation</li>
         <li>Support result display after loading</li>
         <li>Support two direction load</li>
-        <li>Support Vue.js 2.0<sup> Only v2.0.0-rc.1 and later</sup></li>
       </ul>
       <div class="handle-bar">
         <a class="highlight" v-link="{ name: 'installation' }">Get started !</a>
@@ -73,7 +78,7 @@
   export default {
     data() {
       return {
-        docVersion: 1.3,
+        docVersion: 2.01,
         currentVersion: process.env.VERSION,
       };
     },
@@ -262,7 +267,7 @@
           select{
             position: relative;
             z-index: 1;
-            padding: 0 20px 0 15px;
+            padding: 0 5px 0 10px;
             color: #fff;
             border: 0;
             background-color: transparent;
@@ -292,7 +297,7 @@
       }
     }
     .content{
-      margin-left: 240px;
+      margin-left: 220px;
       margin-right: 520px;
       color: #eee;
       transform: translateY(50px);
