@@ -19,7 +19,7 @@
             </optgroup>
             <optgroup label="For Vue.js 1.0">
               <option value="1.3">v1.3</option>
-              <option value="1.1">v1.2</option>
+              <option value="1.2">v1.2</option>
               <option value="1.1">v1.1</option>
               <option value="1">v1.0</option>
               <option value="0">v0.3</option>
@@ -44,7 +44,7 @@
         Notice: This version only can be used with <strong>Vue.js 1.0</strong>, if you want to use this plugin with Vue.js 2.0, <a href="javascript:;" @click="docVersion = 2.01">switch to v2.0</a>.
       </div>
       <div class="warning-prompt" v-show="docVersion >= 2">
-        Notice: This version only can be used with <strong>Vue.js 2.0</strong>, if you want to use this plugin with Vue.js 1.0, <a href="javascript:;" @click="docVersion = 1.1">switch to v1.3</a>.
+        Notice: This version only can be used with <strong>Vue.js 2.0</strong>, if you want to use this plugin with Vue.js 1.0, <a href="javascript:;" @click="docVersion = 1.3">switch to v1.3</a>.
       </div>
       <router-view></router-view>
     </div>
