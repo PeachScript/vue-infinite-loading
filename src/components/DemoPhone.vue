@@ -50,6 +50,7 @@
           '/hackerNews': 'hackerNews',
           '/withFilter': 'withFilter',
           '/spinners': 'spinners',
+          '/serverSideRendering': 'hackerNews',
         },
         timer: null,
         tag: 'story',

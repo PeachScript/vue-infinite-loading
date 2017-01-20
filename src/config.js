@@ -25,6 +25,11 @@ const routes = [
         name: 'withFilter',
         label: 'Use with filter',
       },
+      {
+        path: '/server-side-rendering',
+        name: 'serverSideRendering',
+        label: 'Server-Side Rendering',
+      },
     ],
   },
   {

@@ -239,11 +239,10 @@
       transition: all .3s @a-normal;
       .version-select{
         margin: 0 -20px;
-        padding: 8px 10px;
+        padding: 8px 20px;
         font-size: 14px;
         line-height: 20px;
         color: #fff;
-        text-align: center;
         background-color: rgba(255,255,255,.1);
         border-bottom: 1px solid rgba(255,255,255,.3);
         .select-wrapper{
@@ -295,10 +294,13 @@
           }
         }
       }
+      > ul {
+        padding-left: 0;
+      }
     }
     .content{
-      margin-left: 220px;
-      margin-right: 520px;
+      margin-left: 240px;
+      margin-right: 430px;
       color: #eee;
       transform: translateY(50px);
       opacity: 0;
@@ -392,7 +394,7 @@
         transition-delay: 0s;
       }
       .demo-wrapper{
-        right: 180px;
+        right: 100px;
         transition-delay: .1s;
       }
       .side-menu{
