@@ -12,7 +12,7 @@
       <div class="version-select">
         Doc version:
         <span class="select-wrapper">
-          <select v-model="docVersion">
+          <select v-model="docVersion" @change="updateMenus()">
             <optgroup label="For Vue.js 2.0">
               <option value="2.01">v2.0</option>
               <option value="2.00">v2.0-rc</option>
@@ -80,21 +80,31 @@
       return {
         docVersion: 2.01,
         currentVersion: process.env.VERSION,
+        sideMenus: [],
       };
     },
     computed: {
       isGettingStarted() {
         return this.$route.name !== undefined;
       },
-      sideMenus() {
-        const menus = [];
-        routes.forEach((route) => {
-          if (route.version === undefined || route.version <= this.docVersion) {
-            menus.push(route);
-          }
-        });
+    },
+    ready() {
+      this.updateMenus();
+    },
+    methods: {
+      updateMenus() {
+        this.sideMenus = routes.map((route) => {
+          const result = Object.assign({}, route);
 
-        return menus;
+          if (result.navs && result.navs.length) {
+            result.navs = result.navs.filter(item => this.checkVersion(item.version));
+          }
+
+          return result;
+        }).filter(route => this.checkVersion(route.version));
+      },
+      checkVersion(version) {
+        return version === undefined || version <= this.docVersion;
       },
     },
     components: {
