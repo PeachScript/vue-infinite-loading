@@ -24,21 +24,8 @@ then
   npm publish
   echo "Publish $VERSION successfully!"
 
-  read -p "Upgrade GitHub Pages? (y/n)" -n 1 -r
-  echo    # (optional) move to a new line
-  if [[ $REPLY =~ ^[Yy]$ ]]
-  then
-    echo "Upgrade GitHub Pages ..."
-    # upgrade GitHub Pages
-    git checkout gh-pages
-    npm install vue-infinite-loading@$VERSION --save
-    VERSION=$VERSION npm run build
-    git add -A
-    git commit -m "Upgrade GitHub Pages to $VERSION"
-    git checkout master
-  fi
-
   # push
+  git push origin --tags
   git push
   echo "Done!"
 fi
