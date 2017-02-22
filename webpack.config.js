@@ -81,7 +81,11 @@ if (process.env.NODE_ENV === 'production') {
 
   module.exports.vue = {
     autoprefixer: {
-      browsers: ['last 2 versions']
+      browsers: [
+        'last 2 versions',
+        'last 4 Android versions',
+        'last 3 iOS versions'
+      ]
     }
   };
 } else {
