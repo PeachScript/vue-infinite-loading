@@ -80,13 +80,13 @@ if (process.env.NODE_ENV === 'production') {
   ];
 
   module.exports.vue = {
-    autoprefixer: {
+    postcss: [require('autoprefixer')({
       browsers: [
         'last 2 versions',
         'last 4 Android versions',
         'last 3 iOS versions'
       ]
-    }
+    })]
   };
 } else {
   // development configurations
