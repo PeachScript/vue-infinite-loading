@@ -178,13 +178,16 @@ describe('InfiniteLoading.vue', () => {
     vm.$mount().$appendTo('body');
   });
 
-  it('should display the custom spinner if customize it with slot', () => {
+  it('should display the custom spinner if customize it with slot', (done) => {
     vm.isCustomSpinner = true;
     vm.distance = undefined;
 
     vm.$mount().$appendTo('body');
 
-    expect(vm.$el.querySelector('.custom-spinner')).to.be.ok;
+    Vue.nextTick(() => {
+      expect(vm.$el.querySelector('.custom-spinner')).to.be.ok;
+      done();
+    });
   });
 
   it('should load data when scroll top (direction attribute)', (done) => {
