@@ -25,7 +25,7 @@ then
   echo "Publish $VERSION successfully!"
 
   # push
-  git push origin --tags
+  git push origin refs/tags/v$VERSION
   git push
   echo "Done!"
 fi
