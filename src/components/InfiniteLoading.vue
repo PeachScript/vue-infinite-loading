@@ -48,16 +48,11 @@
     if (dir === 'top') {
       distance = scrollTop;
     } else {
-      const styles = getComputedStyle(elm === window ? document.body : elm);
-      const innerHeight = elm === window
-                        ? window.innerHeight
-                        : parseInt(styles.height, 10);
-      const scrollHeight = elm === window
-                         ? document.body.scrollHeight
-                         : elm.scrollHeight;
-      const paddingTop = parseInt(styles.paddingTop, 10);
-      const paddingBottom = parseInt(styles.paddingBottom, 10);
-      distance = scrollHeight - innerHeight - scrollTop - paddingTop - paddingBottom;
+      const scrollElmHeight = elm === window ?
+                              window.innerHeight :
+                              elm.getBoundingClientRect().height;
+
+      distance = this.$el.offsetTop - scrollTop - scrollElmHeight - (elm.offsetTop || 0);
     }
     return distance;
   }
@@ -122,7 +117,7 @@
     },
     methods: {
       attemptLoad() {
-        const currentDistance = getCurrentDistance(this.scrollParent, this.direction);
+        const currentDistance = getCurrentDistance.bind(this)(this.scrollParent, this.direction);
         if (!this.isComplete && currentDistance <= this.distance) {
           this.isLoading = true;
           this.onInfinite.call();
