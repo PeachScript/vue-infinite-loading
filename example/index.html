@@ -27,7 +27,7 @@
 <body>
   <div id="app">
     <p class="example-list-item" v-for="item in list" v-text="item"></p>
-    <infinite-loading :on-infinite="onInfinite" :distance="distance" v-if="list.length < 300" ref="infiniteLoading"></infinite-loading>
+    <infinite-loading :on-infinite="onInfinite" :distance="distance" ref="infiniteLoading"></infinite-loading>
   </div>
   <script>
     new Vue({
