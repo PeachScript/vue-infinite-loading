@@ -19,7 +19,7 @@
       border-top: 1px solid #fff;
       border-bottom: 1px solid #e3e3e3;
     }
-    .example-list-item:before{
+    .example-list-item::before{
       content: 'Line: ';
     }
   </style>
@@ -38,15 +38,19 @@
       },
       methods: {
         onInfinite: function () {
-          setTimeout(function () {
-            var temp = [];
-            for (var i = this.list.length; i <= this.list.length + 10; i++) {
-              temp.push(i);
-            }
+          if (this.list.length > 200) {
+            this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+          } else {
+            setTimeout(function () {
+              var temp = [];
+              for (var i = this.list.length; i <= this.list.length + 10; i++) {
+                temp.push(i);
+              }
 
-            this.list = this.list.concat(temp);
-            this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
-          }.bind(this), 1000);
+              this.list = this.list.concat(temp);
+              this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+            }.bind(this), 1000);
+          }
         }
       }
     });
