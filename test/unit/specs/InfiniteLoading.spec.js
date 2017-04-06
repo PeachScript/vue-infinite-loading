@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from 'vue/dist/vue.common.js';
 import InfiniteLoading from '../../../src/components/InfiniteLoading';
 
 function isShow(elm) {
@@ -22,52 +22,31 @@ describe('InfiniteLoading.vue', () => {
         direction: 'bottom',
       };
     },
-    render(createElement) {
-      return createElement(
-        'div',
-        {
-          style: {
-            height: `${this.listContainerHeight}px`,
-            overflow: this.isDivScroll ? 'auto' : 'visible',
-          },
-        },
-        [
-          createElement('ul', {
-            style: {
-              margin: 0,
-              padding: 0,
-            },
-          }, this.list.map((item) => createElement('li', {
-            style: {
-              height: `${this.listItemHeight}px`,
-            },
-          }, item))),
-          this.isLoadedAll ? undefined : createElement(InfiniteLoading,
-            {
-              props: {
-                distance: this.distance,
-                onInfinite: this.onInfinite,
-                direction: this.direction,
-              },
-              ref: 'infiniteLoading',
-            },
-            [
-              this.isCustomSpinner ? createElement('span',
-                {
-                  slot: 'spinner',
-                },
-                [
-                  createElement('i', {
-                    attrs: {
-                      class: 'custom-spinner',
-                    },
-                  }),
-                ]
-              ) : undefined,
-            ]
-          ),
-        ]
-      );
+    template: `
+      <div style="margin: 0; padding: 0;"
+          :style="{
+            overflow: isDivScroll ? 'auto' : 'visible',
+            height: listContainerHeight + 'px'
+          }">
+        <ul style="margin: 0; padding: 0;">
+          <li v-for="item in list" v-text="item"
+              :style="{ height: listItemHeight + 'px' }">
+          </li>
+        </ul>
+        <infinite-loading :distance="distance"
+                          :direction="direction"
+                          :on-infinite="onInfinite"
+                          v-if="!isLoadedAll"
+                          ref="infiniteLoading">
+          <span slot="spinner" v-if="isCustomSpinner">
+            <i class="custom-spinner"></i>
+          </span>
+        </infinite-loading>
+      </div>
+    `,
+    components: { InfiniteLoading },
+    methods: {
+      onInfinite() {},
     },
   };
 
@@ -214,7 +193,7 @@ describe('InfiniteLoading.vue', () => {
 
   it('should display the custom spinner if customize it with slot', (done) => {
     vm.isCustomSpinner = true;
-    delete vm.distance;
+    vm.distance = 100;
     vm.$mount('#app');
 
     Vue.nextTick(() => {
