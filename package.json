@@ -63,17 +63,17 @@
     "pre-commit": "^1.2.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "vue": "^2.1.7",
+    "vue": "^2.2.0",
     "vue-hot-reload-api": "^1.3.3",
     "vue-html-loader": "^1.2.2",
     "vue-loader": "^10.0.0",
     "vue-style-loader": "^1.0.0",
-    "vue-template-compiler": "^2.1.7",
+    "vue-template-compiler": "^2.2.0",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
   },
   "peerDependencies": {
-    "vue": "^2.1.7"
+    "vue": "^2.2.0"
   },
   "license": "MIT",
   "pre-commit": [
