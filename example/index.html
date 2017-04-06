@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>vue-infinite-loading</title>
-  <script src="../node_modules/vue/dist/vue.min.js"></script>
+  <script src="https://unpkg.com/vue@2.1.9"></script>
   <script src="../dist/vue-infinite-loading.js"></script>
   <style>
     body{
@@ -26,34 +26,64 @@
 </head>
 <body>
   <div id="app">
-    <p class="example-list-item" v-for="item in list" v-text="item"></p>
-    <infinite-loading :on-infinite="onInfinite" :distance="distance" ref="infiniteLoading"></infinite-loading>
-  </div>
-  <script>
-    new Vue({
-      el: '#app',
-      data: {
-        distance: 100,
-        list: []
-      },
-      methods: {
-        onInfinite: function () {
-          if (this.list.length > 200) {
-            this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
-          } else {
-            setTimeout(function () {
-              var temp = [];
-              for (var i = this.list.length; i <= this.list.length + 10; i++) {
-                temp.push(i);
-              }
+    <p>
+      <button @click="component = 'foo'">Go to Foo</button>
+      <button @click="component = 'bar'">Go to Bar</button>
+    </p>
 
-              this.list = this.list.concat(temp);
-              this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
-            }.bind(this), 1000);
-          }
+    <keep-alive>
+      <component :is="component"></component>
+    </keep-alive>
+  </div>
+
+  <script type="text/x-template" id="bar">
+    <div>
+      <p v-for="item in list">
+        Line:
+        <span v-text="item"></span>
+      </p>
+      <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading"></infinite-loading>
+    </div>
+  </script>
+  <script>
+    const Foo = {
+  template: '<div>foo</div>'
+}
+
+const Bar = {
+  template: '#bar',
+  data() {
+    return {
+      list: [],
+    };
+  },
+  methods: {
+    onInfinite() {
+      console.log('Running onInfinite.')
+      setTimeout(() => {
+        const temp = [];
+        for (let i = this.list.length + 1; i <= this.list.length + 20; i++) {
+          temp.push(i);
         }
+        this.list = this.list.concat(temp);
+        this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+      }, 1000);
+    },
+  },
+}
+
+const app = new Vue({
+  data() {
+      return {
+        component: null,
       }
-    });
+    },
+    components: {
+      'foo': Foo,
+      'bar': Bar
+    }
+}).$mount('#app')
+
   </script>
 </body>
 </html>
