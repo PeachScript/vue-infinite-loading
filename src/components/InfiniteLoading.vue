@@ -115,6 +115,12 @@
         setTimeout(this.scrollHandler, 1);
       });
     },
+    /**
+     * To adapt to keep-alive feature, but only work on Vue 2.2.0 and above, see: http://vuejs.org/v2/api/#keep-alive
+     */
+    deactivated() {
+      this.isLoading = false;
+    },
     methods: {
       attemptLoad() {
         const currentDistance = getCurrentDistance.bind(this)(this.scrollParent, this.direction);
