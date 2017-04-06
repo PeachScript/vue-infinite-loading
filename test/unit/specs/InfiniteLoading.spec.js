@@ -213,4 +213,50 @@ describe('InfiniteLoading.vue', () => {
 
     vm.$mount('#app');
   });
+
+  it('should load data once when deactivated by keep-alive feature', (done) => {
+    let callCount = 0;
+    let app;
+
+    const InfiniteComponent = {
+      data: initConf.data,
+      template: initConf.template,
+      components: initConf.components,
+      methods: {
+        onInfinite() {
+          callCount++;
+          if (callCount === 1) {
+            this.$parent.currentView = null;
+            Vue.nextTick(() => {
+              this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+              setTimeout(() => {
+                expect(callCount).to.equal(1);
+                app.$destroy(true);
+                app.$el && app.$el.remove();
+                done();
+              }, 1000);
+            });
+          }
+        },
+      },
+    };
+
+    app = new Vue({
+      data() {
+        return {
+          currentView: 'InfiniteComponent',
+        };
+      },
+      template: `
+        <keep-alive>
+          <component :is="currentView"></component>
+        </keep-alive>
+      `,
+      components: {
+        InfiniteComponent,
+      },
+    });
+
+    app.$mount('#app');
+  });
 });
