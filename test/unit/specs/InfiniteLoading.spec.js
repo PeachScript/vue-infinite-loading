@@ -96,19 +96,21 @@ describe('InfiniteLoading.vue', () => {
   it('should not to execute callback if the previous loading has not be completed', (done) => {
     vm.onInfinite = function test() {
       const len = this.list.length + 1;
+      const infiniteWrapper = this.$refs.infiniteLoading.scrollParent;
+
       for (let i = len; i < len + 20; i++) {
         this.list.push(i);
       }
 
       Vue.nextTick(() => {
         if (this.list.length === 20) {
-          vm.$el.addEventListener('scroll', () => {
+          infiniteWrapper.addEventListener('scroll', () => {
             expect(this.list).to.have.lengthOf(20);
             done();
           });
 
           // trigger scroll event manually
-          vm.$el.scrollTop = vm.$el.scrollHeight;
+          infiniteWrapper.scrollTop = infiniteWrapper.scrollHeight;
         }
       });
     }.bind(vm);
@@ -258,5 +260,22 @@ describe('InfiniteLoading.vue', () => {
     });
 
     app.$mount('#app');
+  });
+
+  it('should work with customize scroll plugin like iScroll', (done) => {
+    const infiniteWrapper = document.createElement('div');
+    const wrapper = document.createElement('div');
+
+    vm.isDivScroll = false;
+    infiniteWrapper.setAttribute('infinite-wrapper', '');
+    document.getElementById('app').appendChild(infiniteWrapper);
+    infiniteWrapper.appendChild(wrapper);
+
+    vm.$mount(wrapper);
+
+    Vue.nextTick(() => {
+      expect(vm.$refs.infiniteLoading.scrollParent).to.equal(infiniteWrapper);
+      done();
+    }, 1);
   });
 });
