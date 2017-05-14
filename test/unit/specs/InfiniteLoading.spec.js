@@ -262,7 +262,7 @@ describe('InfiniteLoading.vue', () => {
     app.$mount('#app');
   });
 
-  it('should work with customize scroll plugin like iScroll', (done) => {
+  it('should work with customize scroll plugin like perfect-scroll', (done) => {
     const infiniteWrapper = document.createElement('div');
     const wrapper = document.createElement('div');
 
