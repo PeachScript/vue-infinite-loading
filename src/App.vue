@@ -12,7 +12,7 @@
       <div class="version-select">
         Doc version:
         <span class="select-wrapper">
-          <select v-model="docVersion" @change="updateMenus()">
+          <select v-model="docVersion">
             <optgroup label="For Vue.js 2.0">
               <option value="2.01">v2.0</option>
               <option value="2.00">v2.0-rc</option>
@@ -90,6 +90,9 @@
     },
     ready() {
       this.updateMenus();
+      this.$watch('docVersion', () => {
+        this.updateMenus();
+      });
     },
     methods: {
       updateMenus() {
