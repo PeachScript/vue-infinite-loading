@@ -31,6 +31,12 @@ const routes = [
         label: 'Server-Side Rendering',
         version: 2,
       },
+      {
+        path: '/with-3rd-party-scroll-plugin',
+        name: 'With3rdPartyScrollPlugin',
+        label: '3rd-Party Scroll Plugin',
+        version: 2,
+      },
     ],
   },
   {
