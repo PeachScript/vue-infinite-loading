@@ -50,11 +50,14 @@
     if (dir === 'top') {
       distance = scrollTop;
     } else {
+      const elmBoundingClientRect = elm.getBoundingClientRect();
       const scrollElmHeight = elm === window ?
                               window.innerHeight :
-                              elm.getBoundingClientRect().height;
+                              elmBoundingClientRect.height;
+      const elOffsetTopFromScrollElm = this.$el.getBoundingClientRect().top -
+                                       elmBoundingClientRect.top;
 
-      distance = this.$el.offsetTop - scrollTop - scrollElmHeight - (elm.offsetTop || 0);
+      distance = elOffsetTopFromScrollElm - scrollTop - scrollElmHeight - (elm.offsetTop || 0);
     }
     return distance;
   }
