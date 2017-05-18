@@ -51,18 +51,16 @@
       distance = scrollTop;
     } else {
       let scrollElmHeight;
-      let elOffsetTopFromScrollElm;
+      let elOffsetTopFromScrollElm = this.$el.getBoundingClientRect().top;
 
       if (elm === window) {
         scrollElmHeight = window.innerHeight;
-        elOffsetTopFromScrollElm = this.$el.getBoundingClientRect().top;
       } else {
         scrollElmHeight = elm.getBoundingClientRect().height;
-        elOffsetTopFromScrollElm = this.$el.getBoundingClientRect().top -
-                                   elm.getBoundingClientRect().top;
+        elOffsetTopFromScrollElm -= elm.getBoundingClientRect().top;
       }
 
-      distance = elOffsetTopFromScrollElm - scrollTop - scrollElmHeight - (elm.offsetTop || 0);
+      distance = elOffsetTopFromScrollElm - scrollElmHeight - (elm.offsetTop || 0);
     }
     return distance;
   }
