@@ -46,22 +46,22 @@
    */
   function getCurrentDistance(elm, dir) {
     let distance;
-    const scrollTop = isNaN(elm.scrollTop) ? elm.pageYOffset : elm.scrollTop;
+
     if (dir === 'top') {
-      distance = scrollTop;
+      distance = isNaN(elm.scrollTop) ? elm.pageYOffset : elm.scrollTop;
     } else {
       let scrollElmHeight;
-      let elOffsetTopFromScrollElm = this.$el.getBoundingClientRect().top;
+      let elOffsetTop = this.$el.getBoundingClientRect().top;
 
       if (elm === window) {
         scrollElmHeight = window.innerHeight;
       } else {
-        scrollElmHeight = elm.getBoundingClientRect().height;
-        elOffsetTopFromScrollElm -= elm.getBoundingClientRect().top;
+        scrollElmHeight = elm.clientHeight;
+        elOffsetTop -= elm.getBoundingClientRect().top;
       }
-
-      distance = elOffsetTopFromScrollElm - scrollElmHeight - (elm.offsetTop || 0);
+      distance = elOffsetTop - scrollElmHeight;
     }
+
     return distance;
   }
 
