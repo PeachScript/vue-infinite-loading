@@ -204,6 +204,19 @@ describe('InfiniteLoading.vue', () => {
     });
   });
 
+  it('should load data when scroll top with window (direction attribute)', (done) => {
+    vm.isDivScroll = false;
+    vm.direction = 'top';
+    vm.onInfinite = function test() {
+      Vue.nextTick(() => {
+        expect(isShow(vm.$el.querySelector('.loading-default'))).to.be.true;
+        done();
+      });
+    };
+
+    vm.$mount('#app');
+  });
+
   it('should load data when scroll top (direction attribute)', (done) => {
     vm.direction = 'top';
     vm.onInfinite = function test() {
