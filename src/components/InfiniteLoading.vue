@@ -13,7 +13,10 @@
     </div>
   </div>
 </template>
+
 <script>
+  import debounce from 'lodash.debounce';
+
   const spinnerMapping = {
     bubbles: 'loading-bubbles',
     circles: 'loading-circles',
@@ -24,8 +27,8 @@
 
   /**
    * get the first scroll parent of an element
-   * @param  {DOM} elm    the element which find scorll parent
-   * @return {DOM}        the first scroll parent
+   * @param  {DOM} elm - the element which find scorll parent
+   * @return {DOM} the first scroll parent
    */
   function getScrollParent(elm) {
     if (elm.tagName === 'BODY') {
@@ -38,48 +41,23 @@
     return getScrollParent(elm.parentNode);
   }
 
-  /**
-   * get current distance from footer
-   * @param  {DOM} elm    scroll element
-   * @param  {String} dir   calculate direction
-   * @return {Number}     distance
-   */
-  function getCurrentDistance(elm, dir) {
-    let distance;
-
-    if (dir === 'top') {
-      distance = isNaN(elm.scrollTop) ? elm.pageYOffset : elm.scrollTop;
-    } else {
-      let scrollElmHeight;
-      let elOffsetTop = this.$el.getBoundingClientRect().top;
-
-      if (elm === window) {
-        scrollElmHeight = window.innerHeight;
-      } else {
-        scrollElmHeight = elm.clientHeight;
-        elOffsetTop -= elm.getBoundingClientRect().top;
-      }
-      distance = elOffsetTop - scrollElmHeight;
-    }
-
-    return distance;
-  }
 
   export default {
     data() {
       return {
         scrollParent: null,
-        scrollHandler: null,
         isLoading: false,
         isComplete: false,
         isFirstLoad: true, // save the current loading whether it is the first loading
       };
     },
+
     computed: {
       spinnerType() {
         return spinnerMapping[this.spinner] || spinnerMapping.default;
       },
     },
+
     props: {
       distance: {
         type: Number,
@@ -92,14 +70,9 @@
         default: 'bottom',
       },
     },
+
     mounted() {
       this.scrollParent = getScrollParent(this.$el);
-
-      this.scrollHandler = function scrollHandlerOriginal() {
-        if (!this.isLoading) {
-          this.attemptLoad();
-        }
-      }.bind(this);
 
       setTimeout(this.scrollHandler, 1);
       this.scrollParent.addEventListener('scroll', this.scrollHandler);
@@ -123,15 +96,10 @@
         setTimeout(this.scrollHandler, 1);
       });
     },
-    /**
-     * To adapt to keep-alive feature, but only work on Vue 2.2.0 and above, see: http://vuejs.org/v2/api/#keep-alive
-     */
-    deactivated() {
-      this.isLoading = false;
-    },
+
     methods: {
       attemptLoad() {
-        const currentDistance = getCurrentDistance.bind(this)(this.scrollParent, this.direction);
+        const currentDistance = this.getCurrentDistance(this.scrollParent, this.direction);
         if (!this.isComplete && currentDistance <= this.distance) {
           this.isLoading = true;
           this.onInfinite.call();
@@ -139,7 +107,42 @@
           this.isLoading = false;
         }
       },
+
+      getCurrentDistance(elm, dir) {
+        let distance;
+
+        if (dir === 'top') {
+          distance = isNaN(elm.scrollTop) ? elm.pageYOffset : elm.scrollTop;
+        } else {
+          let scrollElmHeight;
+          let elOffsetTop = this.$el.getBoundingClientRect().top;
+
+          if (elm === window) {
+            scrollElmHeight = window.innerHeight;
+          } else {
+            scrollElmHeight = elm.clientHeight;
+            elOffsetTop -= elm.getBoundingClientRect().top;
+          }
+          distance = elOffsetTop - scrollElmHeight;
+        }
+
+        return distance;
+      },
+
+      scrollHandler: debounce(function _scrollHandler() {
+        if (!this.isLoading) {
+          this.attemptLoad();
+        }
+      }, 50),
     },
+
+    /**
+     * To adapt to keep-alive feature, but only work on Vue 2.2.0 and above, see: http://vuejs.org/v2/api/#keep-alive
+     */
+    deactivated() {
+      this.isLoading = false;
+    },
+
     destroyed() {
       if (!this.isComplete) {
         this.scrollParent.removeEventListener('scroll', this.scrollHandler);
@@ -147,6 +150,7 @@
     },
   };
 </script>
+
 <style lang="less" scoped>
   @import '../styles/spinner';
 
