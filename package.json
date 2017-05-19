@@ -78,5 +78,8 @@
   "license": "MIT",
   "pre-commit": [
     "lint"
-  ]
+  ],
+  "dependencies": {
+    "lodash.debounce": "^4.0.8"
+  }
 }
