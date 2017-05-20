@@ -39,27 +39,24 @@
   }
 
   /**
-   * get current distance from footer
-   * @param  {DOM} elm    scroll element
-   * @param  {String} dir   calculate direction
+   * get current distance from bottom
+   * @param  {DOM}    scrollElm     scroll element
+   * @param  {DOM}    infiniteElm   infinite element
+   * @param  {String} dir           calculate direction
    * @return {Number}     distance
    */
-  function getCurrentDistance(elm, dir) {
+  function getCurrentDistance(scrollElm, infiniteElm, dir) {
     let distance;
 
     if (dir === 'top') {
-      distance = isNaN(elm.scrollTop) ? elm.pageYOffset : elm.scrollTop;
+      distance = isNaN(scrollElm.scrollTop) ? scrollElm.pageYOffset : scrollElm.scrollTop;
     } else {
-      let scrollElmHeight;
-      let elOffsetTop = this.$el.getBoundingClientRect().top;
+      const infiniteElmOffsetTopFromBottom = infiniteElm.getBoundingClientRect().top;
+      const scrollElmOffsetTopFromBottom = scrollElm === window ?
+                                           window.innerHeight :
+                                           scrollElm.getBoundingClientRect().bottom;
 
-      if (elm === window) {
-        scrollElmHeight = window.innerHeight;
-      } else {
-        scrollElmHeight = elm.clientHeight;
-        elOffsetTop -= elm.getBoundingClientRect().top;
-      }
-      distance = elOffsetTop - scrollElmHeight;
+      distance = infiniteElmOffsetTopFromBottom - scrollElmOffsetTopFromBottom;
     }
 
     return distance;
@@ -131,7 +128,7 @@
     },
     methods: {
       attemptLoad() {
-        const currentDistance = getCurrentDistance.bind(this)(this.scrollParent, this.direction);
+        const currentDistance = getCurrentDistance(this.scrollParent, this.$el, this.direction);
         if (!this.isComplete && currentDistance <= this.distance) {
           this.isLoading = true;
           this.onInfinite.call();
