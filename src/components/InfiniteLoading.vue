@@ -70,7 +70,6 @@
         isLoading: false,
         isComplete: false,
         isFirstLoad: true, // save the current loading whether it is the first loading
-        isActivated: true, // save activate status to support keep-alive feature
       };
     },
     computed: {
@@ -94,7 +93,7 @@
       this.scrollParent = getScrollParent(this.$el);
 
       this.scrollHandler = function scrollHandlerOriginal() {
-        if (!this.isLoading && this.isActivated) {
+        if (!this.isLoading) {
           this.attemptLoad();
         }
       }.bind(this);
@@ -104,7 +103,7 @@
 
       this.$on('$InfiniteLoading:loaded', () => {
         this.isFirstLoad = false;
-        if (this.isLoading && this.isActivated) {
+        if (this.isLoading) {
           this.$nextTick(this.attemptLoad);
         }
       });
@@ -125,10 +124,11 @@
      * To adapt to keep-alive feature, but only work on Vue 2.2.0 and above, see: https://vuejs.org/v2/api/#keep-alive
      */
     deactivated() {
-      this.isActivated = false;
+      this.isLoading = false;
+      this.scrollParent.removeEventListener('scroll', this.scrollHandler);
     },
     activated() {
-      this.isActivated = true;
+      this.scrollParent.addEventListener('scroll', this.scrollHandler);
     },
     methods: {
       attemptLoad() {
