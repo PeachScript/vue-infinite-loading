@@ -70,6 +70,7 @@
         isLoading: false,
         isComplete: false,
         isFirstLoad: true, // save the current loading whether it is the first loading
+        isActivated: true, // save activate status to support keep-alive feature
       };
     },
     computed: {
@@ -93,7 +94,7 @@
       this.scrollParent = getScrollParent(this.$el);
 
       this.scrollHandler = function scrollHandlerOriginal() {
-        if (!this.isLoading) {
+        if (!this.isLoading && this.isActivated) {
           this.attemptLoad();
         }
       }.bind(this);
@@ -103,7 +104,7 @@
 
       this.$on('$InfiniteLoading:loaded', () => {
         this.isFirstLoad = false;
-        if (this.isLoading) {
+        if (this.isLoading && this.isActivated) {
           this.$nextTick(this.attemptLoad);
         }
       });
@@ -121,10 +122,13 @@
       });
     },
     /**
-     * To adapt to keep-alive feature, but only work on Vue 2.2.0 and above, see: http://vuejs.org/v2/api/#keep-alive
+     * To adapt to keep-alive feature, but only work on Vue 2.2.0 and above, see: https://vuejs.org/v2/api/#keep-alive
      */
     deactivated() {
-      this.isLoading = false;
+      this.isActivated = false;
+    },
+    activated() {
+      this.isActivated = true;
     },
     methods: {
       attemptLoad() {
