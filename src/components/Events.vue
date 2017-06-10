@@ -40,5 +40,5 @@
   </div>
 
   <h4>$InfiniteLoading:reset</h4>
-  <p>The <code>InfiniteLoading</code> component will back to the original state, and the <code>on-infinite</code> function will be called immediately. Most of the time, this event is useful if you use this component with filter or tabs.</p>
+  <p>The <code>InfiniteLoading</code> component will back to the original state, and the <code>on-infinite</code> function will be called immediately if the distance is expected. Most of the time, this event is useful if you use this component with filter or tabs.</p>
 </template>
