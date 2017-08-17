@@ -1,4 +1,23 @@
 {
-  presets: ['es2015'],
-  plugins: ['transform-runtime']
+  presets: [
+    ['env', {
+      modules: false,
+      targets: {
+        browsers: [
+          '> 1%',
+          'last 1 versions',
+          'last 4 Android versions',
+          'last 3 iOS versions'
+        ]
+      }
+    }],
+    'stage-2'
+  ],
+  plugins: ['transform-runtime'],
+  env: {
+    test: {
+      presets: ['env', 'stage-2'],
+      plugins: ['istanbul']
+    }
+  }
 }

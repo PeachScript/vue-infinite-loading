@@ -1,5 +1,7 @@
-import Vue from 'vue/dist/vue.common.js';
+import Vue from 'vue/dist/vue.common';
 import InfiniteLoading from '../../../src/components/InfiniteLoading';
+
+Vue.config.productionTip = false;
 
 function isShow(elm) {
   const styles = getComputedStyle(elm);
@@ -64,13 +66,17 @@ describe('InfiniteLoading.vue', () => {
      * because of call the $destroy method of parent cannot trigger
      * destroy event for child component in Vue.js 2.0.0-rc6
      */
-    vm.$refs.infiniteLoading && vm.$refs.infiniteLoading.$destroy();
+    if (vm.$refs.infiniteLoading) {
+      vm.$refs.infiniteLoading.$destroy();
+    }
     vm.$destroy(true);
     /**
      * because of pass true as the argument for destroy method cannot
      * remove element from DOM in Vue.js 2.0.0-rc6
      */
-    vm.$el && vm.$el.remove();
+    if (vm.$el) {
+      vm.$el.remove();
+    }
   });
 
   it('should render a basic template', (done) => {
@@ -98,7 +104,7 @@ describe('InfiniteLoading.vue', () => {
       const len = this.list.length + 1;
       const infiniteWrapper = this.$refs.infiniteLoading.scrollParent;
 
-      for (let i = len; i < len + 20; i++) {
+      for (let i = len; i < len + 20; i += 1) {
         this.list.push(i);
       }
 
@@ -164,7 +170,8 @@ describe('InfiniteLoading.vue', () => {
 
     vm.onInfinite = function test() {
       setTimeout(() => {
-        this.list.push(++i);
+        i += 1;
+        this.list.push(i);
         this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
         clearTimeout(timer);
         timer = setTimeout(() => {
@@ -183,11 +190,13 @@ describe('InfiniteLoading.vue', () => {
   it('should reset component and call onInfinite again', (done) => {
     let callCount = 0;
     vm.onInfinite = function test() {
-      if (!callCount++) {
+      if (!callCount) {
         this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
       } else {
         done();
       }
+
+      callCount += 1;
     }.bind(vm);
 
     vm.$mount('#app');
@@ -239,7 +248,7 @@ describe('InfiniteLoading.vue', () => {
       components: initConf.components,
       methods: {
         onInfinite() {
-          callCount++;
+          callCount += 1;
           if (callCount === 1) {
             this.$parent.currentView = null;
             Vue.nextTick(() => {
@@ -247,7 +256,9 @@ describe('InfiniteLoading.vue', () => {
               setTimeout(() => {
                 expect(callCount).to.equal(1);
                 app.$destroy(true);
-                app.$el && app.$el.remove();
+                if (app.$el) {
+                  app.$el.remove();
+                }
                 done();
               }, 1000);
             });

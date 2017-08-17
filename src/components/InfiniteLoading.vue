@@ -53,8 +53,8 @@
     } else {
       const infiniteElmOffsetTopFromBottom = infiniteElm.getBoundingClientRect().top;
       const scrollElmOffsetTopFromBottom = scrollElm === window ?
-                                           window.innerHeight :
-                                           scrollElm.getBoundingClientRect().bottom;
+        window.innerHeight :
+        scrollElm.getBoundingClientRect().bottom;
 
       distance = infiniteElmOffsetTopFromBottom - scrollElmOffsetTopFromBottom;
     }
