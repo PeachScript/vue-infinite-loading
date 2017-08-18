@@ -3,46 +3,33 @@ import InfiniteLoading from '../../../src/components/InfiniteLoading';
 
 Vue.config.productionTip = false;
 
+/**
+ * check display status for a specific element
+ * @param  {DOM}      elm
+ * @return {Boolean}
+ */
 function isShow(elm) {
-  const styles = getComputedStyle(elm);
-
-  return styles.getPropertyValue('display') !== 'none';
+  return getComputedStyle(elm).display !== 'none';
 }
 
-describe('InfiniteLoading.vue', () => {
-  let vm;
-  const initConf = {
-    data() {
-      return {
-        list: [],
-        distance: 50,
-        isLoadedAll: false,
-        isDivScroll: true,
-        isCustomSpinner: false,
-        listContainerHeight: 200,
-        listItemHeight: 20,
-        direction: 'bottom',
-      };
+describe('vue-infinite-loading', () => {
+  let vm; // save Vue model
+  const basicConfig = {
+    data: {
+      list: [],
+      isDivScroll: false,
+      direction: 'bottom',
     },
     template: `
-      <div style="margin: 0; padding: 0;"
-          :style="{
-            overflow: isDivScroll ? 'auto' : 'visible',
-            height: listContainerHeight + 'px'
-          }">
-        <ul style="margin: 0; padding: 0;">
-          <li v-for="item in list" v-text="item"
-              :style="{ height: listItemHeight + 'px' }">
-          </li>
+      <div :style="{ overflow: isDivScroll ? 'auto' : 'visible' }">
+        <ul>
+          <li v-for="item in list" v-text="item"></li>
         </ul>
-        <infinite-loading :distance="distance"
-                          :direction="direction"
-                          :on-infinite="onInfinite"
-                          v-if="!isLoadedAll"
-                          ref="infiniteLoading">
-          <span slot="spinner" v-if="isCustomSpinner">
-            <i class="custom-spinner"></i>
-          </span>
+        <infinite-loading
+          :direction="direction"
+          :on-infinite="onInfinite"
+          ref="infiniteLoading"
+          >
         </infinite-loading>
       </div>
     `,
@@ -52,226 +39,243 @@ describe('InfiniteLoading.vue', () => {
     },
   };
 
-  // create new Vue instance for every test case
-  beforeEach(() => {
-    const container = document.createElement('div');
-    container.setAttribute('id', 'app');
-    document.body.appendChild(container);
+  before(() => {
+    // insert global CSS
+    const styles = document.createElement('style');
 
-    vm = new Vue(initConf);
+    styles.id = 'testing-style';
+    styles.innerHTML = `
+      body {
+        margin: 0;
+      }
+      div {
+        height: 200px;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      ul li {
+        height: 20px;
+      }
+    `;
+
+    document.body.appendChild(styles);
+  });
+
+  after(() => {
+    // remove global CSS
+    document.getElementById('testing-style').remove();
+  });
+
+  beforeEach(() => {
+    // create Vue model before each case start
+    const container = document.createElement('div');
+
+    container.id = 'app';
+    document.body.appendChild(container);
   });
 
   afterEach(() => {
-    /**
-     * because of call the $destroy method of parent cannot trigger
-     * destroy event for child component in Vue.js 2.0.0-rc6
-     */
+    // destroy Vue model after each case complete
+    vm.$el.parentNode.removeChild(vm.$el);
+
     if (vm.$refs.infiniteLoading) {
       vm.$refs.infiniteLoading.$destroy();
     }
-    vm.$destroy(true);
-    /**
-     * because of pass true as the argument for destroy method cannot
-     * remove element from DOM in Vue.js 2.0.0-rc6
-     */
-    if (vm.$el) {
-      vm.$el.remove();
+
+    if (document.getElementById('app')) {
+      document.getElementById('app').remove();
     }
   });
 
-  it('should render a basic template', (done) => {
-    vm.isDivScroll = false;
-    setTimeout(() => {
-      vm.$mount('#app');
-      expect(vm.$el.querySelector('.loading-default')).to.be.ok;
-      done();
-    }, 1);
-  });
+  it('should complete a standard life circle\n      (init -> loading -> loaded -> complete)', (done) => {
+    vm = new Vue(Object.assign({}, basicConfig, {
+      methods: {
+        onInfinite: function onInfinite() {
+          for (let i = 0, j = this.list.length; i < 3; i += 1) {
+            this.list.push(j + i);
+          }
 
-  it('should execute callback and display a spinner immediately after initialize', (done) => {
-    vm.onInfinite = function test() {
-      Vue.nextTick(() => {
-        expect(isShow(vm.$el.querySelector('.loading-default'))).to.be.true;
-        done();
-      });
-    };
+          const expectedLength = this.list.length;
+          const isComplete = expectedLength > 6;
 
-    vm.$mount('#app');
-  });
+          // check spinner
+          expect(isShow(this.$el.querySelector('.loading-default'))).to.be.true;
 
-  it('should not to execute callback if the previous loading has not be completed', (done) => {
-    vm.onInfinite = function test() {
-      const len = this.list.length + 1;
-      const infiniteWrapper = this.$refs.infiniteLoading.scrollParent;
+          if (isComplete) {
+            this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+          } else {
+            this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+          }
 
-      for (let i = len; i < len + 20; i += 1) {
-        this.list.push(i);
-      }
+          this.$nextTick(() => {
+            // check list items
+            expect(this.$el.querySelectorAll('ul li')).to.have.lengthOf(expectedLength);
 
-      Vue.nextTick(() => {
-        if (this.list.length === 20) {
-          infiniteWrapper.addEventListener('scroll', () => {
-            expect(this.list).to.have.lengthOf(20);
-            done();
+            if (isComplete) {
+              // check no more text
+              expect(isShow(this.$el.querySelectorAll('.infinite-status-prompt')[1])).to.be.true;
+              done();
+            }
           });
-
-          // trigger scroll event manually
-          infiniteWrapper.scrollTop = infiniteWrapper.scrollHeight;
-        }
-      });
-    }.bind(vm);
+        },
+      },
+    }));
 
     vm.$mount('#app');
   });
 
-  it('should be destroyed completely by v-if', (done) => {
-    vm.onInfinite = function test() {
-      this.isLoadedAll = true;
-      Vue.nextTick(() => {
-        expect(vm.$el.querySelector('.loading-default')).to.not.be.ok;
-        done();
-      });
-    }.bind(vm);
+  it('should not trigger load again before the last load is complete\n      (use div as the container)', (done) => {
+    vm = new Vue(Object.assign({}, basicConfig, {
+      data: {
+        list: [],
+        isDivScroll: true,
+        direction: 'bottom',
+      },
+      methods: {
+        onInfinite: function onInfinite() {
+          const scrollParent = this.$refs.infiniteLoading.scrollParent;
+          const loadCountEachTime = 10;
+
+          this.list.push(...new Array(loadCountEachTime + 1).join('1').split(''));
+          this.$nextTick(() => {
+            // trigger scroll event manually
+            scrollParent.scrollTop = scrollParent.scrollHeight;
+
+            // wait for the scroll event handler process scroll event
+            setTimeout(() => {
+              expect(this.list).to.have.lengthOf(loadCountEachTime);
+              done();
+            }, 10);
+          });
+        },
+      },
+    }));
 
     vm.$mount('#app');
   });
 
-  it('should display no results prompt', (done) => {
-    vm.onInfinite = function test() {
-      this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
-      Vue.nextTick(() => {
-        expect(isShow(vm.$el.querySelectorAll('.infinite-status-prompt')[0])).to.be.true;
-        done();
-      });
-    }.bind(vm);
+  it('should works again when reset it after a completion\n      (use top direction)', (done) => {
+    let calledTimes = 0;
+
+    vm = new Vue(Object.assign({}, basicConfig, {
+      data: {
+        list: [],
+        isDivScroll: false,
+        direction: 'top',
+      },
+      methods: {
+        onInfinite: function onInfinite() {
+          calledTimes += 1;
+
+          if (calledTimes === 1) {
+            this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+            this.$nextTick(() => {
+              // check no results text
+              expect(isShow(this.$el.querySelectorAll('.infinite-status-prompt')[0])).to.be.true;
+
+              // reset component
+              this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+            });
+          } else if (calledTimes === 2) {
+            // check spinner
+            expect(isShow(this.$el.querySelector('.loading-default'))).to.be.true;
+            done();
+          }
+        },
+      },
+    }));
 
     vm.$mount('#app');
   });
 
-  it('should display no more data prompt', (done) => {
-    vm.onInfinite = function test() {
-      this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
-      this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
-      // test for whether trigger again after complete
-      this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
-      Vue.nextTick(() => {
-        expect(isShow(vm.$el.querySelectorAll('.infinite-status-prompt')[1])).to.be.true;
-        done();
-      });
-    }.bind(vm);
-
-    vm.$mount('#app');
-  });
-
-  it('should load results to fill up the container', (done) => {
-    const expectedCount = Math.floor(vm.listContainerHeight / vm.listItemHeight);
-    let i = 0;
+  it('should always load data until fill up the contianer\n      (use div as the container)', (done) => {
     let timer;
 
-    vm.onInfinite = function test() {
-      setTimeout(() => {
-        i += 1;
-        this.list.push(i);
-        this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-          if (i >= expectedCount) {
-            done();
-          } else {
-            done(new Error('List not be fill up!'));
-          }
-        }, 100);
-      }, 1);
-    }.bind(vm);
-
-    vm.$mount('#app');
-  });
-
-  it('should reset component and call onInfinite again', (done) => {
-    let callCount = 0;
-    vm.onInfinite = function test() {
-      if (!callCount) {
-        this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
-      } else {
-        done();
-      }
-
-      callCount += 1;
-    }.bind(vm);
-
-    vm.$mount('#app');
-  });
-
-  it('should display the custom spinner if customize it with slot', (done) => {
-    vm.isCustomSpinner = true;
-    vm.distance = 100;
-    vm.$mount('#app');
-
-    Vue.nextTick(() => {
-      expect(vm.$el.querySelector('.custom-spinner')).to.be.ok;
-      done();
-    });
-  });
-
-  it('should load data when scroll top with window (direction attribute)', (done) => {
-    vm.isDivScroll = false;
-    vm.direction = 'top';
-    vm.onInfinite = function test() {
-      Vue.nextTick(() => {
-        expect(isShow(vm.$el.querySelector('.loading-default'))).to.be.true;
-        done();
-      });
-    };
-
-    vm.$mount('#app');
-  });
-
-  it('should load data when scroll top (direction attribute)', (done) => {
-    vm.direction = 'top';
-    vm.onInfinite = function test() {
-      Vue.nextTick(() => {
-        expect(isShow(vm.$el.querySelector('.loading-default'))).to.be.true;
-        done();
-      });
-    };
-
-    vm.$mount('#app');
-  });
-
-  it('should load data once when deactivated by keep-alive feature', (done) => {
-    let callCount = 0;
-    let app;
-
-    const InfiniteComponent = {
-      data: initConf.data,
-      template: initConf.template,
-      components: initConf.components,
+    vm = new Vue(Object.assign({}, basicConfig, {
+      data: {
+        list: [],
+        isDivScroll: true,
+        direction: 'bottom',
+      },
       methods: {
-        onInfinite() {
-          callCount += 1;
-          if (callCount === 1) {
+        onInfinite: function onInfinite() {
+          this.list.push(this.list.length + 1);
+          this.$nextTick(() => {
+            this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+          });
+
+          // wait for the container be filled up
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            const listHeight = parseInt(getComputedStyle(this.$el.querySelector('ul')).height, 10);
+            const itemHeight = parseInt(getComputedStyle(this.$el.querySelector('li')).height, 10);
+            const expectedCount = listHeight / itemHeight;
+
+            expect(this.list.length).to.be.at.least(expectedCount);
+            done();
+          }, 100);
+        },
+      },
+    }));
+
+    vm.$mount('#app');
+  });
+
+  it('should works properly with scroll plugins through the `infinite-wrapper` attribute', (done) => {
+    const app = document.getElementById('app');
+    const wrapper = document.createElement('div');
+
+    app.appendChild(wrapper);
+    app.setAttribute('infinite-wrapper', ''); // add `infinite-wrapper` attribute for app container
+    vm = new Vue(Object.assign({}, basicConfig, {
+      methods: {
+        onInfinite: function onInfinite() {
+          expect(this.$refs.infiniteLoading.scrollParent).to.equal(app);
+          done();
+        },
+      },
+    }));
+
+    vm.$mount(wrapper);
+  });
+
+  it('should not works when deactivated by the `keep-alive` feature\n      (use top direction)', (done) => {
+    let calledTimes = 0;
+    const InfiniteView = Object.assign({}, basicConfig, {
+      data() {
+        return {
+          list: [],
+          isDivScroll: true,
+          direction: 'top',
+        };
+      },
+      methods: {
+        onInfinite: function onInfinite() {
+          calledTimes += 1;
+
+          if (calledTimes === 1) {
+            // change view to deactivate the component
             this.$parent.currentView = null;
-            Vue.nextTick(() => {
+            this.$nextTick(() => {
+              // trigger loaded event
               this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
-              setTimeout(() => {
-                expect(callCount).to.equal(1);
-                app.$destroy(true);
-                if (app.$el) {
-                  app.$el.remove();
-                }
+              this.$nextTick(() => {
+                // doesnot care the loaded event when it be deactivated
+                expect(calledTimes).to.equal(1);
                 done();
-              }, 1000);
+              });
             });
           }
         },
       },
-    };
+    });
 
-    app = new Vue({
-      data() {
-        return {
-          currentView: 'InfiniteComponent',
-        };
+    vm = new Vue({
+      data: {
+        currentView: 'InfiniteView',
       },
       template: `
         <keep-alive>
@@ -279,27 +283,10 @@ describe('InfiniteLoading.vue', () => {
         </keep-alive>
       `,
       components: {
-        InfiniteComponent,
+        InfiniteView,
       },
     });
 
-    app.$mount('#app');
-  });
-
-  it('should work with customize scroll plugin like perfect-scroll', (done) => {
-    const infiniteWrapper = document.createElement('div');
-    const wrapper = document.createElement('div');
-
-    vm.isDivScroll = false;
-    infiniteWrapper.setAttribute('infinite-wrapper', '');
-    document.getElementById('app').appendChild(infiniteWrapper);
-    infiniteWrapper.appendChild(wrapper);
-
-    vm.$mount(wrapper);
-
-    Vue.nextTick(() => {
-      expect(vm.$refs.infiniteLoading.scrollParent).to.equal(infiniteWrapper);
-      done();
-    }, 1);
+    vm.$mount('#app');
   });
 });
