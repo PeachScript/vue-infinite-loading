@@ -14,6 +14,8 @@
   </div>
 </template>
 <script>
+  /* eslint-disable no-console */
+
   const spinnerMapping = {
     bubbles: 'loading-bubbles',
     circles: 'loading-circles',
@@ -119,6 +121,10 @@
         this.scrollParent.addEventListener('scroll', this.scrollHandler);
         setTimeout(this.scrollHandler, 1);
       });
+
+      if (typeof this.onInfinite === 'function') {
+        console.warn('[Vue-infinite-loading warn]: `:on-infinite` property will be deprecated soon, please use `@infinite` event instead.');
+      }
     },
     /**
      * To adapt to keep-alive feature, but only work on Vue 2.2.0 and above, see: https://vuejs.org/v2/api/#keep-alive
@@ -135,7 +141,12 @@
         const currentDistance = getCurrentDistance(this.scrollParent, this.$el, this.direction);
         if (!this.isComplete && currentDistance <= this.distance) {
           this.isLoading = true;
-          this.onInfinite.call();
+
+          if (typeof this.onInfinite === 'function') {
+            this.onInfinite.call();
+          } else {
+            this.$emit('infinite');
+          }
         } else {
           this.isLoading = false;
         }

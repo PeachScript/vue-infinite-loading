@@ -14,7 +14,10 @@ module.exports = {
     libraryTarget: 'umd'
   },
   resolve: {
-    extensions: ['.js', '.vue']
+    extensions: ['.js', '.vue'],
+    alias: {
+      'vue$': 'vue/dist/vue.min.js'
+    }
   },
   module: {
     rules: [
