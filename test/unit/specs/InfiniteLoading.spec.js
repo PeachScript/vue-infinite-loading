@@ -320,4 +320,45 @@ describe('vue-infinite-loading', () => {
 
     vm.$mount('#app');
   });
+
+  it('should support hide load result through blank slots', (done) => {
+    let calledTimes = 0;
+
+    vm = new Vue(Object.assign({}, basicConfig, {
+      methods: {
+        infiniteHandler: function infiniteHandler() {
+          if (calledTimes) {
+            this.$refs.infiniteLoading.$emit('$InfiniteLoading:load');
+            this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+            this.$nextTick(() => {
+              // check for no-more result display
+              expect(isShow(this.$el.querySelectorAll('.infinite-status-prompt')[1])).to.be.false;
+              done();
+            });
+          } else {
+            calledTimes += 1;
+            this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+            this.$nextTick(() => {
+              // check for no-result result display
+              expect(isShow(this.$el.querySelectorAll('.infinite-status-prompt')[0])).to.be.false;
+
+              // reset component to check no-more status
+              this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+            });
+          }
+        },
+      },
+      template: `
+        <infinite-loading
+          @infinite="infiniteHandler"
+          ref="infiniteLoading"
+          >
+          <span slot="no-results"></span>
+          <span slot="no-more"></span>
+        </infinite-loading>
+      `,
+    }));
+
+    vm.$mount('#app');
+  });
 });
