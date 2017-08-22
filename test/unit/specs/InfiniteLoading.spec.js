@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import Vue from 'vue/dist/vue.common';
 import InfiniteLoading from '../../../src/components/InfiniteLoading';
 
@@ -27,7 +29,7 @@ describe('vue-infinite-loading', () => {
         </ul>
         <infinite-loading
           :direction="direction"
-          :on-infinite="onInfinite"
+          @infinite="infiniteHandler"
           ref="infiniteLoading"
           >
         </infinite-loading>
@@ -35,7 +37,7 @@ describe('vue-infinite-loading', () => {
     `,
     components: { InfiniteLoading },
     methods: {
-      onInfinite() {},
+      infiniteHandler() {},
     },
   };
 
@@ -93,7 +95,7 @@ describe('vue-infinite-loading', () => {
   it('should complete a standard life circle\n      (init -> loading -> loaded -> complete)', (done) => {
     vm = new Vue(Object.assign({}, basicConfig, {
       methods: {
-        onInfinite: function onInfinite() {
+        infiniteHandler: function infiniteHandler() {
           for (let i = 0, j = this.list.length; i < 3; i += 1) {
             this.list.push(j + i);
           }
@@ -135,7 +137,7 @@ describe('vue-infinite-loading', () => {
         direction: 'bottom',
       },
       methods: {
-        onInfinite: function onInfinite() {
+        infiniteHandler: function infiniteHandler() {
           const scrollParent = this.$refs.infiniteLoading.scrollParent;
           const loadCountEachTime = 10;
 
@@ -167,7 +169,7 @@ describe('vue-infinite-loading', () => {
         direction: 'top',
       },
       methods: {
-        onInfinite: function onInfinite() {
+        infiniteHandler: function infiniteHandler() {
           calledTimes += 1;
 
           if (calledTimes === 1) {
@@ -201,7 +203,7 @@ describe('vue-infinite-loading', () => {
         direction: 'bottom',
       },
       methods: {
-        onInfinite: function onInfinite() {
+        infiniteHandler: function infiniteHandler() {
           this.list.push(this.list.length + 1);
           this.$nextTick(() => {
             this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
@@ -232,7 +234,7 @@ describe('vue-infinite-loading', () => {
     app.setAttribute('infinite-wrapper', ''); // add `infinite-wrapper` attribute for app container
     vm = new Vue(Object.assign({}, basicConfig, {
       methods: {
-        onInfinite: function onInfinite() {
+        infiniteHandler: function infiniteHandler() {
           expect(this.$refs.infiniteLoading.scrollParent).to.equal(app);
           done();
         },
@@ -253,7 +255,7 @@ describe('vue-infinite-loading', () => {
         };
       },
       methods: {
-        onInfinite: function onInfinite() {
+        infiniteHandler: function infiniteHandler() {
           calledTimes += 1;
 
           if (calledTimes === 1) {
@@ -286,6 +288,35 @@ describe('vue-infinite-loading', () => {
         InfiniteView,
       },
     });
+
+    vm.$mount('#app');
+  });
+
+  it('should still works properly with the deprecated property `:on-infinite` but through warning', (done) => {
+    const originalError = console.warn;
+    let isThroughWarn;
+
+    console.warn = (text) => {
+      if (text.indexOf('@infinite') > -1) {
+        isThroughWarn = true;
+      }
+    };
+
+    vm = new Vue(Object.assign({}, basicConfig, {
+      methods: {
+        onInfinite: function onInfinite() {
+          expect(isThroughWarn).to.be.true;
+          console.warn = originalError;
+          done();
+        },
+      },
+      template: `
+        <infinite-loading
+          :on-infinite="onInfinite"
+          >
+        </infinite-loading>
+      `,
+    }));
 
     vm.$mount('#app');
   });
