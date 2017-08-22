@@ -5,10 +5,10 @@
         <i :class="spinnerType"></i>
       </slot>
     </div>
-    <div class="infinite-status-prompt" v-show="!isLoading && isComplete && isFirstLoad">
+    <div class="infinite-status-prompt" v-show="isNoResults">
       <slot name="no-results">No results :(</slot>
     </div>
-    <div class="infinite-status-prompt" v-show="!isLoading && isComplete && !isFirstLoad">
+    <div class="infinite-status-prompt" v-show="isNoMore">
       <slot name="no-more">No more data :)</slot>
     </div>
   </div>
@@ -78,6 +78,24 @@
       spinnerType() {
         return spinnerMapping[this.spinner] || spinnerMapping.default;
       },
+      isNoResults: {
+        cache: false, // disable cache to fix the problem of get slot text delay
+        get() {
+          const noResultsSlot = this.$slots['no-results'];
+          const isBlankNoResultsSlot = (noResultsSlot && noResultsSlot[0].elm && noResultsSlot[0].elm.textContent === '');
+
+          return !this.isLoading && this.isComplete && this.isFirstLoad && !isBlankNoResultsSlot;
+        },
+      },
+      isNoMore: {
+        cache: false, // disable cache to fix the problem of get slot text delay
+        get() {
+          const noMoreSlot = this.$slots['no-more'];
+          const isBlankNoMoreSlot = (noMoreSlot && noMoreSlot[0].elm && noMoreSlot[0].elm.textContent === '');
+
+          return !this.isLoading && this.isComplete && !this.isFirstLoad && !isBlankNoMoreSlot;
+        },
+      },
     },
     props: {
       distance: {
@@ -109,11 +127,18 @@
           this.$nextTick(this.attemptLoad);
         }
       });
+
       this.$on('$InfiniteLoading:complete', () => {
         this.isLoading = false;
         this.isComplete = true;
+
+        // force re-complation computed properties to fix the problem of get slot text delay
+        this.$nextTick(() => {
+          this.$forceUpdate();
+        });
         this.scrollParent.removeEventListener('scroll', this.scrollHandler);
       });
+
       this.$on('$InfiniteLoading:reset', () => {
         this.isLoading = false;
         this.isComplete = false;
