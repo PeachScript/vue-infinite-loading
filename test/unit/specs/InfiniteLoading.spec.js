@@ -14,6 +14,23 @@ function isShow(elm) {
   return getComputedStyle(elm).display !== 'none';
 }
 
+/**
+ * continues call the specified number of times for a function
+ * @param  {Function} fn    target function
+ * @param  {Number}   times calls
+ * @param  {Function} cb    [description]
+ */
+function continuesCall(fn, times, cb) {
+  if (times) {
+    fn();
+    setTimeout(() => {
+      continuesCall(fn, times - 1, cb);
+    }, 1);
+  } else {
+    cb();
+  }
+}
+
 describe('vue-infinite-loading', () => {
   let vm; // save Vue model
   const basicConfig = {
@@ -193,7 +210,7 @@ describe('vue-infinite-loading', () => {
     vm.$mount('#app');
   });
 
-  it('should always load data until fill up the contianer\n      (use div as the container)', (done) => {
+  it('should always load data until fill up the container\n      (use div as the container)', (done) => {
     let timer;
 
     vm = new Vue(Object.assign({}, basicConfig, {
@@ -244,7 +261,7 @@ describe('vue-infinite-loading', () => {
     vm.$mount(wrapper);
   });
 
-  it('should not works when deactivated by the `keep-alive` feature\n      (use top direction)', (done) => {
+  it('should not works when deactivated by the `keep-alive` feature\n      (use top direction and use div as the container)', (done) => {
     let calledTimes = 0;
     const InfiniteView = Object.assign({}, basicConfig, {
       data() {
@@ -357,6 +374,33 @@ describe('vue-infinite-loading', () => {
           <span slot="no-more"></span>
         </infinite-loading>
       `,
+    }));
+
+    vm.$mount('#app');
+  });
+
+  it('should debounce properly for the scroll event handler\n      (use div as the container)', (done) => {
+    vm = new Vue(Object.assign({}, basicConfig, {
+      data: {
+        list: [...new Array(20).join('1').split('')],
+        isDivScroll: true,
+        direction: 'bottom',
+      },
+      mounted: function mounted() {
+        const scrollParent = this.$refs.infiniteLoading.scrollParent;
+        const spyFn = sinon.spy(this.$refs.infiniteLoading, 'attemptLoad');
+        const alreadyCalledTimes = 1; // it will be called immediately after mount
+
+        continuesCall(() => {
+          scrollParent.scrollTop += 10;
+        }, 10, () => {
+          expect(spyFn).to.have.been.callCount(0 + alreadyCalledTimes);
+          setTimeout(() => {
+            expect(spyFn).to.have.been.callCount(1 + alreadyCalledTimes);
+            done();
+          }, this.$refs.infiniteLoading.debounceDuration + 10);
+        });
+      },
     }));
 
     vm.$mount('#app');
