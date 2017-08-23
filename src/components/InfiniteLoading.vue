@@ -118,7 +118,7 @@
         if (!this.isLoading) {
           clearTimeout(this.debounceTimer);
 
-          if (typeof ev === 'object' && ev.constructor === Event) {
+          if (ev && ev.constructor === Event) {
             this.debounceTimer = setTimeout(this.attemptLoad, this.debounceDuration);
           } else {
             this.attemptLoad();
@@ -155,7 +155,7 @@
         setTimeout(this.scrollHandler, 1);
       });
 
-      if (typeof this.onInfinite === 'function') {
+      if (this.onInfinite) {
         console.warn('[Vue-infinite-loading warn]: `:on-infinite` property will be deprecated soon, please use `@infinite` event instead.');
       }
     },
