@@ -72,6 +72,8 @@
         isLoading: false,
         isComplete: false,
         isFirstLoad: true, // save the current loading whether it is the first loading
+        debounceTimer: null,
+        debounceDuration: 100,
       };
     },
     computed: {
@@ -112,9 +114,15 @@
     mounted() {
       this.scrollParent = getScrollParent(this.$el);
 
-      this.scrollHandler = function scrollHandlerOriginal() {
+      this.scrollHandler = function scrollHandlerOriginal(ev) {
         if (!this.isLoading) {
-          this.attemptLoad();
+          clearTimeout(this.debounceTimer);
+
+          if (typeof ev === 'object' && ev.constructor === Event) {
+            this.debounceTimer = setTimeout(this.attemptLoad, this.debounceDuration);
+          } else {
+            this.attemptLoad();
+          }
         }
       }.bind(this);
 
