@@ -24,46 +24,6 @@
     waveDots: 'loading-wave-dots',
   };
 
-  /**
-   * get the first scroll parent of an element
-   * @param  {DOM} elm    the element which find scorll parent
-   * @return {DOM}        the first scroll parent
-   */
-  function getScrollParent(elm) {
-    if (elm.tagName === 'BODY') {
-      return window;
-    } else if (['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
-      return elm;
-    } else if (elm.hasAttribute('infinite-wrapper') || elm.hasAttribute('data-infinite-wrapper')) {
-      return elm;
-    }
-    return getScrollParent(elm.parentNode);
-  }
-
-  /**
-   * get current distance from bottom
-   * @param  {DOM}    scrollElm     scroll element
-   * @param  {DOM}    infiniteElm   infinite element
-   * @param  {String} dir           calculate direction
-   * @return {Number}     distance
-   */
-  function getCurrentDistance(scrollElm, infiniteElm, dir) {
-    let distance;
-
-    if (dir === 'top') {
-      distance = isNaN(scrollElm.scrollTop) ? scrollElm.pageYOffset : scrollElm.scrollTop;
-    } else {
-      const infiniteElmOffsetTopFromBottom = infiniteElm.getBoundingClientRect().top;
-      const scrollElmOffsetTopFromBottom = scrollElm === window ?
-        window.innerHeight :
-        scrollElm.getBoundingClientRect().bottom;
-
-      distance = infiniteElmOffsetTopFromBottom - scrollElmOffsetTopFromBottom;
-    }
-
-    return distance;
-  }
-
   export default {
     data() {
       return {
@@ -112,7 +72,7 @@
       },
     },
     mounted() {
-      this.scrollParent = getScrollParent(this.$el);
+      this.scrollParent = this.getScrollParent();
 
       this.scrollHandler = function scrollHandlerOriginal(ev) {
         if (!this.isLoading) {
@@ -170,8 +130,12 @@
       this.scrollParent.addEventListener('scroll', this.scrollHandler);
     },
     methods: {
+      /**
+      * attempt trigger load
+      */
       attemptLoad() {
-        const currentDistance = getCurrentDistance(this.scrollParent, this.$el, this.direction);
+        const currentDistance = this.getCurrentDistance();
+
         if (!this.isComplete && currentDistance <= this.distance) {
           this.isLoading = true;
 
@@ -183,6 +147,46 @@
         } else {
           this.isLoading = false;
         }
+      },
+      /**
+      * get current distance from the specified direction
+      * @return {Number}     distance
+      */
+      getCurrentDistance() {
+        let distance;
+
+        if (this.direction === 'top') {
+          distance = isNaN(this.scrollParent.scrollTop) ?
+            this.scrollParent.pageYOffset :
+            this.scrollParent.scrollTop;
+        } else {
+          const infiniteElmOffsetTopFromBottom = this.$el.getBoundingClientRect().top;
+          const scrollElmOffsetTopFromBottom = this.scrollParent === window ?
+            window.innerHeight :
+            this.scrollParent.getBoundingClientRect().bottom;
+
+          distance = infiniteElmOffsetTopFromBottom - scrollElmOffsetTopFromBottom;
+        }
+
+        return distance;
+      },
+      /**
+      * get the first scroll parent of an element
+      * @param  {DOM} elm    cache element for recursive search
+      * @return {DOM}        the first scroll parent
+      */
+      getScrollParent(elm = this.$el) {
+        let result;
+
+        if (elm.tagName === 'BODY') {
+          result = window;
+        } else if (['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
+          result = elm;
+        } else if (elm.hasAttribute('infinite-wrapper') || elm.hasAttribute('data-infinite-wrapper')) {
+          result = elm;
+        }
+
+        return result || this.getScrollParent(elm.parentNode);
       },
     },
     destroyed() {
