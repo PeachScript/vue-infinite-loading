@@ -11,7 +11,7 @@
     <div class="infinite-status-prompt" v-show="!isLoading && isComplete && !isFirstLoad">
       <slot name="no-more">No more data :)</slot>
     </div>
-    <div class="infinite-load-more-button" v-show="!isLoading" v-on:click="loadMoreClick();">
+    <div class="infinite-load-more-button" v-show="!isComplete && !isLoading" v-on:click="loadMoreClick();">
       <slot name="load-button">
         <button>Load more</button>
       </slot>
