@@ -11,6 +11,11 @@
     <div class="infinite-status-prompt" v-show="!isLoading && isComplete && !isFirstLoad">
       <slot name="no-more">No more data :)</slot>
     </div>
+    <div class="infinite-load-more-button" v-show="!isComplete && !isLoading" v-on:click="loadMoreClick();">
+      <slot name="load-button">
+        <button>Load more</button>
+      </slot>
+    </div>
   </div>
 </template>
 <script>
@@ -70,6 +75,7 @@
         isLoading: false,
         isComplete: false,
         isFirstLoad: true, // save the current loading whether it is the first loading
+        loadButtonIsActivated: false,
       };
     },
     computed: {
@@ -78,6 +84,10 @@
       },
     },
     props: {
+      loadbutton: {
+        type: String,
+        default: 'never', // always || once
+      },
       distance: {
         type: Number,
         default: 100,
@@ -133,12 +143,37 @@
     methods: {
       attemptLoad() {
         const currentDistance = getCurrentDistance(this.scrollParent, this.$el, this.direction);
-        if (!this.isComplete && currentDistance <= this.distance) {
-          this.isLoading = true;
-          this.onInfinite.call();
+
+        const loadButAlways = this.loadbutton === 'always';
+        const loadButNever = this.loadbutton !== 'always' && this.loadbutton !== 'once';
+        const loadButOnceAndActivated = this.loadbutton === 'once' && this.loadButtonIsActivated;
+        const reachedTheBottom = currentDistance <= this.distance;
+
+
+        if (!this.isComplete && loadButOnceAndActivated && reachedTheBottom) {
+          this.reallyLoad();
+        } else if (!this.isComplete && loadButAlways && !this.isFirstLoad) {
+          this.isLoading = false;
+        } else if (!this.isComplete && loadButAlways && this.isFirstLoad) {
+          this.reallyLoad();
+        } else if (!this.isComplete && reachedTheBottom && loadButAlways) {
+          this.reallyLoad();
+        } else if (!this.isComplete && loadButNever && reachedTheBottom) {
+          this.reallyLoad();
+        } else if (!this.isComplete && this.isFirstLoad) {
+          this.reallyLoad();
         } else {
           this.isLoading = false;
         }
+      },
+      reallyLoad() {
+        this.isLoading = true;
+        this.onInfinite.call();
+      },
+
+      loadMoreClick() {
+        this.reallyLoad();
+        this.loadButtonIsActivated = true;
       },
     },
     destroyed() {
