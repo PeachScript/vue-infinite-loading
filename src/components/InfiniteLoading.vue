@@ -28,6 +28,13 @@
    * @return {DOM}        the first scroll parent
    */
   function getScrollParent(elm) {
+    // due to issue in FireFox https://bugzilla.mozilla.org/show_bug.cgi?id=548397
+    const originalGetComputedStyle = window.getComputedStyle;
+    window.getComputedStyle = function (element, pseudoElt) {
+      const style = originalGetComputedStyle(element, pseudoElt);
+      return style === null ? {} : style;
+    };
+
     if (elm.tagName === 'BODY') {
       return window;
     } else if (['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
