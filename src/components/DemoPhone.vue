@@ -102,10 +102,10 @@
                 tags: 'story',
                 page: (this.list.length / 20) + 1,
               },
-            }).then((res) => {
+            }).then(res => res.json()).then((data) => {
               if (this.demoType === 'hackerNews') {
-                if (res.data.hits.length) {
-                  this.list = this.list.concat(res.data.hits);
+                if (data.hits.length) {
+                  this.list = this.list.concat(data.hits);
                   this.$broadcast('$InfiniteLoading:loaded');
                   if (this.list.length / 20 === 10) {
                     this.$broadcast('$InfiniteLoading:complete');
@@ -122,10 +122,10 @@
                 tags: this.tag,
                 page: (this.list.length / 20) + 1,
               },
-            }).then((res) => {
+            }).then(res => res.json()).then((data) => {
               if (this.demoType === 'withFilter') {
-                if (res.data.hits.length) {
-                  this.list = this.list.concat(res.data.hits);
+                if (data.hits.length) {
+                  this.list = this.list.concat(data.hits);
                   this.$broadcast('$InfiniteLoading:loaded');
                   if (this.list.length / 20 === 10) {
                     this.$broadcast('$InfiniteLoading:complete');

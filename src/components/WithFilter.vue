@@ -96,8 +96,8 @@ export default {
           tags: this.tag,
           page: this.list.length / 20 + 1,
         },
-      }).then((res) =&gt; {
-        this.list = this.list.concat(res.data.hits);
+      }).then(res =&gt; res.json()).then((data) =&gt; {
+        this.list = this.list.concat(data.hits);
         this.$broadcast('$InfiniteLoading:loaded');
         if (this.list.length / 20 === 10) {
           this.$broadcast('$InfiniteLoading:noMore');
@@ -133,9 +133,9 @@ export default {
           tags: this.tag,
           page: this.list.length / 20 + 1,
         },
-      }).then((res) =&gt; {
-        if (res.data.hits.length) {
-          this.list = this.list.concat(res.data.hits);
+      }).then(res =&gt; res.json()).then((data) =&gt; {
+        if (data.hits.length) {
+          this.list = this.list.concat(data.hits);
           this.$broadcast('$InfiniteLoading:loaded');
           if (this.list.length / 20 === 10) {
             this.$broadcast('$InfiniteLoading:complete');
@@ -174,9 +174,9 @@ export default {
           tags: this.tag,
           page: this.list.length / 20 + 1,
         },
-      }).then((res) =&gt; {
-        if (res.data.hits.length) {
-          this.list = this.list.concat(res.data.hits);
+      }).then(res =&gt; res.json()).then((data) =&gt; {
+        if (data.hits.length) {
+          this.list = this.list.concat(data.hits);
           this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
           if (this.list.length / 20 === 10) {
             this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
