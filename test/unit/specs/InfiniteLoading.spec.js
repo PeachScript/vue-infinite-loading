@@ -405,4 +405,32 @@ describe('vue-infinite-loading', () => {
 
     vm.$mount('#app');
   });
+
+  it('should still works properly with the $refs.component.$emit but through warning', (done) => {
+    const originalError = console.warn;
+    let throughWarnTimes = 0;
+
+    console.warn = (text) => {
+      if (text.indexOf('$state') > -1) {
+        throughWarnTimes += 1;
+      }
+    };
+
+    vm = new Vue(Object.assign({}, basicConfig, {
+      methods: {
+        infiniteHandler: function infiniteHandler() {
+          if (!throughWarnTimes) {
+            this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+          } else {
+            this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+            expect(throughWarnTimes).to.equal(2);
+            console.warn = originalError;
+            done();
+          }
+        },
+      },
+    }));
+
+    vm.$mount('#app');
+  });
 });
