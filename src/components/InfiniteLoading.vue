@@ -23,6 +23,30 @@
     spiral: 'loading-spiral',
     waveDots: 'loading-wave-dots',
   };
+  const warnings = {
+    stateChanger: [
+      '[Vue-infinite-loading warn]: emit `loaded` and `complete` event through component instance of `$refs` may cause error, so it will be deprecated soon, please use the `$state` argument instead (`$state` just the special `$event` variable):',
+      '\ntemplate:',
+      '<infinite-loading @infinite="infiniteHandler"></infinite-loading>',
+      `
+  script:
+  ...
+  infiniteHandler($state) {
+    ajax('https://www.example.com/api/news')
+      .then((res) => {
+        if (res.data.length) {
+          $state.loaded();
+        } else {
+          $state.complete();
+        }
+      });
+  }
+  ...`,
+      '',
+      'more details: https://github.com/PeachScript/vue-infinite-loading/issues/57#issuecomment-324370549',
+    ].join('\n'),
+    infiniteEvent: '[Vue-infinite-loading warn]: `:on-infinite` property will be deprecated soon, please use `@infinite` event instead.',
+  };
 
   export default {
     data() {
@@ -89,14 +113,19 @@
       setTimeout(this.scrollHandler, 1);
       this.scrollParent.addEventListener('scroll', this.scrollHandler);
 
-      this.$on('$InfiniteLoading:loaded', () => {
+      this.$on('$InfiniteLoading:loaded', (ev) => {
         this.isFirstLoad = false;
+
         if (this.isLoading) {
           this.$nextTick(this.attemptLoad);
         }
+
+        if (!ev || ev.target !== this) {
+          console.warn(warnings.stateChanger);
+        }
       });
 
-      this.$on('$InfiniteLoading:complete', () => {
+      this.$on('$InfiniteLoading:complete', (ev) => {
         this.isLoading = false;
         this.isComplete = true;
 
@@ -104,7 +133,12 @@
         this.$nextTick(() => {
           this.$forceUpdate();
         });
+
         this.scrollParent.removeEventListener('scroll', this.scrollHandler);
+
+        if (!ev || ev.target !== this) {
+          console.warn(warnings.stateChanger);
+        }
       });
 
       this.$on('$InfiniteLoading:reset', () => {
@@ -116,8 +150,23 @@
       });
 
       if (this.onInfinite) {
-        console.warn('[Vue-infinite-loading warn]: `:on-infinite` property will be deprecated soon, please use `@infinite` event instead.');
+        console.warn(warnings.infiniteEvent);
       }
+
+      /**
+       * change state for this component, pass to the callback
+       */
+      this.stateChanger = {
+        loaded: () => {
+          this.$emit('$InfiniteLoading:loaded', { target: this });
+        },
+        complete: () => {
+          this.$emit('$InfiniteLoading:complete', { target: this });
+        },
+        reset: () => {
+          this.$emit('$InfiniteLoading:reset', { target: this });
+        },
+      };
     },
     /**
      * To adapt to keep-alive feature, but only work on Vue 2.2.0 and above, see: https://vuejs.org/v2/api/#keep-alive
@@ -140,9 +189,9 @@
           this.isLoading = true;
 
           if (typeof this.onInfinite === 'function') {
-            this.onInfinite.call();
+            this.onInfinite.call(null, this.stateChanger);
           } else {
-            this.$emit('infinite');
+            this.$emit('infinite', this.stateChanger);
           }
         } else {
           this.isLoading = false;
