@@ -112,7 +112,7 @@ describe('vue-infinite-loading', () => {
   it('should complete a standard life circle\n      (init -> loading -> loaded -> complete)', (done) => {
     vm = new Vue(Object.assign({}, basicConfig, {
       methods: {
-        infiniteHandler: function infiniteHandler() {
+        infiniteHandler: function infiniteHandler($state) {
           for (let i = 0, j = this.list.length; i < 3; i += 1) {
             this.list.push(j + i);
           }
@@ -124,9 +124,9 @@ describe('vue-infinite-loading', () => {
           expect(isShow(this.$el.querySelector('.loading-default'))).to.be.true;
 
           if (isComplete) {
-            this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+            $state.complete();
           } else {
-            this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+            $state.loaded();
           }
 
           this.$nextTick(() => {
@@ -186,17 +186,17 @@ describe('vue-infinite-loading', () => {
         direction: 'top',
       },
       methods: {
-        infiniteHandler: function infiniteHandler() {
+        infiniteHandler: function infiniteHandler($state) {
           calledTimes += 1;
 
           if (calledTimes === 1) {
-            this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+            $state.complete();
             this.$nextTick(() => {
               // check no results text
               expect(isShow(this.$el.querySelectorAll('.infinite-status-prompt')[0])).to.be.true;
 
               // reset component
-              this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+              $state.reset();
             });
           } else if (calledTimes === 2) {
             // check spinner
@@ -220,10 +220,10 @@ describe('vue-infinite-loading', () => {
         direction: 'bottom',
       },
       methods: {
-        infiniteHandler: function infiniteHandler() {
+        infiniteHandler: function infiniteHandler($state) {
           this.list.push(this.list.length + 1);
           this.$nextTick(() => {
-            this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+            $state.loaded();
           });
 
           // wait for the container be filled up
@@ -272,7 +272,7 @@ describe('vue-infinite-loading', () => {
         };
       },
       methods: {
-        infiniteHandler: function infiniteHandler() {
+        infiniteHandler: function infiniteHandler($state) {
           calledTimes += 1;
 
           if (calledTimes === 1) {
@@ -280,7 +280,7 @@ describe('vue-infinite-loading', () => {
             this.$parent.currentView = null;
             this.$nextTick(() => {
               // trigger loaded event
-              this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+              $state.loaded();
               this.$nextTick(() => {
                 // doesnot care the loaded event when it be deactivated
                 expect(calledTimes).to.equal(1);
@@ -343,10 +343,10 @@ describe('vue-infinite-loading', () => {
 
     vm = new Vue(Object.assign({}, basicConfig, {
       methods: {
-        infiniteHandler: function infiniteHandler() {
+        infiniteHandler: function infiniteHandler($state) {
           if (calledTimes) {
-            this.$refs.infiniteLoading.$emit('$InfiniteLoading:load');
-            this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+            $state.loaded();
+            $state.complete();
             this.$nextTick(() => {
               // check for no-more result display
               expect(isShow(this.$el.querySelectorAll('.infinite-status-prompt')[1])).to.be.false;
@@ -354,13 +354,13 @@ describe('vue-infinite-loading', () => {
             });
           } else {
             calledTimes += 1;
-            this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+            $state.complete();
             this.$nextTick(() => {
               // check for no-result result display
               expect(isShow(this.$el.querySelectorAll('.infinite-status-prompt')[0])).to.be.false;
 
               // reset component to check no-more status
-              this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+              $state.reset();
             });
           }
         },
