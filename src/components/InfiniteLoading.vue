@@ -16,15 +16,15 @@
 <script>
   /* eslint-disable no-console */
 
-  const spinnerMapping = {
-    bubbles: 'loading-bubbles',
-    circles: 'loading-circles',
-    default: 'loading-default',
-    spiral: 'loading-spiral',
-    waveDots: 'loading-wave-dots',
+  const SPINNERS = {
+    BUBBLES: 'loading-bubbles',
+    CIRCLES: 'loading-circles',
+    DEFAULT: 'loading-default',
+    SPIRAL: 'loading-spiral',
+    WAVEDOTS: 'loading-wave-dots',
   };
-  const warnings = {
-    stateChanger: [
+  const WARNINGS = {
+    STATE_CHANGER: [
       '[Vue-infinite-loading warn]: emit `loaded` and `complete` event through component instance of `$refs` may cause error, so it will be deprecated soon, please use the `$state` argument instead (`$state` just the special `$event` variable):',
       '\ntemplate:',
       '<infinite-loading @infinite="infiniteHandler"></infinite-loading>',
@@ -45,7 +45,7 @@
       '',
       'more details: https://github.com/PeachScript/vue-infinite-loading/issues/57#issuecomment-324370549',
     ].join('\n'),
-    infiniteEvent: '[Vue-infinite-loading warn]: `:on-infinite` property will be deprecated soon, please use `@infinite` event instead.',
+    INFINITE_EVENT: '[Vue-infinite-loading warn]: `:on-infinite` property will be deprecated soon, please use `@infinite` event instead.',
   };
 
   export default {
@@ -62,7 +62,7 @@
     },
     computed: {
       spinnerType() {
-        return spinnerMapping[this.spinner] || spinnerMapping.default;
+        return SPINNERS[(this.spinner || '').toUpperCase()] || SPINNERS.DEFAULT;
       },
       isNoResults: {
         cache: false, // disable cache to fix the problem of get slot text delay
@@ -121,7 +121,7 @@
         }
 
         if (!ev || ev.target !== this) {
-          console.warn(warnings.stateChanger);
+          console.warn(WARNINGS.STATE_CHANGER);
         }
       });
 
@@ -137,7 +137,7 @@
         this.scrollParent.removeEventListener('scroll', this.scrollHandler);
 
         if (!ev || ev.target !== this) {
-          console.warn(warnings.stateChanger);
+          console.warn(WARNINGS.STATE_CHANGER);
         }
       });
 
@@ -150,7 +150,7 @@
       });
 
       if (this.onInfinite) {
-        console.warn(warnings.infiniteEvent);
+        console.warn(WARNINGS.INFINITE_EVENT);
       }
 
       /**
