@@ -38,9 +38,9 @@
         list: []
       },
       methods: {
-        infiniteHandler: function () {
+        infiniteHandler: function ($state) {
           if (this.list.length > 200) {
-            this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+            $state.complete();
           } else {
             setTimeout(function () {
               var temp = [];
@@ -49,7 +49,7 @@
               }
 
               this.list = this.list.concat(temp);
-              this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+              $state.loaded();
             }.bind(this), 1000);
           }
         }
