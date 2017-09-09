@@ -310,20 +310,20 @@ describe('vue-infinite-loading', () => {
     vm.$mount('#app');
   });
 
-  it('should still works properly with the deprecated property `:on-infinite` but through warning', (done) => {
+  it('should still works properly with the deprecated property `:on-infinite` but throw warning', (done) => {
     const originalError = console.warn;
-    let isThroughWarn;
+    let isThrowWarn;
 
     console.warn = (text) => {
       if (text.indexOf('@infinite') > -1) {
-        isThroughWarn = true;
+        isThrowWarn = true;
       }
     };
 
     vm = new Vue(Object.assign({}, basicConfig, {
       methods: {
         onInfinite: function onInfinite() {
-          expect(isThroughWarn).to.be.true;
+          expect(isThrowWarn).to.be.true;
           console.warn = originalError;
           done();
         },
@@ -407,24 +407,24 @@ describe('vue-infinite-loading', () => {
     vm.$mount('#app');
   });
 
-  it('should still works properly with the $refs.component.$emit but through warning', (done) => {
+  it('should still works properly with the $refs.component.$emit but throw warning', (done) => {
     const originalError = console.warn;
-    let throughWarnTimes = 0;
+    let throwWarnTimes = 0;
 
     console.warn = (text) => {
       if (text.indexOf('$state') > -1) {
-        throughWarnTimes += 1;
+        throwWarnTimes += 1;
       }
     };
 
     vm = new Vue(Object.assign({}, basicConfig, {
       methods: {
         infiniteHandler: function infiniteHandler() {
-          if (!throughWarnTimes) {
+          if (!throwWarnTimes) {
             this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
           } else {
             this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
-            expect(throughWarnTimes).to.equal(2);
+            expect(throwWarnTimes).to.equal(2);
             console.warn = originalError;
             done();
           }
