@@ -16,6 +16,8 @@
 <script>
   /* eslint-disable no-console */
 
+  const LOOP_CHECK_TIMEOUT = 1000; // the timeout for check infinite loop
+  const LOOP_CHECK_MAX_CALLS = 10; // the maximum number of continuous calls
   const SPINNERS = {
     BUBBLES: 'loading-bubbles',
     CIRCLES: 'loading-circles',
@@ -47,6 +49,20 @@
     ].join('\n'),
     INFINITE_EVENT: '[Vue-infinite-loading warn]: `:on-infinite` property will be deprecated soon, please use `@infinite` event instead.',
   };
+  const ERRORS = {
+    INFINITE_LOOP: [
+      `[Vue-infinite-loading error]: executed the callback function more than ${LOOP_CHECK_MAX_CALLS} times for a short time, it looks like searched a wrong scroll wrapper that doest not has fixed height or maximum height, please check it. If you want to force to set a element as scroll wrapper ranther than automatic searching, you can do this:`,
+      `
+  <!-- add a special attribute for the real scroll wrapper -->
+  <div infinite-wrapper>
+    ...
+    <!-- set force-use-infinite-wrapper to true -->
+    <infinite-loading force-use-infinite-wrapper="true"></infinite-loading>
+  </div>
+      `,
+      'more details: https://github.com/PeachScript/vue-infinite-loading/issues/55#issuecomment-316934169',
+    ].join('\n'),
+  };
 
   export default {
     data() {
@@ -58,6 +74,9 @@
         isFirstLoad: true, // save the current loading whether it is the first loading
         debounceTimer: null,
         debounceDuration: 100,
+        infiniteLoopChecked: false, // save the status of infinite loop check
+        infiniteLoopTimer: null,
+        continuousCallTimes: 0,
       };
     },
     computed: {
@@ -94,6 +113,7 @@
         type: String,
         default: 'bottom',
       },
+      forceUseInfiniteWrapper: null,
     },
     mounted() {
       this.scrollParent = this.getScrollParent();
@@ -117,7 +137,7 @@
         this.isFirstLoad = false;
 
         if (this.isLoading) {
-          this.$nextTick(this.attemptLoad);
+          this.$nextTick(this.attemptLoad.bind(null, true));
         }
 
         if (!ev || ev.target !== this) {
@@ -181,8 +201,11 @@
     methods: {
       /**
       * attempt trigger load
+      * @param {Boolean} isContinuousCall  the flag of continuous call, it will be true
+      *                                    if this method be called in the `loaded`
+      *                                    event handler
       */
-      attemptLoad() {
+      attemptLoad(isContinuousCall) {
         const currentDistance = this.getCurrentDistance();
 
         if (!this.isComplete && currentDistance <= this.distance) {
@@ -192,6 +215,23 @@
             this.onInfinite.call(null, this.stateChanger);
           } else {
             this.$emit('infinite', this.stateChanger);
+          }
+
+          if (isContinuousCall && !this.forceUseInfiniteWrapper && !this.infiniteLoopChecked) {
+            // check this component whether be in an infinite loop if it is not checked
+            // more details: https://github.com/PeachScript/vue-infinite-loading/issues/55#issuecomment-316934169
+            this.continuousCallTimes += 1; // save the times of calls
+
+            clearTimeout(this.infiniteLoopTimer);
+            this.infiniteLoopTimer = setTimeout(() => {
+              this.infiniteLoopChecked = true;
+            }, LOOP_CHECK_TIMEOUT);
+
+            // throw warning if the times of continuous calls large than the maximum times
+            if (this.continuousCallTimes > LOOP_CHECK_MAX_CALLS) {
+              console.error(ERRORS.INFINITE_LOOP);
+              this.infiniteLoopChecked = true;
+            }
           }
         } else {
           this.isLoading = false;
@@ -229,7 +269,7 @@
 
         if (elm.tagName === 'BODY') {
           result = window;
-        } else if (['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
+        } else if (!this.forceUseInfiniteWrapper && ['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
           result = elm;
         } else if (elm.hasAttribute('infinite-wrapper') || elm.hasAttribute('data-infinite-wrapper')) {
           result = elm;
