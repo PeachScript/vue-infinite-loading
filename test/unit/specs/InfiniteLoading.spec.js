@@ -434,4 +434,81 @@ describe('vue-infinite-loading', () => {
 
     vm.$mount('#app');
   });
+
+  it('should find my forcible element as scroll wrapper when using `force-use-infinite-wrapper` attribute', (done) => {
+    vm = new Vue(Object.assign({}, basicConfig, {
+      template: `
+        <div infinite-wrapper>
+          <div style="overflow: auto;">
+            <div style="overflow: auto;">
+              <ul>
+                <li v-for="item in list" v-text="item"></li>
+              </ul>
+              <infinite-loading
+                :direction="direction"
+                @infinite="infiniteHandler"
+                ref="infiniteLoading"
+                force-use-infinite-wrapper="true"
+                >
+              </infinite-loading>
+            </div>
+          </div>
+        </div>
+      `,
+      methods: {
+        infiniteHandler: function infiniteHandler() {
+          expect(this.$refs.infiniteLoading.scrollParent).to.equal(this.$el);
+          done();
+        },
+      },
+    }));
+
+    vm.$mount('#app');
+  });
+
+  it('should throw error when the component be in a infinite loop caused by a wrapper with unfixed height', (done) => {
+    const originalError = console.error;
+    let isThrowError;
+
+    console.error = (text) => {
+      if (text.indexOf('issues/55') > -1) {
+        isThrowError = true;
+      }
+    };
+
+    vm = new Vue(Object.assign({}, basicConfig, {
+      template: `
+        <div style="overflow: auto; height: auto;">
+          <ul>
+            <li v-for="item in list" v-text="item"></li>
+          </ul>
+          <infinite-loading
+            :direction="direction"
+            @infinite="infiniteHandler"
+            ref="infiniteLoading"
+            >
+          </infinite-loading>
+        </div>
+      `,
+      methods: {
+        infiniteHandler: function infiniteHandler($state) {
+          if (!isThrowError) {
+            this.list.push(this.list.length + 1);
+            $state.loaded();
+          } else {
+            $state.complete();
+            expect(isThrowError).to.be.true;
+            console.error = originalError;
+            // wait for the loop check flag be marked as true
+            setTimeout(() => {
+              expect(this.$refs.infiniteLoading.infiniteLoopChecked).to.be.true;
+              done();
+            }, 1501);
+          }
+        },
+      },
+    }));
+
+    vm.$mount('#app');
+  });
 });
