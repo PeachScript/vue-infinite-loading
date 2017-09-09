@@ -76,7 +76,7 @@ describe('vue-infinite-loading', () => {
         padding: 0;
       }
       ul li {
-        height: 20px;
+        height: 40px;
       }
     `;
 
@@ -97,6 +97,7 @@ describe('vue-infinite-loading', () => {
   });
 
   afterEach(() => {
+    basicConfig.data.list = [];
     // destroy Vue model after each case complete
     vm.$el.parentNode.removeChild(vm.$el);
 
