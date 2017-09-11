@@ -1,111 +1,54 @@
-.loading-circles{
+.loading-circles {
   @size: 5px;
   @radius: 12px;
-  @shallow: 8%;
-  @c-base: #505050;
-  position: relative;
-  &:before{
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-top: -@size/2;
-    margin-left: -@size/2;
+  @shallow: 56%;
+  @c-basic: #505050;
+  @{deep} .circle-item {
     width: @size;
     height: @size;
-    border-radius: 50%;
-    animation: linear loading-circles .75s infinite;
+    animation: loading-circles linear .75s infinite;
+    &:first-child {
+      margin-top: -@size/2 + -@radius;
+      margin-left: -@size/2;
+    }
+    &:nth-child(2) {
+      margin-top: -@size/2 + -@radius * .73;
+      margin-left: -@size/2 + @radius * .73;
+    }
+    &:nth-child(3) {
+      margin-top: -@size/2;
+      margin-left: -@size/2 + @radius;
+    }
+    &:nth-child(4) {
+      margin-top: -@size/2 + @radius * .73;
+      margin-left: -@size/2 + @radius * .73;
+    }
+    &:nth-child(5) {
+      margin-top: -@size/2 + @radius;
+      margin-left: -@size/2;
+    }
+    &:nth-child(6) {
+      margin-top: -@size/2 + @radius * .73;
+      margin-left: -@size/2 + -@radius * .73;
+    }
+    &:nth-child(7) {
+      margin-top: -@size/2;
+      margin-left: -@size/2 + -@radius;
+    }
+    &:last-child {
+      margin-top: -@size/2 + -@radius * .73;
+      margin-left: -@size/2 + -@radius * .73;
+    }
   }
-  @keyframes loading-circles{
-    0%{
-      box-shadow: 0 -@radius 0 @c-base,
-                  @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow),
-                  @radius 0 0 lighten(@c-base, @shallow * 2),
-                  @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 3),
-                  0 @radius 0 lighten(@c-base, @shallow * 4),
-                  -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 5),
-                  -@radius 0 0 lighten(@c-base, @shallow * 6),
-                  -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 7);
+  @keyframes loading-circles {
+    0% {
+      background: lighten(@c-basic, @shallow);
     }
-    12.5%{
-      box-shadow: 0 -@radius 0 lighten(@c-base, @shallow * 7),
-                  @radius * 0.71 -@radius * 0.71 0 @c-base,
-                  @radius 0 0 lighten(@c-base, @shallow * 1),
-                  @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 2),
-                  0 @radius 0 lighten(@c-base, @shallow * 3),
-                  -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 4),
-                  -@radius 0 0 lighten(@c-base, @shallow * 5),
-                  -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 6);
+    90% {
+      background: @c-basic;
     }
-    25%{
-      box-shadow: 0 -@radius 0 lighten(@c-base, @shallow * 6),
-                  @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 7),
-                  @radius 0 0 @c-base,
-                  @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 1),
-                  0 @radius 0 lighten(@c-base, @shallow * 2),
-                  -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 3),
-                  -@radius 0 0 lighten(@c-base, @shallow * 4),
-                  -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 5);
-    }
-    37.5%{
-      box-shadow: 0 -@radius 0 lighten(@c-base, @shallow * 5),
-                  @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 6),
-                  @radius 0 0 lighten(@c-base, @shallow * 7),
-                  @radius * 0.71 @radius * 0.71 0 @c-base,
-                  0 @radius 0 lighten(@c-base, @shallow * 1),
-                  -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 2),
-                  -@radius 0 0 lighten(@c-base, @shallow * 3),
-                  -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 4);
-    }
-    50%{
-      box-shadow: 0 -@radius 0 lighten(@c-base, @shallow * 4),
-                  @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 5),
-                  @radius 0 0 lighten(@c-base, @shallow * 6),
-                  @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 7),
-                  0 @radius 0 @c-base,
-                  -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 1),
-                  -@radius 0 0 lighten(@c-base, @shallow * 2),
-                  -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 3);
-    }
-    62.5%{
-      box-shadow: 0 -@radius 0 lighten(@c-base, @shallow * 3),
-                  @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 4),
-                  @radius 0 0 lighten(@c-base, @shallow * 5),
-                  @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 6),
-                  0 @radius 0 lighten(@c-base, @shallow * 7),
-                  -@radius * 0.71 @radius * 0.71 0 @c-base,
-                  -@radius 0 0 lighten(@c-base, @shallow * 1),
-                  -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 2);
-    }
-    75%{
-      box-shadow: 0 -@radius 0 lighten(@c-base, @shallow * 2),
-                  @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 3),
-                  @radius 0 0 lighten(@c-base, @shallow * 4),
-                  @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 5),
-                  0 @radius 0 lighten(@c-base, @shallow * 6),
-                  -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 7),
-                  -@radius 0 0 @c-base,
-                  -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 1);
-    }
-    87.5%{
-      box-shadow: 0 -@radius 0 lighten(@c-base, @shallow * 1),
-                  @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 2),
-                  @radius 0 0 lighten(@c-base, @shallow * 3),
-                  @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 4),
-                  0 @radius 0 lighten(@c-base, @shallow * 5),
-                  -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 6),
-                  -@radius 0 0 lighten(@c-base, @shallow * 7),
-                  -@radius * 0.71 -@radius * 0.71 0 @c-base;
-    }
-    100%{
-      box-shadow: 0 -@radius 0 @c-base,
-                  @radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow),
-                  @radius 0 0 lighten(@c-base, @shallow * 2),
-                  @radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 3),
-                  0 @radius 0 lighten(@c-base, @shallow * 4),
-                  -@radius * 0.71 @radius * 0.71 0 lighten(@c-base, @shallow * 5),
-                  -@radius 0 0 lighten(@c-base, @shallow * 6),
-                  -@radius * 0.71 -@radius * 0.71 0 lighten(@c-base, @shallow * 7);
+    100% {
+      background: lighten(@c-basic, @shallow);
     }
   }
 }

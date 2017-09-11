@@ -2,7 +2,7 @@
   <div class="infinite-loading-container">
     <div v-show="isLoading">
       <slot name="spinner">
-        <i :class="spinnerType"></i>
+        <component :is="spinnerView"></component>
       </slot>
     </div>
     <div class="infinite-status-prompt" v-show="isNoResults">
@@ -19,11 +19,47 @@
   const LOOP_CHECK_TIMEOUT = 1000; // the timeout for check infinite loop
   const LOOP_CHECK_MAX_CALLS = 10; // the maximum number of continuous calls
   const SPINNERS = {
-    BUBBLES: 'loading-bubbles',
-    CIRCLES: 'loading-circles',
-    DEFAULT: 'loading-default',
-    SPIRAL: 'loading-spiral',
-    WAVEDOTS: 'loading-wave-dots',
+    BUBBLES: {
+      template: `
+<span class="loading-bubbles">
+  <span class="bubble-item"></span>
+  <span class="bubble-item"></span>
+  <span class="bubble-item"></span>
+  <span class="bubble-item"></span>
+  <span class="bubble-item"></span>
+  <span class="bubble-item"></span>
+  <span class="bubble-item"></span>
+  <span class="bubble-item"></span>
+</span>
+      `,
+    },
+    CIRCLES: {
+      template: `<span class="loading-circles">
+  <span class="circle-item"></span>
+  <span class="circle-item"></span>
+  <span class="circle-item"></span>
+  <span class="circle-item"></span>
+  <span class="circle-item"></span>
+  <span class="circle-item"></span>
+  <span class="circle-item"></span>
+  <span class="circle-item"></span>
+</span>`,
+    },
+    DEFAULT: {
+      template: '<i class="loading-default"></i>',
+    },
+    SPIRAL: {
+      template: '<i class="loading-spiral"></i>',
+    },
+    WAVEDOTS: {
+      template: `<span class="loading-wave-dots">
+  <span class="wave-item"></span>
+  <span class="wave-item"></span>
+  <span class="wave-item"></span>
+  <span class="wave-item"></span>
+  <span class="wave-item"></span>
+</span>`,
+    },
   };
   const WARNINGS = {
     STATE_CHANGER: [
@@ -80,7 +116,7 @@
       };
     },
     computed: {
-      spinnerType() {
+      spinnerView() {
         return SPINNERS[(this.spinner || '').toUpperCase()] || SPINNERS.DEFAULT;
       },
       isNoResults: {
@@ -288,10 +324,10 @@
 <style lang="less" scoped>
   @import '../styles/spinner';
 
-  .infinite-loading-container{
+  .infinite-loading-container {
     clear: both;
     text-align: center;
-    *[class^=loading-]{
+    @{deep} *[class^=loading-] {
       @size: 28px;
       display: inline-block;
       margin: 15px 0;
@@ -303,7 +339,7 @@
     }
   }
 
-  .infinite-status-prompt{
+  .infinite-status-prompt {
     color: #666;
     font-size: 14px;
     text-align: center;
