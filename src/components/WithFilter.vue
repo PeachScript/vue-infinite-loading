@@ -1,6 +1,7 @@
 <template>
   <h3>Use with filter</h3>
   <p>On basis of the Hacker News case, we create a select as a filter into the header, the list will be reload when we changed the filter.</p>
+  <p v-show="$parent.docVersion >= 2.2">Before that, we need to set a <code>ref</code> attribute on <code>InfiniteLoading</code> component to <code>$emit</code> reset event for it</p>
 
   <h4>Template</h4>
   <pre v-highlightjs v-if="$parent.docVersion < 2">&lt;div class=&quot;hacker-news-list&quot;&gt;
@@ -40,7 +41,7 @@
     &lt;/span&gt;
   &lt;/infinite-loading&gt;
 &lt;/div&gt;</pre>
-  <pre v-highlightjs v-if="$parent.docVersion >= 2">&lt;div class=&quot;hacker-news-list&quot;&gt;
+  <pre v-highlightjs v-if="$parent.docVersion >= 2 && $parent.docVersion < 2.2">&lt;div class=&quot;hacker-news-list&quot;&gt;
   &lt;div class=&quot;hacker-news-header&quot;&gt;
     &lt;a target=&quot;_blank&quot; href=&quot;http://www.ycombinator.com/&quot;&gt;
       &lt;img src=&quot;https://news.ycombinator.com/y18.gif&quot;&gt;
@@ -72,6 +73,43 @@
     &lt;/p&gt;
   &lt;/div&gt;
   &lt;infinite-loading :on-infinite=&quot;onInfinite&quot; ref=&quot;infiniteLoading&quot;&gt;
+    &lt;span slot=&quot;no-more&quot;&gt;
+      There is no more Hacker News :(
+    &lt;/span&gt;
+  &lt;/infinite-loading&gt;
+&lt;/div&gt;</pre>
+  <pre v-highlightjs v-if="$parent.docVersion >= 2.2">&lt;div class=&quot;hacker-news-list&quot;&gt;
+  &lt;div class=&quot;hacker-news-header&quot;&gt;
+    &lt;a target=&quot;_blank&quot; href=&quot;http://www.ycombinator.com/&quot;&gt;
+      &lt;img src=&quot;https://news.ycombinator.com/y18.gif&quot;&gt;
+    &lt;/a&gt;
+    &lt;span&gt;Hacker News&lt;/span&gt;
+    &lt;select v-model=&quot;tag&quot; @change=&quot;changeFilter()&quot;&gt;
+      &lt;option value=&quot;story&quot;&gt;Story&lt;/option&gt;
+      &lt;option value=&quot;poll&quot;&gt;Poll&lt;/option&gt;
+      &lt;option value=&quot;show_hn&quot;&gt;Show hn&lt;/option&gt;
+      &lt;option value=&quot;ask_hn&quot;&gt;Ask hn&lt;/option&gt;
+      &lt;option value=&quot;front_page&quot;&gt;Front page&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;hacker-news-item&quot; v-for=&quot;(item, key) in list&quot;&gt;
+    &lt;span class=&quot;num&quot; v-text=&quot;key + 1&quot;&gt;&lt;/span&gt;
+    &lt;p&gt;
+      &lt;a target=&quot;_blank&quot; :href=&quot;item.url&quot; v-text=&quot;item.title&quot;&gt;&lt;/a&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;small&gt;
+        &lt;span v-text=&quot;item.points&quot;&gt;&lt;/span&gt;
+        points by
+        &lt;a target=&quot;_blank&quot; :href=&quot;'https://news.ycombinator.com/user?id=' + item.author&quot;
+           v-text=&quot;item.author&quot;&gt;&lt;/a&gt;
+        |
+        &lt;a target=&quot;_blank&quot; :href=&quot;'https://news.ycombinator.com/item?id=' + item.objectID&quot;
+           v-text=&quot;item.num_comments + ' comments'&quot;&gt;&lt;/a&gt;
+      &lt;/small&gt;
+    &lt;/p&gt;
+  &lt;/div&gt;
+  &lt;infinite-loading @infinite=&quot;infiniteHandler&quot; ref=&quot;infiniteLoading&quot;&gt;
     &lt;span slot=&quot;no-more&quot;&gt;
       There is no more Hacker News :(
     &lt;/span&gt;
@@ -156,7 +194,8 @@ export default {
     InfiniteLoading,
   },
 };</pre>
-  <pre v-highlightjs v-if="$parent.docVersion >= 2">import InfiniteLoading from 'vue-infinite-loading';
+  <pre v-highlightjs v-if="$parent.docVersion >= 2 && $parent.docVersion < 2.2">import InfiniteLoading from 'vue-infinite-loading';
+import axios from 'axios';
 
 const api = 'http://hn.algolia.com/api/v1/search_by_date';
 
@@ -169,7 +208,7 @@ export default {
   },
   methods: {
     onInfinite() {
-      this.$http.get(api, {
+      axios.get(api, {
         params: {
           tags: this.tag,
           page: this.list.length / 20 + 1,
@@ -183,6 +222,48 @@ export default {
           }
         } else {
           this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+        }
+      });
+    },
+    changeFilter() {
+      this.list = [];
+      this.$nextTick(() =&gt; {
+        this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+      });
+    },
+  },
+  components: {
+    InfiniteLoading,
+  },
+};</pre>
+  <pre v-highlightjs v-if="$parent.docVersion >= 2.2">import InfiniteLoading from 'vue-infinite-loading';
+import axios from 'axios';
+
+const api = 'http://hn.algolia.com/api/v1/search_by_date';
+
+export default {
+  data() {
+    return {
+      list: [],
+      tag: 'story',
+    };
+  },
+  methods: {
+    infiniteHandler($state) {
+      axios.get(api, {
+        params: {
+          tags: this.tag,
+          page: this.list.length / 20 + 1,
+        },
+      }).then(res =&gt; res.json()).then((data) =&gt; {
+        if (data.hits.length) {
+          this.list = this.list.concat(data.hits);
+          $state.loaded();
+          if (this.list.length / 20 === 10) {
+            $state.complete();
+          }
+        } else {
+          $state.complete();
         }
       });
     },
