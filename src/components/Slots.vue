@@ -6,7 +6,7 @@
   <span v-text="'{{'"></span> Your content <span v-text="'}}'"></span>
 &lt;/span&gt;</pre>
   <div v-show="$parent.docVersion >= 2.2">
-    <p>If you don't like any one of them, you can set a blank slot to disable it:</p>
+    <p>If you don't need any one of them, you can set a blank slot to disable it:</p>
     <pre>
   &lt;span slot=&quot;<span v-text="'{{'"></span> slot name <span v-text="'}}'"></span>&quot;&gt;&lt;/span&gt;</pre>
   </div>
