@@ -5,6 +5,11 @@
 &lt;span slot=&quot;<span v-text="'{{'"></span> slot name <span v-text="'}}'"></span>&quot;&gt;
   <span v-text="'{{'"></span> Your content <span v-text="'}}'"></span>
 &lt;/span&gt;</pre>
+  <div v-show="$parent.docVersion >= 2.2">
+    <p>If you don't like any one of them, you can set a blank slot to disable it:</p>
+    <pre>
+  &lt;span slot=&quot;<span v-text="'{{'"></span> slot name <span v-text="'}}'"></span>&quot;&gt;&lt;/span&gt;</pre>
+  </div>
 
   <h4>no-results</h4>
   <p v-show="$parent.docVersion < 1">This content will be display when the <code>InfiniteLoading</code> component received <code>$InfiniteLoading:noResults</code> event.</p>
