@@ -4,11 +4,11 @@
 ### Vue.js version
 
 
-### What is exptected?
+### What is expected?
 
 
 ### What is actually happening?
 
 
-### How to repreduce this problem?
+### How to reproduce this problem?
 
