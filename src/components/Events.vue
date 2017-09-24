@@ -12,9 +12,9 @@
     <p>The <code>complete</code> method use to complete a full infinite load, then this component will no longer handle any scroll action. If the <code>loaded</code> method never be called when you call the <code>complete</code> method, this component will display the no results message for user, if not, it will display the no more message for user, and you can customize their content by <a v-link="{ name: 'slots' }">slot</a>.</p>
     <p>The <code>reset</code> method is the shortcut of the <code>reset</code> event in the bellow.</p>
     <pre v-highlightjs>infiniteHandler($state) {
-  axios.get(url, (res) =&gt; {
-    if (res.data) {
-      this.list = this.list.concat(res.data);
+  axios.get(url, ({ data }) =&gt; {
+    if (data) {
+      this.list = this.list.concat(data);
       $state.loaded();
     } else {
       $state.complete();
@@ -53,9 +53,9 @@
   });
 }</pre>
       <pre v-highlightjs v-if="$parent.docVersion >= 2">onInfinite() {
-  axios.get(url, (res) =&gt; {
-    if (res.data) {
-      this.list = this.list.concat(res.data);
+  axios.get(url, ({ data }) =&gt; {
+    if (data) {
+      this.list = this.list.concat(data);
       this.$refs[your ref attirbute's value].$emit('$InfiniteLoading:loaded');
     } else {
       this.$refs[your ref attirbute's value].$emit('$InfiniteLoading:complete');

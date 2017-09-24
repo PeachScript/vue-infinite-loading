@@ -213,7 +213,7 @@ export default {
           tags: this.tag,
           page: this.list.length / 20 + 1,
         },
-      }).then(res =&gt; res.json()).then((data) =&gt; {
+      }).then(({ data }) =&gt; {
         if (data.hits.length) {
           this.list = this.list.concat(data.hits);
           this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
@@ -255,7 +255,7 @@ export default {
           tags: this.tag,
           page: this.list.length / 20 + 1,
         },
-      }).then(res =&gt; res.json()).then((data) =&gt; {
+      }).then(({ data }) =&gt; {
         if (data.hits.length) {
           this.list = this.list.concat(data.hits);
           $state.loaded();
