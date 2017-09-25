@@ -20,45 +20,64 @@
   const LOOP_CHECK_MAX_CALLS = 10; // the maximum number of continuous calls
   const SPINNERS = {
     BUBBLES: {
-      template: `
-<span class="loading-bubbles">
-  <span class="bubble-item"></span>
-  <span class="bubble-item"></span>
-  <span class="bubble-item"></span>
-  <span class="bubble-item"></span>
-  <span class="bubble-item"></span>
-  <span class="bubble-item"></span>
-  <span class="bubble-item"></span>
-  <span class="bubble-item"></span>
-</span>
-      `,
+      render(createElement) {
+        return createElement('span', {
+          attrs: {
+            class: 'loading-bubbles',
+          },
+        }, Array.apply(Array, Array(8)).map(() => createElement('span', {
+          attrs: {
+            class: 'bubble-item',
+          },
+        })),
+        );
+      },
     },
     CIRCLES: {
-      template: `<span class="loading-circles">
-  <span class="circle-item"></span>
-  <span class="circle-item"></span>
-  <span class="circle-item"></span>
-  <span class="circle-item"></span>
-  <span class="circle-item"></span>
-  <span class="circle-item"></span>
-  <span class="circle-item"></span>
-  <span class="circle-item"></span>
-</span>`,
+      render(createElement) {
+        return createElement('span', {
+          attrs: {
+            class: 'loading-circles',
+          },
+        }, Array.apply(Array, Array(8)).map(() => createElement('span', {
+          attrs: {
+            class: 'circle-item',
+          },
+        })),
+        );
+      },
     },
     DEFAULT: {
-      template: '<i class="loading-default"></i>',
+      render(createElement) {
+        return createElement('i', {
+          attrs: {
+            class: 'loading-default',
+          },
+        });
+      },
     },
     SPIRAL: {
-      template: '<i class="loading-spiral"></i>',
+      render(createElement) {
+        return createElement('i', {
+          attrs: {
+            class: 'loading-spiral',
+          },
+        });
+      },
     },
     WAVEDOTS: {
-      template: `<span class="loading-wave-dots">
-  <span class="wave-item"></span>
-  <span class="wave-item"></span>
-  <span class="wave-item"></span>
-  <span class="wave-item"></span>
-  <span class="wave-item"></span>
-</span>`,
+      render(createElement) {
+        return createElement('span', {
+          attrs: {
+            class: 'loading-wave-dots',
+          },
+        }, Array.apply(Array, Array(5)).map(() => createElement('span', {
+          attrs: {
+            class: 'wave-item',
+          },
+        })),
+        );
+      },
     },
   };
   const WARNINGS = {
