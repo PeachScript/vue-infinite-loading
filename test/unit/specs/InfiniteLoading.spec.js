@@ -38,6 +38,7 @@ describe('vue-infinite-loading', () => {
       list: [],
       isDivScroll: false,
       direction: 'bottom',
+      spinner: 'default',
     },
     template: `
       <div :style="{ overflow: isDivScroll ? 'auto' : 'visible' }">
@@ -48,6 +49,7 @@ describe('vue-infinite-loading', () => {
           :direction="direction"
           @infinite="infiniteHandler"
           ref="infiniteLoading"
+          :spinner="spinner"
           >
         </infinite-loading>
       </div>
@@ -147,12 +149,13 @@ describe('vue-infinite-loading', () => {
     vm.$mount('#app');
   });
 
-  it('should not trigger load again before the last load is complete\n      (use div as the container)', (done) => {
+  it('should not trigger load again before the last load is complete\n      (use div as the container and spiral spinner)', (done) => {
     vm = new Vue(Object.assign({}, basicConfig, {
       data: {
         list: [],
         isDivScroll: true,
         direction: 'bottom',
+        spinner: 'spiral',
       },
       methods: {
         infiniteHandler: function infiniteHandler() {
@@ -177,7 +180,7 @@ describe('vue-infinite-loading', () => {
     vm.$mount('#app');
   });
 
-  it('should works again when reset it after a completion\n      (use top direction)', (done) => {
+  it('should works again when reset it after a completion\n      (use top direction and bubbles spinner)', (done) => {
     let calledTimes = 0;
 
     vm = new Vue(Object.assign({}, basicConfig, {
@@ -185,6 +188,7 @@ describe('vue-infinite-loading', () => {
         list: [],
         isDivScroll: false,
         direction: 'top',
+        spinner: 'bubbles',
       },
       methods: {
         infiniteHandler: function infiniteHandler($state) {
@@ -201,7 +205,7 @@ describe('vue-infinite-loading', () => {
             });
           } else if (calledTimes === 2) {
             // check spinner
-            expect(isShow(this.$el.querySelector('.loading-default'))).to.be.true;
+            expect(isShow(this.$el.querySelector('.loading-bubbles'))).to.be.true;
             done();
           }
         },
@@ -211,7 +215,7 @@ describe('vue-infinite-loading', () => {
     vm.$mount('#app');
   });
 
-  it('should always load data until fill up the container\n      (use div as the container)', (done) => {
+  it('should always load data until fill up the container\n      (use div as the container and circles spinner)', (done) => {
     let timer;
 
     vm = new Vue(Object.assign({}, basicConfig, {
@@ -219,6 +223,7 @@ describe('vue-infinite-loading', () => {
         list: [],
         isDivScroll: true,
         direction: 'bottom',
+        spinner: 'circles',
       },
       methods: {
         infiniteHandler: function infiniteHandler($state) {
@@ -270,6 +275,7 @@ describe('vue-infinite-loading', () => {
           list: [],
           isDivScroll: true,
           direction: 'top',
+          spinner: 'default',
         };
       },
       methods: {
@@ -380,12 +386,13 @@ describe('vue-infinite-loading', () => {
     vm.$mount('#app');
   });
 
-  it('should debounce properly for the scroll event handler\n      (use div as the container)', (done) => {
+  it('should debounce properly for the scroll event handler\n      (use div as the container and wave dots spinner)', (done) => {
     vm = new Vue(Object.assign({}, basicConfig, {
       data: {
         list: [...new Array(20).join('1').split('')],
         isDivScroll: true,
         direction: 'bottom',
+        spinner: 'waveDots',
       },
       mounted: function mounted() {
         const scrollParent = this.$refs.infiniteLoading.scrollParent;
