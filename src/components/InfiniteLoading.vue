@@ -1,9 +1,7 @@
 <template>
   <div class="infinite-loading-container">
     <div v-show="isLoading">
-      <slot name="spinner">
-        <component :is="spinnerView"></component>
-      </slot>
+      <spinner :spinner="spinner" />
     </div>
     <div class="infinite-status-prompt" v-show="isNoResults">
       <slot name="no-results">No results :(</slot>
@@ -15,71 +13,10 @@
 </template>
 <script>
   /* eslint-disable no-console */
+  import Spinner from './Spinner';
 
   const LOOP_CHECK_TIMEOUT = 1000; // the timeout for check infinite loop
   const LOOP_CHECK_MAX_CALLS = 10; // the maximum number of continuous calls
-  const SPINNERS = {
-    BUBBLES: {
-      render(createElement) {
-        return createElement('span', {
-          attrs: {
-            class: 'loading-bubbles',
-          },
-        }, Array.apply(Array, Array(8)).map(() => createElement('span', {
-          attrs: {
-            class: 'bubble-item',
-          },
-        })),
-        );
-      },
-    },
-    CIRCLES: {
-      render(createElement) {
-        return createElement('span', {
-          attrs: {
-            class: 'loading-circles',
-          },
-        }, Array.apply(Array, Array(8)).map(() => createElement('span', {
-          attrs: {
-            class: 'circle-item',
-          },
-        })),
-        );
-      },
-    },
-    DEFAULT: {
-      render(createElement) {
-        return createElement('i', {
-          attrs: {
-            class: 'loading-default',
-          },
-        });
-      },
-    },
-    SPIRAL: {
-      render(createElement) {
-        return createElement('i', {
-          attrs: {
-            class: 'loading-spiral',
-          },
-        });
-      },
-    },
-    WAVEDOTS: {
-      render(createElement) {
-        return createElement('span', {
-          attrs: {
-            class: 'loading-wave-dots',
-          },
-        }, Array.apply(Array, Array(5)).map(() => createElement('span', {
-          attrs: {
-            class: 'wave-item',
-          },
-        })),
-        );
-      },
-    },
-  };
   const WARNINGS = {
     STATE_CHANGER: [
       '[Vue-infinite-loading warn]: emit `loaded` and `complete` event through component instance of `$refs` may cause error, so it will be deprecated soon, please use the `$state` argument instead (`$state` just the special `$event` variable):',
@@ -134,10 +71,10 @@
         continuousCallTimes: 0,
       };
     },
+    components: {
+      Spinner,
+    },
     computed: {
-      spinnerView() {
-        return SPINNERS[(this.spinner || '').toUpperCase()] || SPINNERS.DEFAULT;
-      },
       isNoResults: {
         cache: false, // disable cache to fix the problem of get slot text delay
         get() {
@@ -342,7 +279,7 @@
   };
 </script>
 <style lang="less" scoped>
-  @import '../styles/spinner';
+  @deep: ~'>>>';
 
   .infinite-loading-container {
     clear: both;
