@@ -1,7 +1,9 @@
 <template>
   <div class="infinite-loading-container">
     <div v-show="isLoading">
-      <spinner :spinner="spinner" />
+      <slot name="spinner">
+        <spinner :spinner="spinner" />
+      </slot>
     </div>
     <div class="infinite-status-prompt" v-show="isNoResults">
       <slot name="no-results">No results :(</slot>

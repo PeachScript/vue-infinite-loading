@@ -345,6 +345,24 @@ describe('vue-infinite-loading', () => {
     vm.$mount('#app');
   });
 
+  it('should interpolate custom spinner slot', (done) => {
+    vm = new Vue(Object.assign({}, basicConfig, {
+      mounted: function mounted() {
+        expect(this.$el.querySelector('.icon-spinner')).to.be.not.null;
+        done();
+      },
+      template: `
+        <infinite-loading>
+          <div slot="spinner">
+            <i class="icon-spinner"></i>
+          </div>
+        </infinite-loading>
+      `,
+    }));
+
+    vm.$mount('#app');
+  });
+
   it('should support hide load result through blank slots', (done) => {
     let calledTimes = 0;
 
