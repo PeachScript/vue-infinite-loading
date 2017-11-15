@@ -59,6 +59,7 @@
   };
 
   export default {
+    name: 'InfiniteLoading',
     data() {
       return {
         scrollParent: null,
