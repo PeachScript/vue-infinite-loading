@@ -182,6 +182,13 @@
           this.$emit('$InfiniteLoading:reset', { target: this });
         },
       };
+
+      /**
+       * watch for the `force-use-infinite-wrapper` property
+       */
+      this.$watch('forceUseInfiniteWrapper', () => {
+        this.scrollParent = this.getScrollParent();
+      });
     },
     /**
      * To adapt to keep-alive feature, but only work on Vue 2.2.0 and above, see: https://vuejs.org/v2/api/#keep-alive
