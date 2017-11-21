@@ -68,7 +68,7 @@
         isComplete: false,
         isFirstLoad: true, // save the current loading whether it is the first loading
         debounceTimer: null,
-        debounceDuration: 100,
+        debounceDuration: 50,
         infiniteLoopChecked: false, // save the status of infinite loop check
         infiniteLoopTimer: null,
         continuousCallTimes: 0,
