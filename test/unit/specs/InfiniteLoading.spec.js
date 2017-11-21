@@ -249,12 +249,12 @@ describe('vue-infinite-loading', () => {
     vm.$mount('#app');
   });
 
-  it('should works properly with scroll plugins through the `infinite-wrapper` attribute', (done) => {
+  it('should works properly with scroll plugins through the `infinite-wrapper` property', (done) => {
     const app = document.getElementById('app');
     const wrapper = document.createElement('div');
 
     app.appendChild(wrapper);
-    app.setAttribute('infinite-wrapper', ''); // add `infinite-wrapper` attribute for app container
+    app.setAttribute('infinite-wrapper', ''); // add `infinite-wrapper` property for app container
     vm = new Vue(Object.assign({}, basicConfig, {
       methods: {
         infiniteHandler: function infiniteHandler() {
@@ -460,7 +460,7 @@ describe('vue-infinite-loading', () => {
     vm.$mount('#app');
   });
 
-  it('should find my forcible element as scroll wrapper when using `force-use-infinite-wrapper` attribute', (done) => {
+  it('should find my forcible element as scroll wrapper when using `force-use-infinite-wrapper` property', (done) => {
     vm = new Vue(Object.assign({}, basicConfig, {
       template: `
         <div infinite-wrapper>
@@ -531,6 +531,36 @@ describe('vue-infinite-loading', () => {
             }, 1501);
           }
         },
+      },
+    }));
+
+    vm.$mount('#app');
+  });
+
+  it('should search scroll wrapper again when change the `force-use-infinite-wrapper` property', (done) => {
+    vm = new Vue(Object.assign({}, basicConfig, {
+      data: {
+        forceUseInfiniteWrapper: true,
+      },
+      template: `
+        <div infinite-wrapper>
+          <div style="overflow: auto;">
+            <infinite-loading
+              :force-use-infinite-wrapper="forceUseInfiniteWrapper"
+              @infinite="infiniteHandler"
+              ref="infiniteLoading"
+              >
+            </infinite-loading>
+          </div>
+        </div>
+      `,
+      mounted: function mounted() {
+        expect(this.$refs.infiniteLoading.scrollParent).to.equal(this.$el);
+        this.forceUseInfiniteWrapper = false;
+        this.$nextTick(() => {
+          expect(this.$refs.infiniteLoading.scrollParent).to.equal(this.$el.querySelector('div'));
+          done();
+        });
       },
     }));
 
