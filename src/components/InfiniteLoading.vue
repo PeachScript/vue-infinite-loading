@@ -274,7 +274,9 @@
           result = elm;
         } else if (elm.hasAttribute('infinite-wrapper') || elm.hasAttribute('data-infinite-wrapper')) {
           result = elm;
-        } else if (elm.tagName === 'BODY') {
+        }
+
+        if (elm.tagName === 'BODY') {
           result = window;
         }
 
