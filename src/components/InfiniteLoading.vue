@@ -270,14 +270,12 @@
       getScrollParent(elm = this.$el) {
         let result;
 
-        if (!this.forceUseInfiniteWrapper && ['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
+        if (elm.tagName === 'BODY') {
+          result = window;
+        } else if (!this.forceUseInfiniteWrapper && ['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
           result = elm;
         } else if (elm.hasAttribute('infinite-wrapper') || elm.hasAttribute('data-infinite-wrapper')) {
           result = elm;
-        }
-
-        if (elm.tagName === 'BODY') {
-          result = window;
         }
 
         return result || this.getScrollParent(elm.parentNode);
