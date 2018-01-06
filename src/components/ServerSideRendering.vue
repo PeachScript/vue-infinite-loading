@@ -20,7 +20,7 @@ ReferenceError: window is not defined
   <ol>
     <li>
       use
-      <pre v-highlightjs>import InfiniteLoading from 'vue-infinite-loading/src/components/Infiniteloading.vue';</pre>
+      <pre v-highlightjs>import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading.vue';</pre>
       instead of
       <pre v-highlightjs>import InfiniteLoading from 'vue-infinite-loading';</pre></li>
     <li><code>npm install less less-loader --save-dev</code> if you have not installed them.</li>

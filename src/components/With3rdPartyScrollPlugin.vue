@@ -164,5 +164,5 @@ export default {
     InfiniteLoading,
   },
 };</pre>
-<p>But is an ugly way, so if you have any good idea to solve it, please feedback to me in <a target="_blank" href="https://github.com/PeachScript/vue-infinite-loading/issues/44">this issue</a>, thank you very much!</p>
+<p>But this is an ugly way, so if you have any good idea to solve it, please feedback to me in <a target="_blank" href="https://github.com/PeachScript/vue-infinite-loading/issues/44">this issue</a>, thank you very much!</p>
 </template>
