@@ -209,6 +209,7 @@
     height: 455px;
     border: 1px solid #ccc;
     overflow: auto;
+    overscroll-behavior: contain;
   }
   .basic-list-item{
     margin: 0;
