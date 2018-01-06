@@ -43,10 +43,7 @@
     <demo-phone></demo-phone>
     <div class="content">
       <div class="warning-prompt" v-show="docVersion < 2">
-        Notice: This version only can be used with <strong>Vue.js 1.0</strong>, if you want to use this plugin with Vue.js 2.0, <a href="javascript:;" @click="docVersion = 2.1">switch to v2.1</a>.
-      </div>
-      <div class="warning-prompt" v-show="docVersion >= 2">
-        Notice: This version only can be used with <strong>Vue.js 2.0</strong>, if you want to use this plugin with Vue.js 1.0, <a href="javascript:;" @click="docVersion = 1.3">switch to v1.3</a>.
+        Notice: This version only can be used with <strong>Vue.js 1.0</strong>, if you want to use this plugin with Vue.js 2.0, <a href="javascript:;" @click="docVersion = 2.2">switch to v2.2</a>.
       </div>
       <router-view></router-view>
     </div>
