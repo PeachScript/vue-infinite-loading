@@ -37,6 +37,12 @@ const routes = [
         label: '3rd-Party Scroll Plugin',
         version: 2.1,
       },
+      {
+        path: '/trigger-manually',
+        name: 'triggerManually',
+        label: 'Trigger manually',
+        version: 1,
+      },
     ],
   },
   {

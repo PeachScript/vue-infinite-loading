@@ -5,7 +5,7 @@
         <p class="basic-list-item" v-for="item in list" v-text="item"></p>
         <infinite-loading :on-infinite="onInfinite"></infinite-loading>
       </div>
-      <div class="hacker-news-list" v-if="['hackerNews', 'withFilter'].indexOf(demoType) > -1">
+      <div class="hacker-news-list" v-if="['hackerNews', 'withFilter', 'manualLoad'].indexOf(demoType) > -1">
         <div class="hacker-news-header">
           <a target="_blank" href="http://www.ycombinator.com/"><img src="https://news.ycombinator.com/y18.gif"></a>
           <span>Hacker News</span>
@@ -22,7 +22,8 @@
           <p><a target="_blank" :href="item.url" v-text="item.title"></a></p>
           <p><small>{{ item.points }} points by <a target="_blank" :href="'https://news.ycombinator.com/user?id=' + item.author" v-text="item.author"></a> | <a target="_blank" :href="'https://news.ycombinator.com/item?id=' + item.objectID" v-text="item.num_comments + ' comments'"></a></small></p>
         </div>
-        <infinite-loading :on-infinite="onInfinite">
+        <button class="btn-load-more" v-show="distance < 0" @click="loadMore">Load more</button>
+        <infinite-loading :on-infinite="onInfinite" :distance="distance" v-ref:infinite-loading>
           <span slot="no-more">
             There is no more Hacker News :(
           </span>
@@ -51,10 +52,12 @@
           '/withFilter': 'withFilter',
           '/spinners': 'spinners',
           '/serverSideRendering': 'hackerNews',
+          '/triggerManually': 'manualLoad',
         },
         timer: null,
         tag: 'story',
         spinner: 'default',
+        distance: 100,
       };
     },
     computed: {
@@ -136,15 +139,48 @@
               }
             });
             break;
+          case 'manualLoad':
+            this.$http.get(api, {
+              params: {
+                tags: 'story',
+                page: (this.list.length / 20) + 1,
+              },
+            }).then(res => res.json()).then((data) => {
+              if (this.demoType === 'manualLoad') {
+                if (data.hits.length) {
+                  this.list = this.list.concat(data.hits);
+                  this.$broadcast('$InfiniteLoading:loaded');
+                  if (this.list.length / 20 === 10) {
+                    this.$broadcast('$InfiniteLoading:complete');
+                  } else if (data.page % 3 === 0) {
+                    this.distance = -Infinity;
+                  }
+                } else {
+                  this.$broadcast('$InfiniteLoading:complete');
+                }
+              }
+            });
+            break;
           default:
         }
       },
       initInfiniteLoading() {
         this.list = [];
         this.spinner = 'default';
+        if (this.$route.name === 'triggerManually') {
+          this.distance = -Infinity;
+        } else {
+          this.distance = 100;
+        }
         clearTimeout(this.timer);
         this.$nextTick(() => {
           this.$broadcast('$InfiniteLoading:reset');
+        });
+      },
+      loadMore() {
+        this.distance = 100;
+        this.$nextTick(() => {
+          this.$refs.infiniteLoading.attemptLoad();
         });
       },
     },
@@ -253,6 +289,19 @@
             }
           }
         }
+      }
+    }
+    .btn-load-more {
+      display: block;
+      width: 100%;
+      padding: 8px 0 16px;
+      font-size: 14px;
+      color: #FF6601;
+      cursor: pointer;
+      border: 0;
+      background: transparent;
+      &:active {
+        color: #e55d07;
       }
     }
   }
