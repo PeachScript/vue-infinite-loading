@@ -1,7 +1,12 @@
 <template>
   <h3>Trigger manually</h3>
-  <p>In most cases, we hope load data immediately for the empty list, it is also the default behavior of this component.</p>
-  <p>But in some special cases, you may want to trigger load action through a click or other manual behavior, there has a workaround to implement it, for example, we need to load data manually every three pages:</p>
+  <p>In most cases, we hope load data immediately for the empty list, it is also the default behavior of this component. And if you only want to control the first load, you can simply use the <code>v-if</code> and <code>v-else</code> directive to implement it:</p>
+  <pre v-highlightjs>
+  ...
+  &lt;button @click=&quot;isTriggerFirstLoad = true&quot; v-if=&quot;!isTriggerFirstLoad&quot;&gt;Load more&lt;/button&gt;
+  &lt;infinite-loading v-else&gt;&lt;/infinite-loading&gt;
+  ...</pre>
+  <p>And in some complex cases, for example, we need to load data manually every three pages, we can use the following workaroung to implement it:</p>
 
   <h4>Template</h4>
   <pre v-highlightjs v-if="$parent.docVersion < 2">&lt;div class=&quot;hacker-news-list&quot;&gt;
