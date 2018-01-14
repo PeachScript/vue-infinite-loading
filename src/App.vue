@@ -285,6 +285,9 @@
             appearance: none;
             outline: none;
             cursor: pointer;
+            optgroup {
+              color: #333;
+            }
           }
         }
       }
