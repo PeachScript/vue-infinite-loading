@@ -78,6 +78,11 @@
       Spinner,
     },
     computed: {
+      isInit: {
+        get() {
+          return this.init;
+        }
+      },
       isNoResults: {
         cache: false, // disable cache to fix the problem of get slot text delay
         get() {
@@ -98,6 +103,10 @@
       },
     },
     props: {
+      init: {
+        type: Boolean,
+        default: null
+      },
       distance: {
         type: Number,
         default: 100,
@@ -109,6 +118,13 @@
         default: 'bottom',
       },
       forceUseInfiniteWrapper: null,
+    },
+    watch: {
+      init: function(isReady) {
+        if (isReady) {
+          this.initInfinity();
+        }
+      }
     },
     mounted() {
       this.scrollParent = this.getScrollParent();
@@ -125,7 +141,10 @@
         }
       }.bind(this);
 
-      setTimeout(this.scrollHandler, 1);
+      if (this.init === null) {
+        setTimeout(this.scrollHandler, 1);
+      }
+
       this.scrollParent.addEventListener('scroll', this.scrollHandler);
 
       this.$on('$InfiniteLoading:loaded', (ev) => {
@@ -201,6 +220,12 @@
       this.scrollParent.addEventListener('scroll', this.scrollHandler);
     },
     methods: {
+      /**
+       * initialize the component manually if 'init' property is present
+       */
+      initInfinity() {
+        setTimeout(this.scrollHandler, 1);
+      },
       /**
       * attempt trigger load
       * @param {Boolean} isContinuousCall  the flag of continuous call, it will be true
