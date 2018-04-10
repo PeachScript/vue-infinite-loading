@@ -3,8 +3,10 @@
   "version": "2.2.3",
   "description": "An infinite scroll plugin for Vue.js",
   "main": "dist/vue-infinite-loading.js",
+  "typings": "types/index.d.ts",
   "files": [
     "dist/vue-infinite-loading.js",
+    "types/*.d.ts",
     "src"
   ],
   "author": {
