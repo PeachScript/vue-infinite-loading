@@ -104,17 +104,11 @@
         cache: false, // disable cache to fix the problem of get slot text delay
         get() {
           const isFailedSlot = this.$slots['is-failed'];
-          const isBlankIsFailedSlot =
-            isFailedSlot &&
-            isFailedSlot[0].elm &&
-            isFailedSlot[0].elm.textContent === ''
+          const isBlankIsFailedSlot = (isFailedSlot && isFailedSlot[0].elm && isFailedSlot[0].elm.textContent === '');
 
-          return (
-            this.isFailed && 
-            !isBlankIsFailedSlot
-          );
-        }
-      }
+          return this.isFailed && !isBlankIsFailedSlot;
+        },
+      },
     },
     props: {
       distance: {
@@ -175,7 +169,7 @@
         }
       });
 
-      this.$on('$InfiniteLoading:failed', ev => {
+      this.$on('$InfiniteLoading:failed', (ev) => {
         this.isLoading = false;
         this.isComplete = false;
         this.isFailed = true;
