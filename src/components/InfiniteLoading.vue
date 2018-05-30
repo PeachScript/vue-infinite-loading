@@ -70,7 +70,7 @@
         isLoading: false,
         isComplete: false,
         isFirstLoad: true, // save the current loading whether it is the first loading
-        isFailed : false,
+        isFailed: false,
         debounceTimer: null,
         debounceDuration: 50,
         infiniteLoopChecked: false, // save the status of infinite loop check
