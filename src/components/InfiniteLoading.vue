@@ -11,6 +11,9 @@
     <div class="infinite-status-prompt" v-show="isNoMore">
       <slot name="no-more">No more data :)</slot>
     </div>
+    <div class="infinite-status-prompt" v-show="isRequestFailed">
+      <slot name="is-failed">Request Failed :(</slot>
+    </div>
   </div>
 </template>
 <script>
@@ -67,6 +70,7 @@
         isLoading: false,
         isComplete: false,
         isFirstLoad: true, // save the current loading whether it is the first loading
+        isFailed : false,
         debounceTimer: null,
         debounceDuration: 50,
         infiniteLoopChecked: false, // save the status of infinite loop check
@@ -96,6 +100,21 @@
           return !this.isLoading && this.isComplete && !this.isFirstLoad && !isBlankNoMoreSlot;
         },
       },
+      isRequestFailed: {
+        cache: false, // disable cache to fix the problem of get slot text delay
+        get() {
+          const isFailedSlot = this.$slots["is-failed"];
+          const isBlankIsFailedSlot =
+            isFailedSlot &&
+            isFailedSlot[0].elm &&
+            isFailedSlot[0].elm.textContent === "";
+
+          return (
+            this.isFailed && 
+            !isBlankIsFailedSlot
+          );
+        }
+      }
     },
     props: {
       distance: {
@@ -156,6 +175,16 @@
         }
       });
 
+      this.$on("$InfiniteLoading:failed", ev => {
+        this.isLoading = false;
+        this.isComplete = false;
+        this.isFailed = true;
+
+        if (!ev || ev.target !== this) {
+          console.warn(WARNINGS.STATE_CHANGER);
+        }
+      });
+
       this.$on('$InfiniteLoading:reset', () => {
         this.isLoading = false;
         this.isComplete = false;
@@ -177,6 +206,9 @@
         },
         complete: () => {
           this.$emit('$InfiniteLoading:complete', { target: this });
+        },
+        failed: () => {
+          this.$emit("$InfiniteLoading:failed", { target: this });
         },
         reset: () => {
           this.$emit('$InfiniteLoading:reset', { target: this });
@@ -208,6 +240,7 @@
       *                                    event handler
       */
       attemptLoad(isContinuousCall) {
+        this.isFailed = false;
         const currentDistance = this.getCurrentDistance();
 
         if (!this.isComplete && currentDistance <= this.distance &&
