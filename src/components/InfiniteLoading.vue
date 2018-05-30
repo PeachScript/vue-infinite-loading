@@ -70,7 +70,7 @@
         isLoading: false,
         isComplete: false,
         isFirstLoad: true, // save the current loading whether it is the first loading
-        isFailed : false,
+        isFailed: false,
         debounceTimer: null,
         debounceDuration: 50,
         infiniteLoopChecked: false, // save the status of infinite loop check
@@ -103,11 +103,11 @@
       isRequestFailed: {
         cache: false, // disable cache to fix the problem of get slot text delay
         get() {
-          const isFailedSlot = this.$slots["is-failed"];
+          const isFailedSlot = this.$slots['is-failed'];
           const isBlankIsFailedSlot =
             isFailedSlot &&
             isFailedSlot[0].elm &&
-            isFailedSlot[0].elm.textContent === "";
+            isFailedSlot[0].elm.textContent === ''
 
           return (
             this.isFailed && 
@@ -175,7 +175,7 @@
         }
       });
 
-      this.$on("$InfiniteLoading:failed", ev => {
+      this.$on('$InfiniteLoading:failed', ev => {
         this.isLoading = false;
         this.isComplete = false;
         this.isFailed = true;
@@ -208,7 +208,7 @@
           this.$emit('$InfiniteLoading:complete', { target: this });
         },
         failed: () => {
-          this.$emit("$InfiniteLoading:failed", { target: this });
+          this.$emit('$InfiniteLoading:failed', { target: this });
         },
         reset: () => {
           this.$emit('$InfiniteLoading:reset', { target: this });
