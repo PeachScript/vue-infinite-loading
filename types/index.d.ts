@@ -14,12 +14,14 @@ declare namespace InfiniteLoading {
     spinner: VNode[];
     'no-result': VNode[];
     'no-more': VNode[];
+    'is-failed': VNode[];
     [key: string]: VNode[];
   }
 
   interface StateChanger {
     loaded(): void;
     complete(): void;
+    failed(): void;
     reset(): void;
   }
 }
