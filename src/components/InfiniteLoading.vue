@@ -1,6 +1,6 @@
 <template>
   <div class="infinite-loading-container">
-    <div v-show="isLoading">
+    <div v-show="showSpinner">
       <slot name="spinner">
         <spinner :spinner="spinner" />
       </slot>
@@ -96,6 +96,10 @@
           return !this.isLoading && this.isComplete && !this.isFirstLoad && !isBlankNoMoreSlot;
         },
       },
+      showSpinner() {
+          // in case that APP in UIWebview cannot show the spinner when scrolling to bottom
+          return this.hideSpinner ? this.loading : (!this.isNoMore && !this.isNoResults)
+      }
     },
     props: {
       distance: {
@@ -104,6 +108,10 @@
       },
       onInfinite: Function,
       spinner: String,
+      hideSpinner: {
+          type: Boolean,
+          default: true
+      },
       direction: {
         type: String,
         default: 'bottom',
