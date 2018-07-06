@@ -120,8 +120,8 @@
         if (!this.isLoading) {
           if (ev && ev.constructor === Event) {
             if (!this.inThrottle) {
-              this.attemptLoad();
               this.inThrottle = true;
+              this.attemptLoad();
               setTimeout(() => { this.inThrottle = false; }, this.throttleLimit);
             }
           } else {
