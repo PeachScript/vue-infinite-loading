@@ -67,8 +67,8 @@
         isLoading: false,
         isComplete: false,
         isFirstLoad: true, // save the current loading whether it is the first loading
-        debounceTimer: null,
-        debounceDuration: 50,
+        inThrottle: false,
+        throttleLimit: 50,
         infiniteLoopChecked: false, // save the status of infinite loop check
         infiniteLoopTimer: null,
         continuousCallTimes: 0,
@@ -115,10 +115,12 @@
 
       this.scrollHandler = function scrollHandlerOriginal(ev) {
         if (!this.isLoading) {
-          clearTimeout(this.debounceTimer);
-
           if (ev && ev.constructor === Event) {
-            this.debounceTimer = setTimeout(this.attemptLoad, this.debounceDuration);
+            if (!this.inThrottle) {
+              this.attemptLoad();
+              this.inThrottle = true;
+              setTimeout(() => { this.inThrottle = false; }, this.throttleLimit);
+            }
           } else {
             this.attemptLoad();
           }
