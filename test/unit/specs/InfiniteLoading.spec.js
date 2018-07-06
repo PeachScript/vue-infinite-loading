@@ -404,7 +404,7 @@ describe('vue-infinite-loading', () => {
     vm.$mount('#app');
   });
 
-  it('should debounce properly for the scroll event handler\n      (use div as the container and wave dots spinner)', (done) => {
+  it('should throttle properly for the scroll event handler\n      (use div as the container and wave dots spinner)', (done) => {
     vm = new Vue(Object.assign({}, basicConfig, {
       data: {
         list: [...new Array(20).join('1').split('')],
@@ -420,11 +420,11 @@ describe('vue-infinite-loading', () => {
         continuesCall(() => {
           scrollParent.scrollTop += 10;
         }, 10, () => {
-          expect(spyFn).to.have.been.callCount(0 + alreadyCalledTimes);
+          expect(spyFn).to.have.been.callCount(1 + alreadyCalledTimes);
           setTimeout(() => {
             expect(spyFn).to.have.been.callCount(1 + alreadyCalledTimes);
             done();
-          }, this.$refs.infiniteLoading.debounceDuration + 10);
+          }, this.$refs.infiniteLoading.throttleLimit + 10);
         });
       },
     }));
