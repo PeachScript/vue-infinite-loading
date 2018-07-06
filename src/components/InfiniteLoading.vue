@@ -165,6 +165,7 @@
         this.isLoading = false;
         this.isComplete = false;
         this.isFirstLoad = true;
+        this.inThrottle = false;
         this.scrollParent.addEventListener('scroll', this.scrollHandler);
         setTimeout(this.scrollHandler, 1);
       });
