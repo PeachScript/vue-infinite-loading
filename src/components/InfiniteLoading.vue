@@ -98,7 +98,7 @@
       },
       showSpinner() {
           // in case that APP in UIWebview cannot show the spinner when scrolling to bottom
-          return this.hideSpinner ? this.loading : (!this.isNoMore && !this.isNoResults);
+          return this.hideAfterLoaded ? this.loading : (!this.isNoMore && !this.isNoResults);
       },
     },
     props: {
@@ -108,7 +108,7 @@
       },
       onInfinite: Function,
       spinner: String,
-      hideSpinner: {
+      hideAfterLoaded: {
           type: Boolean,
           default: true,
       },
