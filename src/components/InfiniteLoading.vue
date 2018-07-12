@@ -67,8 +67,7 @@
         isLoading: false,
         isComplete: false,
         isFirstLoad: true, // save the current loading whether it is the first loading
-        debounceTimer: null,
-        debounceDuration: 50,
+        inThrottle: false,
         infiniteLoopChecked: false, // save the status of infinite loop check
         infiniteLoopTimer: null,
         continuousCallTimes: 0,
@@ -109,16 +108,22 @@
         default: 'bottom',
       },
       forceUseInfiniteWrapper: null,
+      throttleLimit: {
+        type: Number,
+        default: 50,
+      },
     },
     mounted() {
       this.scrollParent = this.getScrollParent();
 
       this.scrollHandler = function scrollHandlerOriginal(ev) {
         if (!this.isLoading) {
-          clearTimeout(this.debounceTimer);
-
           if (ev && ev.constructor === Event) {
-            this.debounceTimer = setTimeout(this.attemptLoad, this.debounceDuration);
+            if (!this.inThrottle) {
+              this.inThrottle = true;
+              this.attemptLoad();
+              setTimeout(() => { this.inThrottle = false; }, this.throttleLimit);
+            }
           } else {
             this.attemptLoad();
           }
@@ -160,6 +165,7 @@
         this.isLoading = false;
         this.isComplete = false;
         this.isFirstLoad = true;
+        this.inThrottle = false;
         this.scrollParent.addEventListener('scroll', this.scrollHandler);
         setTimeout(this.scrollHandler, 1);
       });
