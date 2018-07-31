@@ -146,6 +146,7 @@
       });
 
       this.$on('$InfiniteLoading:complete', (ev) => {
+        this.isFirstLoad = false;
         this.isLoading = false;
         this.isComplete = true;
 
