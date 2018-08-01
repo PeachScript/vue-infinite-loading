@@ -131,7 +131,7 @@
       }.bind(this);
 
       setTimeout(this.scrollHandler, 1);
-      this.scrollParent.addEventListener('scroll', this.scrollHandler);
+      this.scrollParent.addEventListener('scroll', this.scrollHandler, { passive: true });
 
       this.$on('$InfiniteLoading:loaded', (ev) => {
         this.isFirstLoad = false;
@@ -154,7 +154,7 @@
           this.$forceUpdate();
         });
 
-        this.scrollParent.removeEventListener('scroll', this.scrollHandler);
+        this.scrollParent.removeEventListener('scroll', this.scrollHandler, { passive: true });
 
         if (!ev || ev.target !== this) {
           console.warn(WARNINGS.STATE_CHANGER);
@@ -166,7 +166,7 @@
         this.isComplete = false;
         this.isFirstLoad = true;
         this.inThrottle = false;
-        this.scrollParent.addEventListener('scroll', this.scrollHandler);
+        this.scrollParent.addEventListener('scroll', this.scrollHandler, { passive: true });
         setTimeout(this.scrollHandler, 1);
       });
 
@@ -201,10 +201,10 @@
      */
     deactivated() {
       this.isLoading = false;
-      this.scrollParent.removeEventListener('scroll', this.scrollHandler);
+      this.scrollParent.removeEventListener('scroll', this.scrollHandler, { passive: true });
     },
     activated() {
-      this.scrollParent.addEventListener('scroll', this.scrollHandler);
+      this.scrollParent.addEventListener('scroll', this.scrollHandler, { passive: true });
     },
     methods: {
       /**
@@ -289,7 +289,7 @@
     },
     destroyed() {
       if (!this.isComplete) {
-        this.scrollParent.removeEventListener('scroll', this.scrollHandler);
+        this.scrollParent.removeEventListener('scroll', this.scrollHandler, { passive: true });
       }
     },
   };
