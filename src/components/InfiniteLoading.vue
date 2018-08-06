@@ -16,6 +16,7 @@
 <script>
   /* eslint-disable no-console */
   import Spinner from './Spinner';
+  import { supportsPassive as check } from '../utils/supportsPassive.js';
 
   const LOOP_CHECK_TIMEOUT = 1000; // the timeout for check infinite loop
   const LOOP_CHECK_MAX_CALLS = 10; // the maximum number of continuous calls
@@ -131,7 +132,7 @@
       }.bind(this);
 
       setTimeout(this.scrollHandler, 1);
-      this.scrollParent.addEventListener('scroll', this.scrollHandler);
+      this.scrollParent.addEventListener('scroll', this.scrollHandler, passiveSupported ? { passive: true } : false);
 
       this.$on('$InfiniteLoading:loaded', (ev) => {
         this.isFirstLoad = false;
@@ -154,7 +155,7 @@
           this.$forceUpdate();
         });
 
-        this.scrollParent.removeEventListener('scroll', this.scrollHandler);
+        this.scrollParent.removeEventListener('scroll', this.scrollHandler, passiveSupported ? { passive: true } : false);
 
         if (!ev || ev.target !== this) {
           console.warn(WARNINGS.STATE_CHANGER);
@@ -166,7 +167,7 @@
         this.isComplete = false;
         this.isFirstLoad = true;
         this.inThrottle = false;
-        this.scrollParent.addEventListener('scroll', this.scrollHandler);
+        this.scrollParent.addEventListener('scroll', this.scrollHandler, passiveSupported ? { passive: true } : false);
         setTimeout(this.scrollHandler, 1);
       });
 
@@ -201,10 +202,10 @@
      */
     deactivated() {
       this.isLoading = false;
-      this.scrollParent.removeEventListener('scroll', this.scrollHandler);
+      this.scrollParent.removeEventListener('scroll', this.scrollHandler, passiveSupported ? { passive: true } : false);
     },
     activated() {
-      this.scrollParent.addEventListener('scroll', this.scrollHandler);
+      this.scrollParent.addEventListener('scroll', this.scrollHandler, passiveSupported ? { passive: true } : false);
     },
     methods: {
       /**
@@ -289,7 +290,7 @@
     },
     destroyed() {
       if (!this.isComplete) {
-        this.scrollParent.removeEventListener('scroll', this.scrollHandler);
+        this.scrollParent.removeEventListener('scroll', this.scrollHandler, passiveSupported ? { passive: true } : false);
       }
     },
   };
