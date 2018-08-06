@@ -16,8 +16,8 @@
 <script>
   /* eslint-disable no-console */
   import Spinner from './Spinner';
-  import { supportsPassive } from '../utils/supportsPassive.js';
-  const supportsPassive = supportsPassive(); // check if passive event handler object is supported
+  import { supportsPassive as check } from '../utils/supportsPassive.js';
+
   const LOOP_CHECK_TIMEOUT = 1000; // the timeout for check infinite loop
   const LOOP_CHECK_MAX_CALLS = 10; // the maximum number of continuous calls
   const WARNINGS = {
