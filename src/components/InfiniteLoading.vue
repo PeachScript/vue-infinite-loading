@@ -15,9 +15,7 @@
 </template>
 <script>
   /* eslint-disable no-console */
-  /* eslint-disable import/extensions */
   import Spinner from './Spinner';
-  import { supportsPassive } from '../utils/supportsPassive.js';
 
   const LOOP_CHECK_TIMEOUT = 1000; // the timeout for check infinite loop
   const LOOP_CHECK_MAX_CALLS = 10; // the maximum number of continuous calls
@@ -59,6 +57,22 @@
       'more details: https://github.com/PeachScript/vue-infinite-loading/issues/55#issuecomment-316934169',
     ].join('\n'),
   };
+  const evt3rdArg = (() => {
+    let result = false;
+
+    try {
+      const arg = Object.defineProperty({}, 'passive', {
+        get() {
+          result = { passive: true };
+        },
+      });
+
+      window.addEventListener('testpassive', arg, arg);
+      window.remove('testpassive', arg, arg);
+    } catch (e) { /* */ }
+
+    return result;
+  })();
 
   export default {
     name: 'InfiniteLoading',
@@ -133,7 +147,7 @@
       }.bind(this);
 
       setTimeout(this.scrollHandler, 1);
-      this.scrollParent.addEventListener('scroll', this.scrollHandler, supportsPassive ? { passive: true } : false);
+      this.scrollParent.addEventListener('scroll', this.scrollHandler, evt3rdArg);
 
       this.$on('$InfiniteLoading:loaded', (ev) => {
         this.isFirstLoad = false;
@@ -156,7 +170,7 @@
           this.$forceUpdate();
         });
 
-        this.scrollParent.removeEventListener('scroll', this.scrollHandler, supportsPassive ? { passive: true } : false);
+        this.scrollParent.removeEventListener('scroll', this.scrollHandler, evt3rdArg);
 
         if (!ev || ev.target !== this) {
           console.warn(WARNINGS.STATE_CHANGER);
@@ -168,7 +182,7 @@
         this.isComplete = false;
         this.isFirstLoad = true;
         this.inThrottle = false;
-        this.scrollParent.addEventListener('scroll', this.scrollHandler, supportsPassive ? { passive: true } : false);
+        this.scrollParent.addEventListener('scroll', this.scrollHandler, evt3rdArg);
         setTimeout(this.scrollHandler, 1);
       });
 
@@ -203,10 +217,10 @@
      */
     deactivated() {
       this.isLoading = false;
-      this.scrollParent.removeEventListener('scroll', this.scrollHandler, supportsPassive ? { passive: true } : false);
+      this.scrollParent.removeEventListener('scroll', this.scrollHandler, evt3rdArg);
     },
     activated() {
-      this.scrollParent.addEventListener('scroll', this.scrollHandler, supportsPassive ? { passive: true } : false);
+      this.scrollParent.addEventListener('scroll', this.scrollHandler, evt3rdArg);
     },
     methods: {
       /**
@@ -291,7 +305,7 @@
     },
     destroyed() {
       if (!this.isComplete) {
-        this.scrollParent.removeEventListener('scroll', this.scrollHandler, supportsPassive ? { passive: true } : false);
+        this.scrollParent.removeEventListener('scroll', this.scrollHandler, evt3rdArg);
       }
     },
   };
