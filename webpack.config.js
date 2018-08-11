@@ -46,7 +46,19 @@ module.exports = {
   }
 };
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'production') {
+  // production configurations
+  const pkg = require('./package');
+  const banner = [
+    `${pkg.name} v${process.env.VERSION || pkg.version}`,
+    `(c) 2016-${new Date().getFullYear()} ${pkg.author.name}`,
+    `${pkg.license} License`
+  ].join('\n');
+
+  module.exports.plugins = [
+    new webpack.BannerPlugin(banner)
+  ];
+} else {
   // development configurations
   module.exports.plugins = [
     new HtmlWebpackPlugin({

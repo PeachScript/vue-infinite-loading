@@ -13,7 +13,7 @@ then
   npm test 2>/dev/null
 
   # build
-  npm run build
+  VERSION=$VERSION npm run build
 
   # commit
   git add -A
