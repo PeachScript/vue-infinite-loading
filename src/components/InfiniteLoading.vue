@@ -84,6 +84,7 @@
         isComplete: false,
         isFirstLoad: true, // save the current loading whether it is the first loading
         inThrottle: false,
+        throttleLimit: 50,
         infiniteLoopChecked: false, // save the status of infinite loop check
         infiniteLoopTimer: null,
         continuousCallTimes: 0,
@@ -124,10 +125,6 @@
         default: 'bottom',
       },
       forceUseInfiniteWrapper: null,
-      throttleLimit: {
-        type: Number,
-        default: 50,
-      },
     },
     mounted() {
       this.scrollParent = this.getScrollParent();
