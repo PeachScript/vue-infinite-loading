@@ -420,7 +420,7 @@ describe('vue-infinite-loading', () => {
         continuesCall(() => {
           scrollParent.scrollTop += 10;
         }, 10, () => {
-          expect(spyFn).to.have.been.callCount(1 + alreadyCalledTimes);
+          expect(spyFn).to.have.been.callCount(0 + alreadyCalledTimes);
           setTimeout(() => {
             expect(spyFn).to.have.been.callCount(1 + alreadyCalledTimes);
             done();
