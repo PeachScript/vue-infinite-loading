@@ -47,4 +47,4 @@ declare class InfiniteLoading extends Vue {
   $slots: InfiniteLoading.Slots;
 }
 
-export = InfiniteLoading;
+export default InfiniteLoading;
