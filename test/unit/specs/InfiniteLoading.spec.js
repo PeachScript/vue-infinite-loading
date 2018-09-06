@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import Vue from 'vue/dist/vue.common';
-import InfiniteLoading from '../../../src/components/InfiniteLoading';
+import InfiniteLoading from '../../../src/components/InfiniteLoading.vue';
 
 Vue.config.productionTip = false;
 
@@ -159,7 +159,7 @@ describe('vue-infinite-loading', () => {
       },
       methods: {
         infiniteHandler: function infiniteHandler() {
-          const scrollParent = this.$refs.infiniteLoading.scrollParent;
+          const { scrollParent } = this.$refs.infiniteLoading;
           const loadCountEachTime = 10;
 
           this.list.push(...new Array(loadCountEachTime + 1).join('1').split(''));
@@ -413,7 +413,7 @@ describe('vue-infinite-loading', () => {
         spinner: 'waveDots',
       },
       mounted: function mounted() {
-        const scrollParent = this.$refs.infiniteLoading.scrollParent;
+        const { scrollParent } = this.$refs.infiniteLoading;
         const spyFn = sinon.spy(this.$refs.infiniteLoading, 'attemptLoad');
         const alreadyCalledTimes = 1; // it will be called immediately after mount
 

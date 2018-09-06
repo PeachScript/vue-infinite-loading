@@ -27,7 +27,7 @@ module.exports = {
         include: [path.join(__dirname, './src'), path.join(__dirname, './test')],
         loader: 'eslint-loader',
         options: {
-          formatter: require('eslint-friendly-formatter')
+          formatter: require('eslint-formatter-friendly')
         }
       },
       {

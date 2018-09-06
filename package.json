@@ -16,7 +16,7 @@
   "scripts": {
     "dev": "webpack-dev-server --hot --info=false --port 8000",
     "build": "NODE_ENV=production webpack -p --progress --hide-modules",
-    "lint": "eslint --ext .js,.vue src",
+    "lint": "eslint -f friendly \"{src,test/unit/specs}/**/*.{js,vue}\"",
     "test": "BABEL_ENV=test karma start",
     "precommit": "npm run lint",
     "commitmsg": "commitlint -E GIT_PARAMS",
@@ -42,7 +42,6 @@
     "@commitlint/config-conventional": "^7.0.1",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.25.0",
-    "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",
     "babel-plugin-istanbul": "^4.1.4",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -50,13 +49,12 @@
     "babel-preset-stage-2": "^6.24.1",
     "chai": "^3.5.0",
     "css-loader": "^0.28.4",
-    "eslint": "^4.4.1",
-    "eslint-config-airbnb-base": "^11.3.1",
-    "eslint-friendly-formatter": "^3.0.0",
-    "eslint-import-resolver-webpack": "^0.8.3",
-    "eslint-loader": "^1.9.0",
-    "eslint-plugin-html": "^3.2.0",
-    "eslint-plugin-import": "^2.7.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-formatter-friendly": "^6.0.0",
+    "eslint-loader": "^2.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-vue": "^4.7.1",
     "html-webpack-plugin": "^2.30.1",
     "husky": "^0.14.3",
     "karma": "^1.7.0",
@@ -107,5 +105,12 @@
         ]
       ]
     }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "airbnb-base",
+      "plugin:vue/essential"
+    ]
   }
 }
