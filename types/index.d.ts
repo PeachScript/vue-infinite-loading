@@ -14,6 +14,7 @@ declare namespace InfiniteLoading {
     spinner: VNode[];
     'no-result': VNode[];
     'no-more': VNode[];
+    'is-failed':VNode[];
     [key: string]: VNode[];
   }
 
@@ -21,6 +22,7 @@ declare namespace InfiniteLoading {
     loaded(): void;
     complete(): void;
     reset(): void;
+    failed():void;
   }
 }
 
