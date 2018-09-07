@@ -273,9 +273,9 @@ export default {
       let distance;
 
       if (this.direction === 'top') {
-        distance = Number.isNaN(this.scrollParent.scrollTop)
-          ? this.scrollParent.pageYOffset
-          : this.scrollParent.scrollTop;
+        distance = typeof this.scrollParent.scrollTop === 'number'
+          ? this.scrollParent.scrollTop
+          : this.scrollParent.pageYOffset;
       } else {
         const infiniteElmOffsetTopFromBottom = this.$el.getBoundingClientRect().top;
         const scrollElmOffsetTopFromBottom = this.scrollParent === window
