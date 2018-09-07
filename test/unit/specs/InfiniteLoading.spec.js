@@ -369,7 +369,7 @@ describe('vue-infinite-loading', () => {
     vm = new Vue(Object.assign({}, basicConfig, {
       methods: {
         infiniteHandler: function infiniteHandler($state) {
-          if (calledTimes) {
+          if (calledTimes === 1) {
             $state.loaded();
             $state.complete();
             this.$nextTick(() => {
@@ -377,7 +377,7 @@ describe('vue-infinite-loading', () => {
               expect(isShow(this.$el.querySelectorAll('.infinite-status-prompt')[1])).to.be.false;
               done();
             });
-          } else {
+          } else if (calledTimes === 0) {
             calledTimes += 1;
             $state.complete();
             this.$nextTick(() => {
@@ -386,6 +386,11 @@ describe('vue-infinite-loading', () => {
 
               // reset component to check no-more status
               $state.reset();
+            });
+          } else {
+            $state.failed();
+            this.$nextTick(() => {
+              expect(isShow(this.$el.querySelectorAll('.infinite-status-prompt')[3])).to.be.false;
             });
           }
         },
@@ -397,6 +402,7 @@ describe('vue-infinite-loading', () => {
           >
           <span slot="no-results"></span>
           <span slot="no-more"></span>
+          <span slot="is-failed"></span>
         </infinite-loading>
       `,
     }));
@@ -561,6 +567,24 @@ describe('vue-infinite-loading', () => {
           expect(this.$refs.infiniteLoading.scrollParent).to.equal(this.$el.querySelector('div'));
           done();
         });
+      },
+    }));
+
+    vm.$mount('#app');
+  });
+
+  it('should call state.$failed() show failed slot', (done) => {
+    vm = new Vue(Object.assign({}, basicConfig, {
+      methods: {
+        infiniteHandler: function infiniteHandler($state) {
+          $state.failed();
+
+          this.$nextTick(() => {
+            // check failed text
+            expect(isShow(this.$el.querySelectorAll('.infinite-status-prompt')[2])).to.be.true;
+            done();
+          });
+        },
       },
     }));
 
