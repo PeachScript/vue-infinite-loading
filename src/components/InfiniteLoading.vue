@@ -11,6 +11,9 @@
     <div class="infinite-status-prompt" v-show="isNoMore">
       <slot name="no-more">No more data :)</slot>
     </div>
+    <div class="infinite-status-prompt" v-show="isRequestFailed">
+      <slot name="is-failed">Request Failed :(</slot>
+    </div>
   </div>
 </template>
 <script>
@@ -85,6 +88,7 @@ export default {
       isComplete: false,
       isFirstLoad: true, // save the current loading whether it is the first loading
       inThrottle: false,
+      isFailed: false,
       throttleLimit: 50,
       infiniteLoopChecked: false, // save the status of infinite loop check
       infiniteLoopTimer: null,
@@ -101,7 +105,11 @@ export default {
         const noResultsSlot = this.$slots['no-results'];
         const isBlankNoResultsSlot = (noResultsSlot && noResultsSlot[0].elm && noResultsSlot[0].elm.textContent === '');
 
-        return !this.isLoading && this.isComplete && this.isFirstLoad && !isBlankNoResultsSlot;
+        return !this.isLoading
+          && this.isComplete
+          && !this.isFailed
+          && this.isFirstLoad
+          && !isBlankNoResultsSlot;
       },
     },
     isNoMore: {
@@ -110,7 +118,19 @@ export default {
         const noMoreSlot = this.$slots['no-more'];
         const isBlankNoMoreSlot = (noMoreSlot && noMoreSlot[0].elm && noMoreSlot[0].elm.textContent === '');
 
-        return !this.isLoading && this.isComplete && !this.isFirstLoad && !isBlankNoMoreSlot;
+        return !this.isLoading
+          && this.isComplete
+          && !this.isFailed
+          && !this.isFirstLoad
+          && !isBlankNoMoreSlot;
+      },
+    },
+    isRequestFailed: {
+      cache: false, // disable cache to fix the problem of get slot text delay
+      get() {
+        const isFailedSlot = this.$slots['is-failed'];
+        const isBlankIsFailedSlot = (isFailedSlot && isFailedSlot[0].elm && isFailedSlot[0].elm.textContent === '');
+        return !this.isLoading && this.isFailed && !isBlankIsFailedSlot;
       },
     },
   },
@@ -186,6 +206,23 @@ export default {
       setTimeout(this.scrollHandler, 1);
     });
 
+    this.$on('$InfiniteLoading:failed', (ev) => {
+      this.isLoading = false;
+      this.isComplete = true;
+      this.isFailed = true;
+
+      // force re-complation computed properties to fix the problem of get slot text delay
+      this.$nextTick(() => {
+        this.$forceUpdate();
+      });
+
+      this.scrollParent.removeEventListener('scroll', this.scrollHandler, evt3rdArg);
+
+      if (!ev || ev.target !== this) {
+        console.warn(WARNINGS.STATE_CHANGER);
+      }
+    });
+
     if (this.onInfinite) {
       console.warn(WARNINGS.INFINITE_EVENT);
     }
@@ -202,6 +239,9 @@ export default {
       },
       reset: () => {
         this.$emit('$InfiniteLoading:reset', { target: this });
+      },
+      failed: () => {
+        this.$emit('$InfiniteLoading:failed', { target: this });
       },
     };
 
