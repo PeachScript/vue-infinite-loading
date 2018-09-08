@@ -16,7 +16,7 @@
   "scripts": {
     "dev": "webpack-dev-server --hot --info=false --port 8000",
     "build": "NODE_ENV=production webpack -p --progress --hide-modules",
-    "lint": "eslint -f friendly \"{src,test/unit/specs}/**/*.{js,vue}\"",
+    "lint": "eslint -f friendly --ext .js,.vue ./",
     "test": "BABEL_ENV=test karma start",
     "precommit": "npm run lint",
     "commitmsg": "commitlint -E GIT_PARAMS",
@@ -112,5 +112,11 @@
       "airbnb-base",
       "plugin:vue/essential"
     ]
-  }
+  },
+  "eslintIgnore": [
+    "dist",
+    "test/unit/coverage",
+    "karma.conf.js",
+    "webpack.config.js"
+  ]
 }
