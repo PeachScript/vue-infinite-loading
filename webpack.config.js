@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue'],
     alias: {
-      'vue$': 'vue/dist/vue.min.js'
+      vue$: 'vue/dist/vue.min.js'
     }
   },
   module: {
@@ -37,13 +38,36 @@ module.exports = {
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          postcss: [require('autoprefixer')]
-        }
+        loader: 'vue-loader'
+      },
+      {
+        test: /\.less$/,
+        use: [
+          'vue-style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: [
+                require('autoprefixer')
+              ]
+            }
+          },
+          'less-loader'
+        ]
       }
     ]
-  }
+  },
+  plugins: [
+    new VueLoaderPlugin()
+  ],
+  mode: process.env.NODE_ENV || 'development'
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -55,18 +79,12 @@ if (process.env.NODE_ENV === 'production') {
     `${pkg.license} License`
   ].join('\n');
 
-  module.exports.plugins = [
-    new webpack.BannerPlugin(banner)
-  ];
+  module.exports.plugins.push(new webpack.BannerPlugin(banner));
 } else {
   // development configurations
-  module.exports.plugins = [
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './example/index.html',
-      inject: false
-    })
-  ];
-
-  module.exports.devtool = '#cheap-module-eval-source-map';
+  module.exports.plugins.push(new HtmlWebpackPlugin({
+    filename: 'index.html',
+    template: './example/index.html',
+    inject: false
+  }));
 }

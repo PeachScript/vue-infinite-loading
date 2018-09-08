@@ -24,7 +24,7 @@ module.exports = function(config) {
     },
     webpack: webpackConfig,
     webpackMiddleware: {
-      noInfo: true
+      stats: 'errors-only'
     },
     singleRun: true
   });
