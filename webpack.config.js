@@ -34,7 +34,17 @@ module.exports = {
       {
         test: /\.js$/,
         include: [path.join(__dirname, './src'), path.join(__dirname, './test')],
-        loader: 'babel-loader'
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env'],
+          plugins: ['@babel/plugin-transform-runtime'],
+          env: {
+            test: {
+              presets: [['@babel/preset-env', { useBuiltIns: 'usage' }]],
+              plugins: ['babel-plugin-istanbul']
+            }
+          }
+        }
       },
       {
         test: /\.vue$/,
