@@ -14,13 +14,13 @@
     "email": "scdzwyxst@gmail.com"
   },
   "scripts": {
-    "dev": "webpack-dev-server --hot --info=false --port 8000",
-    "build": "NODE_ENV=production webpack -p --progress --hide-modules",
+    "dev": "webpack-dev-server --config scripts/webpack.config.js --hot --info=false --port 8000",
+    "build": "NODE_ENV=production webpack --config scripts/webpack.config.js -p --progress --hide-modules",
     "lint": "eslint -f friendly --ext .js,.vue ./",
-    "test": "BABEL_ENV=test karma start",
+    "test": "BABEL_ENV=test karma start scripts/karma.conf.js",
     "precommit": "npm run lint",
     "commitmsg": "commitlint -E GIT_PARAMS",
-    "release": "bash ./release.sh"
+    "release": "bash ./scripts/release.sh"
   },
   "keywords": [
     "vue",
@@ -116,7 +116,6 @@
   "eslintIgnore": [
     "dist",
     "test/unit/coverage",
-    "karma.conf.js",
-    "webpack.config.js"
+    "scripts"
   ]
 }

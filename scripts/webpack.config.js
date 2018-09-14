@@ -8,7 +8,7 @@ module.exports = {
     'vue-infinite-loading': './src/index.js'
   },
   output: {
-    path: path.join(__dirname, './dist'),
+    path: path.join(__dirname, '../dist'),
     filename: '[name].js',
     publicPath: '/',
     library: 'VueInfiniteLoading',
@@ -25,7 +25,7 @@ module.exports = {
       {
         test: /\.(vue|js)$/,
         enforce: 'pre',
-        include: [path.join(__dirname, './src'), path.join(__dirname, './test')],
+        include: [path.join(__dirname, '../src'), path.join(__dirname, '../test')],
         loader: 'eslint-loader',
         options: {
           formatter: require('eslint-formatter-friendly')
@@ -33,7 +33,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        include: [path.join(__dirname, './src'), path.join(__dirname, './test')],
+        include: [path.join(__dirname, '../src'), path.join(__dirname, '../test')],
         loader: 'babel-loader',
         options: {
           presets: ['@babel/preset-env'],
@@ -82,7 +82,7 @@ module.exports = {
 
 if (process.env.NODE_ENV === 'production') {
   // production configurations
-  const pkg = require('./package');
+  const pkg = require('../package');
   const banner = [
     `${pkg.name} v${process.env.VERSION || pkg.version}`,
     `(c) 2016-${new Date().getFullYear()} ${pkg.author.name}`,
