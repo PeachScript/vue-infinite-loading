@@ -16,6 +16,8 @@
   "scripts": {
     "dev": "webpack-dev-server --config scripts/webpack.config.js --hot --info=false --port 8000",
     "build": "NODE_ENV=production webpack --config scripts/webpack.config.js -p --progress --hide-modules",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
     "lint": "eslint -f friendly --ext .js,.vue ./",
     "test": "BABEL_ENV=test karma start scripts/karma.conf.js",
     "precommit": "npm run lint",
@@ -75,6 +77,7 @@
     "vue": "^2.5.17",
     "vue-loader": "^15.4.1",
     "vue-template-compiler": "^2.5.17",
+    "vuepress": "^0.14.3",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.8"
