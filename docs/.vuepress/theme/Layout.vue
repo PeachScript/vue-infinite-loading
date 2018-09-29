@@ -10,8 +10,8 @@
       <previewer class="previewer"></previewer>
       <div class="intro-container">
         <p>An infinite scroll plugin for Vue.js</p>
-        <button class="button button-intro">Get Started</button>
-        <button class="button button-intro">View GitHub</button>
+        <button class="button button-large button-basic">Get Started</button>
+        <button class="button button-large">View GitHub</button>
         <ul class="feat-list">
           <li>
             <h3>Out of the box</h3>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import 'focus-visible';
 import Previewer from './Previewer';
 
 export default {
@@ -42,6 +43,8 @@ export default {
 </script>
 
 <style lang="less">
+@import './less/button.less';
+
 body {
   margin: 0;
   font: 16px/1.42857 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
@@ -99,7 +102,6 @@ main.container {
     + h1 {
       top: 280px;
       left: 38%;
-      margin-top: 20px;
       margin-left: 179px;
       font-size: 32px;
     }
@@ -128,30 +130,8 @@ main.container {
     color: @c-basic-light;
   }
 
-  .button-intro {
-    padding: 16px 48px;
-    color: #fff;
-    font-size: 20px;
-    background: lighten(@c-basic, 20%);
-    border: 1px solid lighten(@c-basic, 20%);
-    border-radius: 2px;
-    cursor: pointer;
-    outline: none;
-
-    &:hover,
-    &:focus {
-      opacity: 0.9;
-    }
-
-    &:active {
-      opacity: 1;
-    }
-
-    + .button-intro {
-      margin-left: 20px;
-      color: @c-basic;
-      background: transparent;
-    }
+  .button + .button {
+    margin-left: 20px;
   }
 
   .feat-list {
