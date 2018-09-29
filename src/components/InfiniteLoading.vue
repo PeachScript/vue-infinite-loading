@@ -75,6 +75,19 @@ const evt3rdArg = (() => {
   return result;
 })();
 
+function restoreScrollPos() {
+  if (this.lastHeight) {
+    const vClientRect = this.scrollParent.getBoundingClientRect();
+    if (this.scrollParent.scrollHeight - this.lastHeight >= vClientRect.height) {
+      this.scrollParent.scrollTop = this.distance
+        + this.scrollParent.scrollHeight - this.lastHeight;
+    } else {
+      this.scrollParent.scrollTop = this.distance + 1;
+    }
+    this.lastHeight = 0;
+  }
+}
+
 export default {
   name: 'InfiniteLoading',
   data() {
@@ -151,6 +164,7 @@ export default {
 
     this.$on('$InfiniteLoading:loaded', (ev) => {
       this.isFirstLoad = false;
+      restoreScrollPos.call(this);
 
       if (this.isLoading) {
         this.$nextTick(this.attemptLoad.bind(null, true));
@@ -164,6 +178,7 @@ export default {
     this.$on('$InfiniteLoading:complete', (ev) => {
       this.isLoading = false;
       this.isComplete = true;
+      restoreScrollPos.call(this);
 
       // force re-complation computed properties to fix the problem of get slot text delay
       this.$nextTick(() => {
@@ -178,6 +193,7 @@ export default {
     });
 
     this.$on('$InfiniteLoading:reset', () => {
+      this.lastHeight = 0;
       this.isLoading = false;
       this.isComplete = false;
       this.isFirstLoad = true;
@@ -259,6 +275,8 @@ export default {
           if (this.continuousCallTimes > LOOP_CHECK_MAX_CALLS) {
             console.error(ERRORS.INFINITE_LOOP);
             this.infiniteLoopChecked = true;
+            // Avoid the Chrome Browser frozen.
+            // this.$emit('$InfiniteLoading:complete', { target: this });
           }
         }
       } else {
@@ -312,6 +330,7 @@ export default {
     }
   },
 };
+
 </script>
 <style lang="less" scoped>
 @deep: ~'>>>';
