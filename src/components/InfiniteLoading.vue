@@ -75,6 +75,10 @@ const evt3rdArg = (() => {
   return result;
 })();
 
+function hasClass(element, className) {
+  return (` ${element.className} `).indexOf(` ${className} `) > -1;
+}
+
 function restoreScrollPos() {
   if (this.lastHeight) {
     const vClientRect = this.scrollParent.getBoundingClientRect();
@@ -139,6 +143,10 @@ export default {
       default: 'bottom',
     },
     forceUseInfiniteWrapper: null,
+    infiniteWrapperClass: {
+      type: String,
+      default: 'scroll',
+    },
   },
   mounted() {
     this.scrollParent = this.getScrollParent();
@@ -317,7 +325,7 @@ export default {
         result = window;
       } else if (!this.forceUseInfiniteWrapper && ['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
         result = elm;
-      } else if (elm.hasAttribute('infinite-wrapper') || elm.hasAttribute('data-infinite-wrapper')) {
+      } else if (elm.hasAttribute('infinite-wrapper') || elm.hasAttribute('data-infinite-wrapper') || hasClass(elm, this.infiniteWrapperClass)) {
         result = elm;
       }
 
