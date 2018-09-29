@@ -5,46 +5,44 @@
 
 import Vue, { VNode } from 'vue';
 
-declare namespace InfiniteLoading {
-  type SpinnerType = 'default' | 'bubbles' | 'circles' | 'spiral' | 'waveDots';
+export type SpinnerType = 'default' | 'bubbles' | 'circles' | 'spiral' | 'waveDots';
+export type DirectionType = 'top' | 'bottom';
 
-  type DirectionType = 'top' | 'bottom';
+export interface Slots {
+  spinner: VNode[];
+  'no-result': VNode[];
+  'no-more': VNode[];
+  [key: string]: VNode[];
+}
 
-  interface Slots {
-    spinner: VNode[];
-    'no-result': VNode[];
-    'no-more': VNode[];
-    [key: string]: VNode[];
-  }
+export interface StateChanger {
+  loaded(): void;
+  complete(): void;
+  reset(): void;
+}
 
-  interface StateChanger {
-    loaded(): void;
-    complete(): void;
-    reset(): void;
+declare module 'vue-infinite-loading' {
+  class InfiniteLoading extends Vue {
+    // The trigger distance
+    distance: number;
+
+    // The load spinner type
+    spinner: SpinnerType;
+
+    // The scroll direction
+    direction: DirectionType;
+
+    // Whether find the element which has `infinite-wrapper` attribute as the scroll wrapper
+    forceUseInfiniteWrapper: boolean;
+
+    // Infinite event handler
+    onInfinite: ($state: StateChanger) => void;
+
+    // The method collection used to change infinite state
+    stateChanger: StateChanger;
+
+    // Slots
+    $slots: Slots;
   }
 }
 
-declare class InfiniteLoading extends Vue {
-  // The trigger distance
-  distance: number;
-
-  // The load spinner type
-  spinner: InfiniteLoading.SpinnerType;
-
-  // The scroll direction
-  direction: InfiniteLoading.DirectionType;
-
-  // Whether find the element which has `infinite-wrapper` attribute as the scroll wrapper
-  forceUseInfiniteWrapper: boolean;
-
-  // Infinite event handler
-  onInfinite: ($state: InfiniteLoading.StateChanger) => void;
-
-  // The method collection used to change infinite state
-  stateChanger: InfiniteLoading.StateChanger;
-
-  // Slots
-  $slots: InfiniteLoading.Slots;
-}
-
-export default InfiniteLoading;
