@@ -1,0 +1,64 @@
+@import './variables.less';
+
+.button-shadow-generator(@color, @offsetx: 0) {
+  box-shadow: 0 (12px + @offsetx) 30px -10px @color,
+              0 (8px + @offsetx) 20px -20px fadein(@color, 5%);
+}
+
+.button {
+  padding: 12px 24px;
+  color: @c-basic;
+  font-size: 16px;
+  background: #fff;
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+
+  &,
+  &:active {
+    .button-shadow-generator(rgba(0, 0, 0, 0.1));
+  }
+
+  // action status
+  &:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+    .button-shadow-generator(rgba(0, 0, 0, 0.1), 1px);
+  }
+
+  &:focus:not(.focus-visible) {
+    outline: none;
+  }
+
+  &:active {
+    opacity: 1;
+    transform: none;
+  }
+
+  // size control
+  &.button-large {
+    padding: 16px 48px;
+    font-size: 20px;
+  }
+
+  &.button-small {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  // color control
+  &.button-basic {
+    color: #fff;
+    background: linear-gradient(30deg, lighten(@c-basic, 10%), lighten(@c-basic, 25%));
+
+    &,
+    &:active {
+      .button-shadow-generator(rgba(28, 90, 160, 0.5));
+    }
+
+    &:hover {
+      .button-shadow-generator(rgba(28, 90, 160, 0.5), 1px);
+    }
+  }
+}
