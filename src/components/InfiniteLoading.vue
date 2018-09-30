@@ -81,10 +81,10 @@ function hasClass(element, className) {
 
 function restoreScrollPos() {
   if (this.lastHeight) {
-    const vClientRect = this.scrollParent.getBoundingClientRect();
-    if (this.scrollParent.scrollHeight - this.lastHeight >= vClientRect.height) {
-      this.scrollParent.scrollTop = this.distance
-        + this.scrollParent.scrollHeight - this.lastHeight;
+    const vClientHeight = this.scrollParent.clientHeight;
+    const vOffset = this.scrollParent.scrollHeight - this.lastHeight;
+    if (vOffset >= vClientHeight) {
+      this.scrollParent.scrollTop = vOffset + this.distance;
     } else {
       this.scrollParent.scrollTop = this.distance + 1;
     }
