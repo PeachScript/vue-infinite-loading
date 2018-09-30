@@ -262,6 +262,9 @@ export default {
         && (this.$el.offsetWidth + this.$el.offsetHeight) > 0
       ) {
         this.isLoading = true;
+        if (!this.lastHeight && this.direction === 'top') {
+          this.lastHeight = this.scrollParent.scrollHeight;
+        }
 
         if (typeof this.onInfinite === 'function') {
           this.onInfinite.call(null, this.stateChanger);
