@@ -80,6 +80,11 @@ describe('vue-infinite-loading', () => {
       ul li {
         height: 40px;
       }
+      .scroll {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
     `;
 
     document.body.appendChild(styles);
@@ -591,6 +596,117 @@ describe('vue-infinite-loading', () => {
         infiniteHandler: function infiniteHandler() {
           expect(this.$refs.infiniteLoading.scrollParent).to.equal(this.$el);
           done();
+        },
+      },
+    }));
+
+    vm.$mount('#app');
+  });
+  it('should restore the scroll position to the distance if the incremented size is less than the client height when direction is top', (done) => {
+    vm = new Vue(Object.assign({}, basicConfig, {
+      template: `
+        <div style="overflow: auto;">
+          <infinite-loading
+            direction="top"
+            :distance="1"
+            @infinite="infiniteHandler"
+            ref="infiniteLoading"
+          >
+          </infinite-loading>
+          <ul>
+            <li v-for="item in list" v-text="item"></li>
+          </ul>
+        </div>
+      `,
+      methods: {
+        infiniteHandler: function infiniteHandler($state) {
+          for (let i = 0, j = this.list.length; i < 2; i += 1) {
+            this.list.push(j + i);
+          }
+
+          const expectedLength = this.list.length;
+          const isComplete = expectedLength > 3;
+
+          // check spinner
+          expect(isShow(this.$el.querySelector('.loading-default'))).to.be.true;
+
+          if (isComplete) {
+            $state.complete();
+          } else {
+            $state.loaded();
+          }
+
+          this.$nextTick(() => {
+            const vInfLoading = this.$refs.infiniteLoading;
+            const vScrollParent = vInfLoading.scrollParent;
+            expect(vScrollParent.scrollTop).to.equal(vInfLoading.distance + 1);
+            // check list items
+            expect(this.$el.querySelectorAll('ul li')).to.have.lengthOf(expectedLength);
+
+            if (isComplete) {
+              // check no more text
+              expect(isShow(this.$el.querySelectorAll('.infinite-status-prompt')[1])).to.be.true;
+              done();
+            }
+          });
+        },
+      },
+    }));
+
+    vm.$mount('#app');
+  });
+  it('should restore the scroll position when direction is top', (done) => {
+    vm = new Vue(Object.assign({}, basicConfig, {
+      template: `
+        <div style="overflow: auto;">
+          <infinite-loading
+            direction="top"
+            :distance="1"
+            @infinite="infiniteHandler"
+            ref="infiniteLoading"
+          >
+          </infinite-loading>
+          <ul>
+            <li v-for="item in list" v-text="item"></li>
+          </ul>
+        </div>
+      `,
+      methods: {
+        infiniteHandler: function infiniteHandler($state) {
+          const vInfLoading = this.$refs.infiniteLoading;
+          const vScrollParent = vInfLoading.scrollParent;
+
+          for (let i = 0, j = this.list.length; i < 5; i += 1) {
+            this.list.push(j + i);
+          }
+
+          const expectedLength = this.list.length;
+          const isComplete = expectedLength > 6;
+
+          // check spinner
+          expect(isShow(this.$el.querySelector('.loading-default'))).to.be.true;
+          this.$nextTick(() => {
+            const vClientHeight = vScrollParent.clientHeight;
+            const maxScrollTop = vScrollParent.scrollHeight - vClientHeight;
+            let vExpectedPos = vScrollParent.scrollHeight - vInfLoading.lastHeight
+              + vInfLoading.distance;
+            if (vExpectedPos > maxScrollTop) vExpectedPos = maxScrollTop;
+            if (isComplete) {
+              $state.complete();
+            } else {
+              $state.loaded();
+            }
+
+            expect(vScrollParent.scrollTop).to.equal(vExpectedPos);
+            // check list items
+            expect(this.$el.querySelectorAll('ul li')).to.have.lengthOf(expectedLength);
+
+            if (isComplete) {
+              done();
+            } else {
+              vScrollParent.scrollTop = 0;
+            }
+          });
         },
       },
     }));
