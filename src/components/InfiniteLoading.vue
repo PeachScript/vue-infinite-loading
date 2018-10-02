@@ -81,9 +81,12 @@ function hasClass(element, className) {
 
 function restoreScrollPos() {
   if (this.lastHeight) {
-    const vClientHeight = this.scrollParent.clientHeight;
+    let vPos = this.topScrollPos;
+    if (vPos <= 1) {
+      vPos *= this.scrollParent.clientHeight;
+    }
     const vOffset = this.scrollParent.scrollHeight - this.lastHeight;
-    if (vOffset >= vClientHeight) {
+    if (vOffset >= vPos) {
       this.scrollParent.scrollTop = vOffset + this.distance;
     } else {
       this.scrollParent.scrollTop = this.distance + 1;
@@ -145,6 +148,16 @@ export default {
     forceUseInfiniteWrapper: null,
     infiniteWrapperClass: {
       type: String,
+    },
+    /*
+      topScrollPos for direction is 'top'
+      pos = clientHeight * value when value in [0, 1]
+      pos = value when value > 1
+    */
+    topScrollPos: {
+      type: Number,
+      validator: value => value >= 0,
+      default: 1,
     },
   },
   mounted() {
