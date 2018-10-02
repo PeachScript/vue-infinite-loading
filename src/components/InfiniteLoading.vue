@@ -76,7 +76,7 @@ const evt3rdArg = (() => {
 })();
 
 function hasClass(element, className) {
-  return (` ${element.className} `).indexOf(` ${className} `) > -1;
+  return className ? (` ${element.className} `).indexOf(` ${className} `) > -1 : false;
 }
 
 function restoreScrollPos() {
@@ -145,7 +145,6 @@ export default {
     forceUseInfiniteWrapper: null,
     infiniteWrapperClass: {
       type: String,
-      default: 'scroll',
     },
   },
   mounted() {

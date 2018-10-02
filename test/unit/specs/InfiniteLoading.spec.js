@@ -602,6 +602,36 @@ describe('vue-infinite-loading', () => {
 
     vm.$mount('#app');
   });
+  it('should find my forcible element as scroll wrapper when not using `infiniteWrapperClass` property', (done) => {
+    vm = new Vue(Object.assign({}, basicConfig, {
+      template: `
+        <div style="overflow: auto;">
+          <div class="scroll">
+            <div>
+              <ul>
+                <li v-for="item in list" v-text="item"></li>
+              </ul>
+              <infinite-loading
+                :direction="direction"
+                @infinite="infiniteHandler"
+                ref="infiniteLoading"
+                infinite-wrapper-class=""
+                >
+              </infinite-loading>
+            </div>
+          </div>
+        </div>
+      `,
+      methods: {
+        infiniteHandler: function infiniteHandler() {
+          expect(this.$refs.infiniteLoading.scrollParent).to.equal(this.$el);
+          done();
+        },
+      },
+    }));
+
+    vm.$mount('#app');
+  });
   it('should restore the scroll position to the distance if the incremented size is less than the client height when direction is top', (done) => {
     vm = new Vue(Object.assign({}, basicConfig, {
       template: `
