@@ -743,4 +743,58 @@ describe('vue-infinite-loading', () => {
 
     vm.$mount('#app');
   });
+  it('should restore the scroll position(topScrollPos) when direction is top', (done) => {
+    vm = new Vue(Object.assign({}, basicConfig, {
+      template: `
+        <div style="overflow: auto;">
+          <infinite-loading
+            direction="top"
+            :distance="1"
+            @infinite="infiniteHandler"
+            :topScrollPos="300"
+            ref="infiniteLoading"
+          >
+          </infinite-loading>
+          <ul>
+            <li v-for="item in list" v-text="item"></li>
+          </ul>
+        </div>
+      `,
+      methods: {
+        infiniteHandler: function infiniteHandler($state) {
+          const vInfLoading = this.$refs.infiniteLoading;
+          const vScrollParent = vInfLoading.scrollParent;
+
+          for (let i = 0, j = this.list.length; i < 5; i += 1) {
+            this.list.push(j + i);
+          }
+
+          const expectedLength = this.list.length;
+          const isComplete = expectedLength > 6;
+
+          // check spinner
+          expect(isShow(this.$el.querySelector('.loading-default'))).to.be.true;
+          this.$nextTick(() => {
+            if (isComplete) {
+              $state.complete();
+            } else {
+              $state.loaded();
+            }
+
+            expect(vScrollParent.scrollTop).to.equal(2);
+            // check list items
+            expect(this.$el.querySelectorAll('ul li')).to.have.lengthOf(expectedLength);
+
+            if (isComplete) {
+              done();
+            } else {
+              vScrollParent.scrollTop = 0;
+            }
+          });
+        },
+      },
+    }));
+
+    vm.$mount('#app');
+  });
 });
