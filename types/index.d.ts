@@ -21,28 +21,26 @@ export interface StateChanger {
   reset(): void;
 }
 
-declare module 'vue-infinite-loading' {
-  class InfiniteLoading extends Vue {
-    // The trigger distance
-    distance: number;
+export default class InfiniteLoading extends Vue {
+  // The trigger distance
+  distance: number;
 
-    // The load spinner type
-    spinner: SpinnerType;
+  // The load spinner type
+  spinner: SpinnerType;
 
-    // The scroll direction
-    direction: DirectionType;
+  // The scroll direction
+  direction: DirectionType;
 
-    // Whether find the element which has `infinite-wrapper` attribute as the scroll wrapper
-    forceUseInfiniteWrapper: boolean;
+  // Whether find the element which has `infinite-wrapper` attribute as the scroll wrapper
+  forceUseInfiniteWrapper: boolean;
 
-    // Infinite event handler
-    onInfinite: ($state: StateChanger) => void;
+  // Infinite event handler
+  onInfinite: ($state: StateChanger) => void;
 
-    // The method collection used to change infinite state
-    stateChanger: StateChanger;
+  // The method collection used to change infinite state
+  stateChanger: StateChanger;
 
-    // Slots
-    $slots: Slots;
-  }
+  // Slots
+  $slots: Slots;
 }
 
