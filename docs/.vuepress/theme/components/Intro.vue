@@ -32,6 +32,9 @@
   width 640px
   text-align center
 
+  @media (max-width 1080px)
+    width 590px
+
   > p
     margin 0 0 40px
     color $c-basic-light
@@ -48,6 +51,7 @@
     li
       flex 1
       color $c-basic-light
+      line-height 1.42857
       word-break break-all
 
       &:not(:last-child)
@@ -76,4 +80,5 @@
       h3
         margin 0 0 5px
         color $c-basic
+        font-size 1.1rem
 </style>

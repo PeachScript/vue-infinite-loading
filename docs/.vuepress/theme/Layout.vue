@@ -6,7 +6,7 @@
     @touchend="onTouchEnd"
   >
     <router-link :to="$localePath" id="logo"></router-link>
-    <h1 v-text="$siteTitle"></h1>
+    <router-link :to="$localePath" v-text="$siteTitle" tag="h1"></router-link>
 
     <Navbar
       v-if="shouldShowNavbar"
@@ -85,8 +85,29 @@ export default {
 </script>
 
 <style lang="stylus">
-@require './styles/button';
-@require './styles/config';
+@require './styles/button'
+@require './styles/config'
+
+body
+  font 16px/1.42857 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif
+  background-color #fbfcff
+
+.navbar
+  transition all 0.3s
+  border-bottom-color transparent
+
+  .home-link
+    margin-left 5px
+    padding-right 40px
+    pointer-events none
+    visibility hidden
+
+  .links
+    transition all 0.3s
+
+.sidebar
+  @media (min-width $mq-mobile)
+    background #fbfcff
 
 .theme-container
   .previewer
@@ -96,6 +117,14 @@ export default {
     right 100% - $s-home-divide-ratio
     margin-right $s-home-middle-gap
     transition all 0.6s cubic-bezier(0.645, 0.045, 0.355, 1)
+
+    @media (max-width 1080px)
+      margin-right ($s-home-middle-gap / 4)
+
+    @media (max-width $mq-narrow)
+      visibility hidden
+      opacity 0
+      transform scale(0)
 
   #logo
     position absolute
@@ -108,6 +137,14 @@ export default {
     height 200px
     background url('./assets/images/logo.png') no-repeat center/100%
 
+    @media (max-width 1080px)
+      margin-left 191px + ($s-home-middle-gap / 4)
+
+    @media (max-width $mq-narrow)
+      left 50%
+      margin-left 0
+      transform translateX(-50%)
+
     + h1
       position absolute
       z-index 100
@@ -116,19 +153,19 @@ export default {
       margin-left 164px + $s-home-middle-gap
       color $c-basic
       font-size 32px
+      white-space nowrap
+
+      @media (max-width 1080px)
+        margin-left 140px + ($s-home-middle-gap / 4)
+
+      @media (max-width $mq-narrow)
+        left 50%
+        margin-left 0
+        transform translateX(-50%)
 
     &,
     + h1
       transition all 0.6s cubic-bezier(0.645, 0.045, 0.355, 1)
-
-  .navbar
-    transition all 0.3s
-
-    .home-link
-      display none
-
-    .links
-      transition all 0.3s
 
   .intro-container
     position absolute
@@ -138,6 +175,15 @@ export default {
     margin-left $s-home-middle-gap
     transition all 0.3s
     transition-delay 0.6s
+
+    @media (max-width 1080px)
+      margin-left ($s-home-middle-gap / 4)
+
+    @media (max-width $mq-narrow)
+      left 50%
+      margin-left 0
+      transform translateX(-50%)
+      transition-delay 0.3s
 
   .footer
     margin-top 700px
@@ -151,6 +197,10 @@ export default {
       color lighten($c-basic-light, 15%)
       font-size 14px
 
+  @media (min-width $mq-narrow)
+    .page
+     margin-right $s-preview-width + $s-edge-gap
+
   &:not(.doc-mode)
     .navbar
       background transparent
@@ -159,27 +209,70 @@ export default {
         opacity 0
         visibility hidden
         transform translateY(10px)
+
+    .page,
+    .sidebar
+      visibility hidden
+      opacity 0
+
   &.doc-mode
-    #logo
-      top 5px
-      left $s-edge-gap
-      margin-left 0
-      width 50px
-      height 50px
+    .navbar,
+    .navbar .links,
+    #logo,
+    #logo +h1,
+    .previewer
       transition-delay 0.3s
 
+    @media (max-width $mq-narrow)
+      #logo,
+      #logo +h1
+        transition-delay 0s
+
+    .sidebar,
+    .page
+      transition all 0.3s
+      transition-delay 0.6s
+
+    .navbar
+      box-shadow 0 0 8px rgba($c-basic, 0.15)
+
+    #logo
+      position fixed
+      top 6px
+      left $s-edge-gap
+      margin-left 0
+      width 46px
+      height 46px
+
+      @media (max-width $mq-narrow)
+        top 9px
+        width 40px
+        height 40px
+        transform none
+      @media (max-width $mq-mobile)
+        opacity 0
+        visibility hidden
+
       + h1
-        top 2px
+        position fixed
+        top 3px
         left $s-edge-gap + 60
         margin 12px 0 0
-        font-size 24px
-        transition-delay 0.3s
+        font-size 22px
+
+        @media (max-width $mq-narrow)
+          top 6px
+          left $s-edge-gap + 50
+          font-size 18px
+          transform none
+
+        @media (max-width $mq-mobile)
+          left $s-edge-gap + 40
 
     .previewer
       position fixed
       right $s-edge-gap
       margin-right 0
-      transition-delay 0.3s
 
     .intro-container
       opacity 0
@@ -187,7 +280,17 @@ export default {
       transform translateY(30px)
       transition-delay 0s
 
+      @media (max-width $mq-narrow)
+        transform translate(-50%, 30px)
+
     .footer
       opacity 0
       visibility hidden
+
+  &.no-sidebar
+    .sidebar
+      @media (min-width $mq-mobile + 1)
+        display block
+        visibility hidden
+        pointer-events none
 </style>
