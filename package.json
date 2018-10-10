@@ -78,7 +78,7 @@
     "vue": "^2.5.17",
     "vue-loader": "^15.4.1",
     "vue-template-compiler": "^2.5.17",
-    "vuepress": "^0.14.3",
+    "vuepress": "^1.0.0-alpha.9",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.8"

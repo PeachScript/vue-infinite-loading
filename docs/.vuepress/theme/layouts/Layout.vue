@@ -1,7 +1,11 @@
 <template>
   <div
     class="theme-container"
-    :class="[{ 'doc-mode': !isHomepage }, ...pageClasses]"
+    :class="[
+      { 'doc-mode': !isHomepage },
+      { 'start-mode': isInitializing },
+      ...pageClasses
+    ]"
     @touchstart="onTouchStart"
     @touchend="onTouchEnd"
   >
@@ -39,24 +43,24 @@
       <component :is="$page.frontmatter.layout"/>
     </div>
 
-    <Page
-      v-else
-      :sidebar-items="sidebarItems"
-    >
-      <slot
-        name="page-top"
-        slot="top"
-      />
-      <slot
-        name="page-bottom"
-        slot="bottom"
-      />
-    </Page>
+    <template v-else-if="$page.frontmatter.home"/>
+
+    <transition name="content-fade" appear v-else>
+      <Page :sidebar-items="sidebarItems">
+        <slot
+          name="page-top"
+          slot="top"
+        />
+        <slot
+          name="page-bottom"
+          slot="bottom"
+        />
+      </Page>
+    </transition>
 
     <Previewer/>
     <Intro/>
 
-    <SWUpdatePopup :updateEvent="swUpdateEvent"/>
     <footer class="footer">
       <p>Released under the MIT License</p>
       <p>&copy;2016-present Made with ♥ under Vuepress by PeachScript</p>
@@ -66,16 +70,26 @@
 
 <script>
 import 'focus-visible';
-import OfficialLayout from 'vuepress/lib/default-theme/Layout';
-import Intro from './components/Intro';
-import Previewer from './components/Previewer';
+import OfficialLayout from '@vuepress/theme-default/layouts/Layout';
+import Intro from '../components/Intro';
+import Previewer from '../components/Previewer';
 
 export default {
   extends: OfficialLayout,
+  data() {
+    return {
+      isInitializing: true,
+    };
+  },
   computed: {
     isHomepage() {
       return this.$page.frontmatter.home;
     },
+  },
+  mounted() {
+    setTimeout(() => {
+      this.isInitializing = false;
+    }, 10);
   },
   components: {
     Intro,
@@ -85,8 +99,8 @@ export default {
 </script>
 
 <style lang="stylus">
-@require './styles/button'
-@require './styles/config'
+@require '../styles/button'
+@require '../styles/config'
 
 body
   font 16px/1.42857 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif
@@ -102,7 +116,8 @@ body
     pointer-events none
     visibility hidden
 
-  .links
+  .links,
+  .sidebar-button
     transition all 0.3s
 
 .sidebar
@@ -135,7 +150,7 @@ body
     margin-left 216px + $s-home-middle-gap
     width 200px
     height 200px
-    background url('./assets/images/logo.png') no-repeat center/100%
+    background url('../assets/images/logo.png') no-repeat center/100%
 
     @media (max-width 1080px)
       margin-left 191px + ($s-home-middle-gap / 4)
@@ -186,7 +201,7 @@ body
       transition-delay 0.3s
 
   .footer
-    margin-top 700px
+    margin-top 800px
     padding 15px 0
     text-align center
     background-color #fff
@@ -205,19 +220,21 @@ body
     .navbar
       background transparent
 
-      .links
+      .links,
+      .sidebar-button
         opacity 0
         visibility hidden
         transform translateY(10px)
 
-    .page,
     .sidebar
       visibility hidden
       opacity 0
+      transform translateX(-30px)
 
   &.doc-mode
     .navbar,
     .navbar .links,
+    .navbar .sidebar-button,
     #logo,
     #logo +h1,
     .previewer
@@ -228,8 +245,7 @@ body
       #logo +h1
         transition-delay 0s
 
-    .sidebar,
-    .page
+    .sidebar
       transition all 0.3s
       transition-delay 0.6s
 
@@ -293,4 +309,20 @@ body
         display block
         visibility hidden
         pointer-events none
+
+// content transition
+.content-fade-enter-active,
+.content-fade-leave-active
+  transition: all 0.3s
+
+.content-fade-enter,
+.content-fade-leave-to
+  opacity 0
+  visibility hidden
+
+.content-fade-enter
+  transform: translateY(20px)
+
+.doc-mode:not(.start-mode) .content-fade-enter-active
+  transition-delay 0.6s
 </style>
