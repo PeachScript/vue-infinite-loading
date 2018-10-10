@@ -104,7 +104,7 @@ export default {
 
 body
   font 16px/1.42857 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif
-  background-color #fbfcff
+  background-color $c-bg
 
 .navbar
   transition all 0.3s
@@ -122,7 +122,18 @@ body
 
 .sidebar
   @media (min-width $mq-mobile)
-    background #fbfcff
+    width $s-sidebar-width * 0.82
+    background $c-bg
+
+  @media (min-width $mq-narrow)
+    width $s-sidebar-width
+
+.page
+  @media (min-width $mq-mobile)
+    padding-left $s-sidebar-width * 0.82
+
+  @media (min-width $mq-narrow)
+    padding-left $s-sidebar-width
 
 .theme-container
   .previewer
@@ -265,6 +276,7 @@ body
         width 40px
         height 40px
         transform none
+
       @media (max-width $mq-mobile)
         opacity 0
         visibility hidden
