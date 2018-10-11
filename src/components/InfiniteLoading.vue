@@ -75,10 +75,6 @@ const evt3rdArg = (() => {
   return result;
 })();
 
-function hasClass(element, className) {
-  return className ? (` ${element.className} `).indexOf(` ${className} `) > -1 : false;
-}
-
 function restoreScrollPos() {
   if (this.lastHeight) {
     let vPos = this.topScrollPos;
@@ -146,9 +142,6 @@ export default {
       default: 'bottom',
     },
     forceUseInfiniteWrapper: null,
-    infiniteWrapperClass: {
-      type: String,
-    },
     /*
       topScrollPos for direction is 'top'
       pos = clientHeight * value when value in [0, 1]
@@ -336,12 +329,18 @@ export default {
     getScrollParent(elm = this.$el) {
       let result;
 
-      if (elm.tagName === 'BODY') {
-        result = window;
-      } else if (!this.forceUseInfiniteWrapper && ['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
-        result = elm;
-      } else if (elm.hasAttribute('infinite-wrapper') || elm.hasAttribute('data-infinite-wrapper') || hasClass(elm, this.infiniteWrapperClass)) {
-        result = elm;
+      if (typeof this.forceUseInfiniteWrapper === 'string') {
+        result = elm.querySelector(this.forceUseInfiniteWrapper);
+      }
+
+      if (!result) {
+        if (elm.tagName === 'BODY') {
+          result = window;
+        } else if (!this.forceUseInfiniteWrapper && ['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
+          result = elm;
+        } else if (elm.hasAttribute('infinite-wrapper') || elm.hasAttribute('data-infinite-wrapper')) {
+          result = elm;
+        }
       }
 
       return result || this.getScrollParent(elm.parentNode);

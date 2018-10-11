@@ -571,7 +571,7 @@ describe('vue-infinite-loading', () => {
 
     vm.$mount('#app');
   });
-  it('should find my forcible element as scroll wrapper when using `infiniteWrapperClass` property', (done) => {
+  it('should find my forcible element as scroll wrapper when using `forceUseInfiniteWrapper` to select', (done) => {
     vm = new Vue(Object.assign({}, basicConfig, {
       template: `
         <div class="scroll">
@@ -584,8 +584,7 @@ describe('vue-infinite-loading', () => {
                 :direction="direction"
                 @infinite="infiniteHandler"
                 ref="infiniteLoading"
-                infinite-wrapper-class="scroll"
-                force-use-infinite-wrapper="true"
+                force-use-infinite-wrapper=".scroll"
                 >
               </infinite-loading>
             </div>
