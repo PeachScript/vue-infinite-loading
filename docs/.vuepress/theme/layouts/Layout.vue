@@ -1,0 +1,340 @@
+<template>
+  <div
+    class="theme-container"
+    :class="[
+      { 'doc-mode': !isHomepage },
+      { 'start-mode': isInitializing },
+      ...pageClasses
+    ]"
+    @touchstart="onTouchStart"
+    @touchend="onTouchEnd"
+  >
+    <router-link :to="$localePath" id="logo"></router-link>
+    <router-link :to="$localePath" v-text="$siteTitle" tag="h1"></router-link>
+
+    <Navbar
+      v-if="shouldShowNavbar"
+      @toggle-sidebar="toggleSidebar"
+    />
+
+    <div
+      class="sidebar-mask"
+      @click="toggleSidebar(false)"
+    ></div>
+
+    <Sidebar
+      :items="sidebarItems"
+      @toggle-sidebar="toggleSidebar"
+    >
+      <slot
+        name="sidebar-top"
+        slot="top"
+      />
+      <slot
+        name="sidebar-bottom"
+        slot="bottom"
+      />
+    </Sidebar>
+
+    <div
+      class="custom-layout"
+      v-if="$page.frontmatter.layout"
+    >
+      <component :is="$page.frontmatter.layout"/>
+    </div>
+
+    <template v-else-if="$page.frontmatter.home"/>
+
+    <transition name="content-fade" appear v-else>
+      <Page :sidebar-items="sidebarItems">
+        <slot
+          name="page-top"
+          slot="top"
+        />
+        <slot
+          name="page-bottom"
+          slot="bottom"
+        />
+      </Page>
+    </transition>
+
+    <Previewer/>
+    <Intro/>
+
+    <footer class="footer">
+      <p>Released under the MIT License</p>
+      <p>&copy;2016-present Made with ♥ under Vuepress by PeachScript</p>
+    </footer>
+  </div>
+</template>
+
+<script>
+import 'focus-visible';
+import OfficialLayout from '@vuepress/theme-default/layouts/Layout';
+import Intro from '../components/Intro';
+import Previewer from '../components/Previewer';
+
+export default {
+  extends: OfficialLayout,
+  data() {
+    return {
+      isInitializing: true,
+    };
+  },
+  computed: {
+    isHomepage() {
+      return this.$page.frontmatter.home;
+    },
+  },
+  mounted() {
+    setTimeout(() => {
+      this.isInitializing = false;
+    }, 10);
+  },
+  components: {
+    Intro,
+    Previewer,
+  },
+};
+</script>
+
+<style lang="stylus">
+@require '../styles/button'
+@require '../styles/config'
+
+body
+  font 16px/1.42857 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif
+  background-color $c-bg
+
+.navbar
+  transition all 0.3s
+  border-bottom-color transparent
+
+  .home-link
+    margin-left 5px
+    padding-right 40px
+    pointer-events none
+    visibility hidden
+
+  .links,
+  .sidebar-button
+    transition all 0.3s
+
+.sidebar
+  @media (min-width $mq-mobile)
+    width $s-sidebar-width * 0.82
+    background $c-bg
+
+  @media (min-width $mq-narrow)
+    width $s-sidebar-width
+
+.page
+  @media (min-width $mq-mobile)
+    padding-left $s-sidebar-width * 0.82
+
+  @media (min-width $mq-narrow)
+    padding-left $s-sidebar-width
+
+.theme-container
+  .previewer
+    position absolute
+    z-index 100
+    top $s-header-height + 10
+    right 100% - $s-home-divide-ratio
+    margin-right $s-home-middle-gap
+    transition all 0.6s cubic-bezier(0.645, 0.045, 0.355, 1)
+
+    @media (max-width 1080px)
+      margin-right ($s-home-middle-gap / 4)
+
+    @media (max-width $mq-narrow)
+      visibility hidden
+      opacity 0
+      transform scale(0)
+
+  #logo
+    position absolute
+    z-index 100
+    top 100px
+    left $s-home-divide-ratio
+    display inline-block
+    margin-left 216px + $s-home-middle-gap
+    width 200px
+    height 200px
+    background url('../assets/images/logo.png') no-repeat center/100%
+
+    @media (max-width 1080px)
+      margin-left 191px + ($s-home-middle-gap / 4)
+
+    @media (max-width $mq-narrow)
+      left 50%
+      margin-left 0
+      transform translateX(-50%)
+
+    + h1
+      position absolute
+      z-index 100
+      top 280px
+      left $s-home-divide-ratio
+      margin-left 164px + $s-home-middle-gap
+      color $c-basic
+      font-size 32px
+      white-space nowrap
+
+      @media (max-width 1080px)
+        margin-left 140px + ($s-home-middle-gap / 4)
+
+      @media (max-width $mq-narrow)
+        left 50%
+        margin-left 0
+        transform translateX(-50%)
+
+    &,
+    + h1
+      transition all 0.6s cubic-bezier(0.645, 0.045, 0.355, 1)
+
+  .intro-container
+    position absolute
+    z-index 10
+    top 346px
+    left $s-home-divide-ratio
+    margin-left $s-home-middle-gap
+    transition all 0.3s
+    transition-delay 0.6s
+
+    @media (max-width 1080px)
+      margin-left ($s-home-middle-gap / 4)
+
+    @media (max-width $mq-narrow)
+      left 50%
+      margin-left 0
+      transform translateX(-50%)
+      transition-delay 0.3s
+
+  .footer
+    margin-top 800px
+    padding 15px 0
+    text-align center
+    background-color #fff
+    transition all 0.3s
+
+    p
+      margin 0
+      color lighten($c-basic-light, 15%)
+      font-size 14px
+
+  @media (min-width $mq-narrow)
+    .page
+     margin-right $s-preview-width + $s-edge-gap
+
+  &:not(.doc-mode)
+    .navbar
+      background transparent
+
+      .links,
+      .sidebar-button
+        opacity 0
+        visibility hidden
+        transform translateY(10px)
+
+    .sidebar
+      visibility hidden
+      opacity 0
+      transform translateX(-30px)
+
+  &.doc-mode
+    .navbar,
+    .navbar .links,
+    .navbar .sidebar-button,
+    #logo,
+    #logo +h1,
+    .previewer
+      transition-delay 0.3s
+
+    @media (max-width $mq-narrow)
+      #logo,
+      #logo +h1
+        transition-delay 0s
+
+    .sidebar
+      transition all 0.3s
+      transition-delay 0.6s
+
+    .navbar
+      box-shadow 0 0 8px rgba($c-basic, 0.15)
+
+    #logo
+      position fixed
+      top 6px
+      left $s-edge-gap
+      margin-left 0
+      width 46px
+      height 46px
+
+      @media (max-width $mq-narrow)
+        top 9px
+        width 40px
+        height 40px
+        transform none
+
+      @media (max-width $mq-mobile)
+        opacity 0
+        visibility hidden
+
+      + h1
+        position fixed
+        top 3px
+        left $s-edge-gap + 60
+        margin 12px 0 0
+        font-size 22px
+
+        @media (max-width $mq-narrow)
+          top 6px
+          left $s-edge-gap + 50
+          font-size 18px
+          transform none
+
+        @media (max-width $mq-mobile)
+          left $s-edge-gap + 40
+
+    .previewer
+      position fixed
+      right $s-edge-gap
+      margin-right 0
+
+    .intro-container
+      opacity 0
+      visibility hidden
+      transform translateY(30px)
+      transition-delay 0s
+
+      @media (max-width $mq-narrow)
+        transform translate(-50%, 30px)
+
+    .footer
+      opacity 0
+      visibility hidden
+
+  &.no-sidebar
+    .sidebar
+      @media (min-width $mq-mobile + 1)
+        display block
+        visibility hidden
+        pointer-events none
+
+// content transition
+.content-fade-enter-active,
+.content-fade-leave-active
+  transition: all 0.3s
+
+.content-fade-enter,
+.content-fade-leave-to
+  opacity 0
+  visibility hidden
+
+.content-fade-enter
+  transform: translateY(20px)
+
+.doc-mode:not(.start-mode) .content-fade-enter-active
+  transition-delay 0.6s
+</style>
