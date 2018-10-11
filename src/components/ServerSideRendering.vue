@@ -1,29 +1,11 @@
 <template>
   <h3>Server-Side Rendering</h3>
-  <p>Server-Side Rendering(SSR) is a <a target="_blank" href="https://vuejs.org/v2/guide/ssr.html">new official feature</a> in <code>Vue.js 2.0</code>, but we will get an error like this when you use this component in your SRR app:</p>
+  <p>Server-Side Rendering(SSR) is a <a target="_blank" href="https://vuejs.org/v2/guide/ssr.html">new official feature</a> in <code>Vue.js 2.0</code>, but this plugin depends on multiple DOM APIs, so it is no support SSR.</p>
+  <p>If you created SSR project with other framework which has <code>no-ssr</code> component such as <a target="_blank" href="https://nuxtjs.org/api/components-no-ssr#the-lt-no-ssr-gt-component">Nuxt</a>, please wrap <code>infinite-loading</code> component with it to make sure SSR work properly:</p>
   <pre v-highlightjs>
-Error: window is not defined
-
-ReferenceError: window is not defined
-    at ...
-    at ...
-    at e.exports (...)
-    at Object. (...)
-    at p (...)
-    at Object.e.exports.render.e (...)
-    at p (...)
-    at Object. (...)
-    at p (...)
-    at e.__esModule.default (...)
-  </pre>
-  <p>Because the <code>style-loader</code> does not support local export at this time, details in <a target="_blank" href="https://github.com/webpack/style-loader/pull/159">here</a>, so we need this workaround for your SSR app:</p>
-  <ol>
-    <li>
-      use
-      <pre v-highlightjs>import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading.vue';</pre>
-      instead of
-      <pre v-highlightjs>import InfiniteLoading from 'vue-infinite-loading';</pre></li>
-    <li><code>npm install less less-loader --save-dev</code> if you have not installed them.</li>
-  </ol>
+&lt;no-ssr&gt;
+  &lt;infinite-loading&gt;&lt;/infinite-loading&gt;
+&lt;/no-ssr&gt;</pre>
+  <p>If you created SSR project manually, you can use <a href="https://github.com/egoist/vue-no-ssr">vue-no-ssr</a> component to implement it.</p>
   <p>After them, your SSR app should running well, if not, you can join <a target="_blank" href="https://github.com/PeachScript/vue-infinite-loading/issues/18">this issue</a> to discuss it.</p>
 </template>
