@@ -460,7 +460,7 @@ describe('vue-infinite-loading', () => {
     vm.$mount('#app');
   });
 
-  it.only('should find my forcible element as scroll wrapper when using `force-use-infinite-wrapper` property', (done) => {
+  it('should find my forcible element as scroll wrapper when using `force-use-infinite-wrapper` property', (done) => {
     vm = new Vue(Object.assign({}, basicConfig, {
       template: `
         <div infinite-wrapper>
