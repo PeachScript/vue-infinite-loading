@@ -61,9 +61,9 @@
     <Previewer/>
     <Intro/>
 
-    <footer class="footer">
-      <p>Released under the MIT License</p>
-      <p>&copy;2016-present Made with ♥ under Vuepress by PeachScript</p>
+    <footer class="footer"
+      v-if="$themeConfig.footer || $themeLocaleConfig.footer"
+      v-html="$themeConfig.footer || $themeLocaleConfig.footer">
     </footer>
   </div>
 </template>

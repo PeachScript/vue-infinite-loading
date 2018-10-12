@@ -1,29 +1,55 @@
 <template>
   <div class="intro-container">
-    <p>An infinite scroll plugin for Vue.js</p>
+    <p v-text="$description || 'Welcome to your VuePress site'"></p>
     <router-link
       class="button button-large button-basic"
-      :to="'/guide/'"
+      v-if="data.actionText && data.actionLink"
+      :to="data.actionLink"
+      v-text="data.actionText"
       tag="button">
-      Get Started
     </router-link>
-    <button class="button button-large">View GitHub</button>
-    <ul class="feat-list">
-      <li>
-        <h3>Out of the box</h3>
-        BalabalaBalabalaBalabalaBalabala
-      </li>
-      <li>
-        <h3>2-direction support</h3>
-        BalabalaBalabalaBalabalaBalabala
-      </li>
-      <li>
-        <h3>Result display</h3>
-        BalabalaBalabalaBalabalaBalabala
+    <a :href="repoLink" class="button button-large"
+      v-if="data.GitHubText && $themeConfig.repo"
+      v-text="data.GitHubText">
+    </a>
+    <ul class="feat-list"
+      v-if="data.features && data.features">
+      <li v-for="(feature, index) in data.features">
+        <h3 v-text="feature.title"></h3>
+        {{ feature.details }}
       </li>
     </ul>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return { data: {} };
+  },
+  watch: {
+    '$page.frontmatter': {
+      immediate: true,
+      handler(val) {
+        // only read home data
+        if (val && val.home) {
+          this.data = val;
+        }
+      },
+    },
+  },
+  computed: {
+    repoLink() {
+      const link = this.$themeConfig.repo;
+
+      return /^https?:/.test(link)
+        ? link
+        : `https://github.com/${link}`;
+    },
+  },
+};
+</script>
+
 
 <style lang="stylus" scoped>
 @require '../styles/config';
