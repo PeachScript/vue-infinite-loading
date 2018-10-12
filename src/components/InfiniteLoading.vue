@@ -50,8 +50,14 @@ const ERRORS = {
 <!-- add a special attribute for the real scroll wrapper -->
 <div infinite-wrapper>
   ...
-  <!-- set force-use-infinite-wrapper to true -->
-  <infinite-loading force-use-infinite-wrapper="true"></infinite-loading>
+  <!-- set force-use-infinite-wrapper -->
+  <infinite-loading force-use-infinite-wrapper></infinite-loading>
+</div>
+or
+<div class="infinite-wrapper">
+  ...
+  <!-- set force-use-infinite-wrapper as css selector of the real scroll wrapper -->
+  <infinite-loading force-use-infinite-wrapper=".infinite-wrapper"></infinite-loading>
 </div>
     `,
     'more details: https://github.com/PeachScript/vue-infinite-loading/issues/55#issuecomment-316934169',
