@@ -295,12 +295,18 @@ export default {
     getScrollParent(elm = this.$el) {
       let result;
 
-      if (elm.tagName === 'BODY') {
-        result = window;
-      } else if (!this.forceUseInfiniteWrapper && ['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
-        result = elm;
-      } else if (elm.hasAttribute('infinite-wrapper') || elm.hasAttribute('data-infinite-wrapper')) {
-        result = elm;
+      if (typeof this.forceUseInfiniteWrapper === 'string') {
+        result = elm.querySelector(this.forceUseInfiniteWrapper);
+      }
+
+      if (!result) {
+        if (elm.tagName === 'BODY') {
+          result = window;
+        } else if (!this.forceUseInfiniteWrapper && ['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
+          result = elm;
+        } else if (elm.hasAttribute('infinite-wrapper') || elm.hasAttribute('data-infinite-wrapper')) {
+          result = elm;
+        }
       }
 
       return result || this.getScrollParent(elm.parentNode);
