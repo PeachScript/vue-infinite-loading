@@ -1,1 +1,3 @@
-# Vue-infinite-loading
+---
+home: true
+---
