@@ -1,4 +1,6 @@
-// mock passive event listener support and upsupport
+import Vue from 'vue/dist/vue.common';
+
+// mock passive event listener support and not support
 (() => {
   const originAddListener = window.addEventListener;
   let flag;
@@ -12,8 +14,14 @@
   };
 })();
 
+// disable Vue production tip
+Vue.config.productionTip = false;
+
+// setup global Vue manually
+window.Vue = Vue;
+
 const testsContext = require.context('./specs', true, /\.spec$/);
 testsContext.keys().forEach(testsContext);
 
-const srcContext = require.context('../../src', true, /^\/(?!index(\.js)?$)/);
+const srcContext = require.context('../../src', true, /\.js$/);
 srcContext.keys().forEach(srcContext);

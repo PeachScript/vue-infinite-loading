@@ -3,8 +3,6 @@
 import Vue from 'vue/dist/vue.common';
 import InfiniteLoading from '../../../src/components/InfiniteLoading.vue';
 
-Vue.config.productionTip = false;
-
 /**
  * check display status for a specific element
  * @param  {DOM}      elm
@@ -31,7 +29,7 @@ function continuesCall(fn, times, cb) {
   }
 }
 
-describe('vue-infinite-loading', () => {
+describe('vue-infinite-loading:component', () => {
   let vm; // save Vue model
   const basicConfig = {
     data: {
@@ -275,7 +273,7 @@ describe('vue-infinite-loading', () => {
           list: [],
           isDivScroll: true,
           direction: 'top',
-          spinner: 'unknown',
+          spinner: 'default',
         };
       },
       methods: {
@@ -473,7 +471,7 @@ describe('vue-infinite-loading', () => {
                 :direction="direction"
                 @infinite="infiniteHandler"
                 ref="infiniteLoading"
-                force-use-infinite-wrapper
+                force-use-infinite-wrapper="true"
                 >
               </infinite-loading>
             </div>
