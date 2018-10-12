@@ -275,7 +275,7 @@ describe('vue-infinite-loading', () => {
           list: [],
           isDivScroll: true,
           direction: 'top',
-          spinner: 'default',
+          spinner: 'unknown',
         };
       },
       methods: {
@@ -473,7 +473,7 @@ describe('vue-infinite-loading', () => {
                 :direction="direction"
                 @infinite="infiniteHandler"
                 ref="infiniteLoading"
-                force-use-infinite-wrapper="true"
+                force-use-infinite-wrapper
                 >
               </infinite-loading>
             </div>

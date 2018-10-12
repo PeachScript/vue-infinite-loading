@@ -65,7 +65,7 @@ export default {
   name: 'spinner',
   computed: {
     spinnerView() {
-      return SPINNERS[(this.spinner || '').toUpperCase()] || SPINNERS.DEFAULT;
+      return SPINNERS[this.spinner.toUpperCase()];
     },
   },
   props: {

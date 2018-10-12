@@ -6,80 +6,17 @@
       </slot>
     </div>
     <div class="infinite-status-prompt" v-show="isNoResults">
-      <slot name="no-results">No results :(</slot>
+      <slot name="no-results" v-text="slots.noResults"></slot>
     </div>
     <div class="infinite-status-prompt" v-show="isNoMore">
-      <slot name="no-more">No more data :)</slot>
+      <slot name="no-more" v-text="slots.noMore"></slot>
     </div>
   </div>
 </template>
 <script>
 /* eslint-disable no-console */
 import Spinner from './Spinner.vue';
-
-const LOOP_CHECK_TIMEOUT = 1000; // the timeout for check infinite loop
-const LOOP_CHECK_MAX_CALLS = 10; // the maximum number of continuous calls
-const WARNINGS = {
-  STATE_CHANGER: [
-    '[Vue-infinite-loading warn]: emit `loaded` and `complete` event through component instance of `$refs` may cause error, so it will be deprecated soon, please use the `$state` argument instead (`$state` just the special `$event` variable):',
-    '\ntemplate:',
-    '<infinite-loading @infinite="infiniteHandler"></infinite-loading>',
-    `
-script:
-...
-infiniteHandler($state) {
-  ajax('https://www.example.com/api/news')
-    .then((res) => {
-      if (res.data.length) {
-        $state.loaded();
-      } else {
-        $state.complete();
-      }
-    });
-}
-...`,
-    '',
-    'more details: https://github.com/PeachScript/vue-infinite-loading/issues/57#issuecomment-324370549',
-  ].join('\n'),
-  INFINITE_EVENT: '[Vue-infinite-loading warn]: `:on-infinite` property will be deprecated soon, please use `@infinite` event instead.',
-};
-const ERRORS = {
-  INFINITE_LOOP: [
-    `[Vue-infinite-loading error]: executed the callback function more than ${LOOP_CHECK_MAX_CALLS} times for a short time, it looks like searched a wrong scroll wrapper that doest not has fixed height or maximum height, please check it. If you want to force to set a element as scroll wrapper ranther than automatic searching, you can do this:`,
-    `
-<!-- add a special attribute for the real scroll wrapper -->
-<div infinite-wrapper>
-  ...
-  <!-- set force-use-infinite-wrapper -->
-  <infinite-loading force-use-infinite-wrapper></infinite-loading>
-</div>
-or
-<div class="infinite-wrapper">
-  ...
-  <!-- set force-use-infinite-wrapper as css selector of the real scroll wrapper -->
-  <infinite-loading force-use-infinite-wrapper=".infinite-wrapper"></infinite-loading>
-</div>
-    `,
-    'more details: https://github.com/PeachScript/vue-infinite-loading/issues/55#issuecomment-316934169',
-  ].join('\n'),
-};
-const evt3rdArg = (() => {
-  let result = false;
-
-  try {
-    const arg = Object.defineProperty({}, 'passive', {
-      get() {
-        result = { passive: true };
-        return true;
-      },
-    });
-
-    window.addEventListener('testpassive', arg, arg);
-    window.remove('testpassive', arg, arg);
-  } catch (e) { /* */ }
-
-  return result;
-})();
+import config, { evt3rdArg, WARNINGS, ERRORS } from '../config';
 
 export default {
   name: 'InfiniteLoading',
@@ -95,6 +32,7 @@ export default {
       infiniteLoopChecked: false, // save the status of infinite loop check
       infiniteLoopTimer: null,
       continuousCallTimes: 0,
+      slots: config.slots,
     };
   },
   components: {
@@ -123,15 +61,21 @@ export default {
   props: {
     distance: {
       type: Number,
-      default: 100,
+      default: config.props.distance,
     },
     onInfinite: Function,
-    spinner: String,
+    spinner: {
+      type: String,
+      default: config.props.spinner,
+    },
     direction: {
       type: String,
       default: 'bottom',
     },
-    forceUseInfiniteWrapper: null,
+    forceUseInfiniteWrapper: {
+      type: [Boolean, String],
+      default: config.props.forceUseInfiniteWrapper,
+    },
   },
   mounted() {
     this.scrollParent = this.getScrollParent();
@@ -259,10 +203,10 @@ export default {
           clearTimeout(this.infiniteLoopTimer);
           this.infiniteLoopTimer = setTimeout(() => {
             this.infiniteLoopChecked = true;
-          }, LOOP_CHECK_TIMEOUT);
+          }, config.system.loopCheckTimeout);
 
           // throw warning if the times of continuous calls large than the maximum times
-          if (this.continuousCallTimes > LOOP_CHECK_MAX_CALLS) {
+          if (this.continuousCallTimes > config.system.loopCheckMaxCalls) {
             console.error(ERRORS.INFINITE_LOOP);
             this.infiniteLoopChecked = true;
           }
