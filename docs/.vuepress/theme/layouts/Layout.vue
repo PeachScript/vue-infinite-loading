@@ -121,18 +121,18 @@ body
     transition all 0.3s
 
 .sidebar
-  @media (min-width $mq-mobile)
+  @media (min-width $mq-mobile + 1)
     width $s-sidebar-width * 0.82
     background $c-bg
 
-  @media (min-width $mq-narrow)
+  @media (min-width $mq-narrow + 1)
     width $s-sidebar-width
 
 .page
-  @media (min-width $mq-mobile)
+  @media (min-width $mq-mobile + 1)
     padding-left $s-sidebar-width * 0.82
 
-  @media (min-width $mq-narrow)
+  @media (min-width $mq-narrow + 1)
     padding-left $s-sidebar-width
 
 .theme-container
@@ -171,6 +171,11 @@ body
       margin-left 0
       transform translateX(-50%)
 
+    @media (max-width $mq-mobile)
+      top 60px
+      width 150px
+      height 150px
+
     + h1
       position absolute
       z-index 100
@@ -188,6 +193,10 @@ body
         left 50%
         margin-left 0
         transform translateX(-50%)
+
+      @media (max-width $mq-mobile)
+        top 200px
+        font-size 26px
 
     &,
     + h1
@@ -211,6 +220,9 @@ body
       transform translateX(-50%)
       transition-delay 0.3s
 
+    @media (max-width $mq-mobile)
+      top 250px
+
   .footer
     margin-top 800px
     padding 15px 0
@@ -223,7 +235,7 @@ body
       color lighten($c-basic-light, 15%)
       font-size 14px
 
-  @media (min-width $mq-narrow)
+  @media (min-width $mq-narrow + 1)
     .page
      margin-right $s-preview-width + $s-edge-gap
 

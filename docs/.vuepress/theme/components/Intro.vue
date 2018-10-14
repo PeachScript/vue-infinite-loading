@@ -15,6 +15,7 @@
     <ul class="feat-list"
       v-if="data.features && data.features">
       <li v-for="(feature, index) in data.features">
+        <div class="feat-img"></div>
         <h3 v-text="feature.title"></h3>
         {{ feature.details }}
       </li>
@@ -61,9 +62,15 @@ export default {
   @media (max-width 1080px)
     width 590px
 
+  @media (max-width $mq-mobile)
+    width auto
+
   > p
     margin 0 0 40px
     color $c-basic-light
+
+    @media (max-width $mq-mobile)
+      line-height 1.28
 
   .button + .button
     margin-left 20px
@@ -74,6 +81,10 @@ export default {
     margin-top 60px
     padding 0
 
+    @media (max-width $mq-mobile)
+      flex-direction column
+      margin-top 40px
+
     li
       flex 1
       color $c-basic-light
@@ -81,26 +92,34 @@ export default {
       word-break break-all
 
       &:not(:last-child)
-        margin-right 40px
+        @media (min-width $mq-mobile + 1)
+          margin-right 40px
 
-      &::before
-        content ''
-        display block
-        padding-top 57%
-        background no-repeat center top/90%
-        filter grayscale(50%)
-        transition filter 0.3s
+        @media (max-width $mq-mobile)
+          margin-bottom 20px
 
-      &:first-child::before
+      .feat-img
+        margin 0 auto
+        max-width 200px
+
+        &::before
+          content ''
+          display block
+          padding-top 57%
+          background no-repeat center top/90%
+          filter grayscale(50%)
+          transition filter 0.3s
+
+      &:first-child .feat-img::before
         background-image url('../assets/images/icon-box.png')
 
-      &:nth-child(2)::before
+      &:nth-child(2) .feat-img::before
         background-image url('../assets/images/icon-dir.png')
 
-      &:last-child::before
+      &:last-child .feat-img::before
         background-image url('../assets/images/icon-msg.png')
 
-      &:hover::before
+      &:hover .feat-img::before
         filter none
 
       h3
