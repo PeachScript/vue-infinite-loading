@@ -138,7 +138,7 @@ body
 .theme-container
   .previewer
     position absolute
-    z-index 100
+    z-index 10
     top $s-header-height + 10
     right 100% - $s-home-divide-ratio
     margin-right $s-home-middle-gap
@@ -154,7 +154,7 @@ body
 
   #logo
     position absolute
-    z-index 100
+    z-index 21
     top 100px
     left $s-home-divide-ratio
     display inline-block
@@ -178,7 +178,7 @@ body
 
     + h1
       position absolute
-      z-index 100
+      z-index 21
       top 280px
       left $s-home-divide-ratio
       margin-left 164px + $s-home-middle-gap
@@ -204,7 +204,7 @@ body
 
   .intro-container
     position absolute
-    z-index 10
+    z-index 1
     top 346px
     left $s-home-divide-ratio
     margin-left $s-home-middle-gap
@@ -229,6 +229,12 @@ body
     text-align center
     background-color #fff
     transition all 0.3s
+
+    @media (max-width $mq-mobile)
+      margin-top 1250px
+
+    @media (max-width $mq-mobile-narrow)
+      margin-top 1300px
 
     p
       margin 0
@@ -324,6 +330,7 @@ body
         transform translate(-50%, 30px)
 
     .footer
+      margin-top 0
       opacity 0
       visibility hidden
 

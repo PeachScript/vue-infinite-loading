@@ -72,8 +72,18 @@ export default {
     @media (max-width $mq-mobile)
       line-height 1.28
 
-  .button + .button
-    margin-left 20px
+  .button
+    white-space nowrap
+
+    @media (max-width $mq-mobile)
+      margin-bottom 20px
+
+    + .button
+      @media (min-width $mq-mobile + 1)
+        margin-left 20px
+
+      @media (max-width $mq-mobile)
+        margin-bottom 0
 
   .feat-list
     list-style none
@@ -89,7 +99,7 @@ export default {
       flex 1
       color $c-basic-light
       line-height 1.42857
-      word-break break-all
+      word-break break-word
 
       &:not(:last-child)
         @media (min-width $mq-mobile + 1)
