@@ -17,6 +17,11 @@ module.exports = {
         selectText: 'Languages',
         label: 'English',
         nav: [],
+        sidebar: {
+          '/guide/': [
+            '',
+          ],
+        },
         footer: `
 <p>
   Released under the
@@ -36,6 +41,11 @@ module.exports = {
         selectText: '选择语言',
         label: '简体中文',
         nav: [],
+        sidebar: {
+          '/zh/guide/': [
+            '',
+          ],
+        },
         footer: `
 <p>
   遵循
