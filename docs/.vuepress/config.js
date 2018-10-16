@@ -20,6 +20,7 @@ module.exports = {
         sidebar: {
           '/guide/': [
             '',
+            'start-with-hn',
           ],
         },
         footer: `
@@ -44,6 +45,7 @@ module.exports = {
         sidebar: {
           '/zh/guide/': [
             '',
+            'start-with-hn',
           ],
         },
         footer: `
