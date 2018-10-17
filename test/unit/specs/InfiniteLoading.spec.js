@@ -1,33 +1,8 @@
 /* eslint-disable no-console */
 
 import Vue from 'vue/dist/vue.common';
+import { isShow, continuesCall, fakeBox } from '../utils';
 import InfiniteLoading from '../../../src/components/InfiniteLoading.vue';
-
-/**
- * check display status for a specific element
- * @param  {DOM}      elm
- * @return {Boolean}
- */
-function isShow(elm) {
-  return getComputedStyle(elm).display !== 'none';
-}
-
-/**
- * continues call the specified number of times for a function
- * @param  {Function} fn    target function
- * @param  {Number}   times calls
- * @param  {Function} cb    [description]
- */
-function continuesCall(fn, times, cb) {
-  if (times) {
-    fn();
-    setTimeout(() => {
-      continuesCall(fn, times - 1, cb);
-    }, 1);
-  } else {
-    cb();
-  }
-}
 
 describe('vue-infinite-loading:component', () => {
   let vm; // save Vue model
@@ -315,20 +290,19 @@ describe('vue-infinite-loading:component', () => {
   });
 
   it('should still works properly with the deprecated property `:on-infinite` but throw warning', (done) => {
-    const originalError = console.warn;
     let isThrowWarn;
 
-    console.warn = (text) => {
+    console.warn = fakeBox(console.warn, (text) => {
       if (text.indexOf('@infinite') > -1) {
         isThrowWarn = true;
       }
-    };
+    });
 
     vm = new Vue(Object.assign({}, basicConfig, {
       methods: {
         onInfinite: function onInfinite() {
           expect(isThrowWarn).to.be.true;
-          console.warn = originalError;
+          console.warn = fakeBox();
           done();
         },
       },
@@ -431,14 +405,13 @@ describe('vue-infinite-loading:component', () => {
   });
 
   it('should still works properly with the $refs.component.$emit but throw warning', (done) => {
-    const originalError = console.warn;
     let throwWarnTimes = 0;
 
-    console.warn = (text) => {
+    console.warn = fakeBox(console.warn, (text) => {
       if (text.indexOf('$state') > -1) {
         throwWarnTimes += 1;
       }
-    };
+    });
 
     vm = new Vue(Object.assign({}, basicConfig, {
       methods: {
@@ -448,7 +421,7 @@ describe('vue-infinite-loading:component', () => {
           } else {
             this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
             expect(throwWarnTimes).to.equal(2);
-            console.warn = originalError;
+            console.warn = fakeBox();
             done();
           }
         },
@@ -490,14 +463,13 @@ describe('vue-infinite-loading:component', () => {
   });
 
   it('should throw error when the component be in a infinite loop caused by a wrapper with unfixed height', (done) => {
-    const originalError = console.error;
     let isThrowError;
 
-    console.error = (text) => {
+    console.error = fakeBox(console.error, (text) => {
       if (text.indexOf('issues/55') > -1) {
         isThrowError = true;
       }
-    };
+    });
 
     vm = new Vue(Object.assign({}, basicConfig, {
       template: `
@@ -521,7 +493,7 @@ describe('vue-infinite-loading:component', () => {
           } else {
             $state.complete();
             expect(isThrowError).to.be.true;
-            console.error = originalError;
+            console.error = fakeBox();
             // wait for the loop check flag be marked as true
             setTimeout(() => {
               expect(this.$refs.infiniteLoading.infiniteLoopChecked).to.be.true;
