@@ -86,6 +86,7 @@ infiniteHandler($state) {
     'more details: https://github.com/PeachScript/vue-infinite-loading/issues/57#issuecomment-324370549',
   ].join('\n'),
   INFINITE_EVENT: '[Vue-infinite-loading warn]: `:on-infinite` property will be deprecated soon, please use `@infinite` event instead.',
+  IDENTIFIER: '[Vue-infinite-loading warn]: the `reset` event will be deprecated soon, please reset this component by change the `identifier` property.',
 };
 
 /**

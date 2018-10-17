@@ -63,7 +63,6 @@ export default {
       type: Number,
       default: config.props.distance,
     },
-    onInfinite: Function,
     spinner: {
       type: String,
       default: config.props.spinner,
@@ -75,6 +74,18 @@ export default {
     forceUseInfiniteWrapper: {
       type: [Boolean, String],
       default: config.props.forceUseInfiniteWrapper,
+    },
+    identifier: {
+      default: +new Date(),
+    },
+    onInfinite: Function,
+  },
+  watch: {
+    forceUseInfiniteWrapper() {
+      this.scrollParent = this.getScrollParent();
+    },
+    identifier() {
+      this.stateChanger.reset();
     },
   },
   mounted() {
@@ -127,13 +138,17 @@ export default {
       }
     });
 
-    this.$on('$InfiniteLoading:reset', () => {
+    this.$on('$InfiniteLoading:reset', (ev) => {
       this.isLoading = false;
       this.isComplete = false;
       this.isFirstLoad = true;
       this.inThrottle = false;
       this.scrollParent.addEventListener('scroll', this.scrollHandler, evt3rdArg);
       setTimeout(this.scrollHandler, 1);
+
+      if (!ev || ev.target !== this) {
+        console.warn(WARNINGS.IDENTIFIER);
+      }
     });
 
     if (this.onInfinite) {
@@ -154,13 +169,6 @@ export default {
         this.$emit('$InfiniteLoading:reset', { target: this });
       },
     };
-
-    /**
-     * watch for the `force-use-infinite-wrapper` property
-     */
-    this.$watch('forceUseInfiniteWrapper', () => {
-      this.scrollParent = this.getScrollParent();
-    });
   },
   /**
    * To adapt to keep-alive feature, but only work on Vue 2.2.0 and above, see: https://vuejs.org/v2/api/#keep-alive
