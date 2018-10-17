@@ -6,10 +6,10 @@
       </slot>
     </div>
     <div class="infinite-status-prompt" v-show="isNoResults">
-      <slot name="no-results" v-text="slots.noResults"></slot>
+      <slot name="no-results">{{ slots.noResults }}</slot>
     </div>
     <div class="infinite-status-prompt" v-show="isNoMore">
-      <slot name="no-more" v-text="slots.noMore"></slot>
+      <slot name="no-more">{{ slots.noMore }}</slot>
     </div>
   </div>
 </template>
@@ -17,6 +17,20 @@
 /* eslint-disable no-console */
 import Spinner from './Spinner.vue';
 import config, { evt3rdArg, WARNINGS, ERRORS } from '../config';
+
+/**
+ * determine slot is or not a empty element
+ * @param   {Slot}    slot  target slot
+ * @return  {Boolean}
+ */
+function isBlankSlotElm(slot) {
+  return (
+    slot
+    && slot[0].elm
+    && slot[0].elm.textContent === ''
+    && slot[0].elm.childNodes.length === 0
+  );
+}
 
 export default {
   name: 'InfiniteLoading',
@@ -42,19 +56,23 @@ export default {
     isNoResults: {
       cache: false, // disable cache to fix the problem of get slot text delay
       get() {
-        const noResultsSlot = this.$slots['no-results'];
-        const isBlankNoResultsSlot = (noResultsSlot && noResultsSlot[0].elm && noResultsSlot[0].elm.textContent === '');
-
-        return !this.isLoading && this.isComplete && this.isFirstLoad && !isBlankNoResultsSlot;
+        return (
+          !this.isLoading
+          && this.isComplete
+          && this.isFirstLoad
+          && !isBlankSlotElm(this.$slots['no-results'])
+        );
       },
     },
     isNoMore: {
       cache: false, // disable cache to fix the problem of get slot text delay
       get() {
-        const noMoreSlot = this.$slots['no-more'];
-        const isBlankNoMoreSlot = (noMoreSlot && noMoreSlot[0].elm && noMoreSlot[0].elm.textContent === '');
-
-        return !this.isLoading && this.isComplete && !this.isFirstLoad && !isBlankNoMoreSlot;
+        return (
+          !this.isLoading
+          && this.isComplete
+          && !this.isFirstLoad
+          && !isBlankSlotElm(this.$slots['no-more'])
+        );
       },
     },
   },
