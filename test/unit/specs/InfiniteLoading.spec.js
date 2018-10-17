@@ -567,4 +567,53 @@ describe('vue-infinite-loading:component', () => {
 
     vm.$mount('#app');
   });
+
+  it('should be reset if received `reset` event or change `identifier`, and throw warning if use the event way', (done) => {
+    let triggerTimes = 0;
+    let isThrowWarn;
+
+    vm = new Vue(Object.assign({}, basicConfig, {
+      data: {
+        list: [],
+        identifier: '',
+      },
+      template: `
+        <infinite-loading
+          :identifier="identifier"
+          @infinite="infiniteHandler"
+          ref="infiniteLoading">
+        </infinite-loading>
+      `,
+      methods: {
+        infiniteHandler: function infiniteHandler() {
+          switch (triggerTimes += 1) {
+            case 1:
+              console.warn = fakeBox(console.warn, (text) => {
+                if (text.indexOf('identifier') > -1) {
+                  isThrowWarn = true;
+                }
+              });
+
+              // emit reset event to reset component
+              this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+              console.warn = fakeBox();
+              break;
+            case 2:
+              // expect get warning if use reset event
+              expect(isThrowWarn).to.be.true;
+
+              // change identifier to reset component
+              this.identifier = +new Date();
+              break;
+            case 3:
+              done();
+              break;
+            default:
+          }
+        },
+      },
+    }));
+
+    vm.$mount('#app');
+  });
 });
