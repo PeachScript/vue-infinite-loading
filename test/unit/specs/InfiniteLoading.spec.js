@@ -2,6 +2,7 @@
 
 import Vue from 'vue/dist/vue.common';
 import { isShow, continuesCall, fakeBox } from '../utils';
+import config from '../../../src/config';
 import InfiniteLoading from '../../../src/components/InfiniteLoading.vue';
 
 describe('vue-infinite-loading:component', () => {
@@ -396,7 +397,7 @@ describe('vue-infinite-loading:component', () => {
           setTimeout(() => {
             expect(spyFn).to.have.been.callCount(1 + alreadyCalledTimes);
             done();
-          }, this.$refs.infiniteLoading.throttleLimit + 10);
+          }, config.system.throttleLimit + 10);
         });
       },
     }));

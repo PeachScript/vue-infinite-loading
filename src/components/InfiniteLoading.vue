@@ -17,6 +17,7 @@
 /* eslint-disable no-console */
 import Spinner from './Spinner.vue';
 import config, { evt3rdArg, WARNINGS, ERRORS } from '../config';
+import { throttleer } from '../utils';
 
 /**
  * determine slot is or not a empty element
@@ -41,8 +42,6 @@ export default {
       isLoading: false,
       isComplete: false,
       isFirstLoad: true, // save the current loading whether it is the first loading
-      inThrottle: false,
-      throttleLimit: 50,
       infiniteLoopChecked: false, // save the status of infinite loop check
       infiniteLoopTimer: null,
       continuousCallTimes: 0,
@@ -111,13 +110,7 @@ export default {
     this.scrollHandler = function scrollHandlerOriginal(ev) {
       if (!this.isLoading) {
         if (ev && ev.constructor === Event) {
-          if (!this.inThrottle) {
-            this.inThrottle = true;
-            setTimeout(() => {
-              this.attemptLoad();
-              this.inThrottle = false;
-            }, this.throttleLimit);
-          }
+          throttleer.throttle(this.attemptLoad);
         } else {
           this.attemptLoad();
         }
@@ -159,7 +152,7 @@ export default {
       this.isLoading = false;
       this.isComplete = false;
       this.isFirstLoad = true;
-      this.inThrottle = false;
+      throttleer.reset();
       this.scrollParent.addEventListener('scroll', this.scrollHandler, evt3rdArg);
       setTimeout(this.scrollHandler, 1);
 
