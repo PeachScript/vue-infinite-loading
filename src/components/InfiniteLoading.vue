@@ -87,7 +87,7 @@ export default {
     },
     direction: {
       type: String,
-      default: 'bottom',
+      default: config.props.direction,
     },
     forceUseInfiniteWrapper: {
       type: [Boolean, String],
@@ -99,15 +99,14 @@ export default {
     onInfinite: Function,
   },
   watch: {
-    forceUseInfiniteWrapper() {
-      this.scrollParent = this.getScrollParent();
-    },
     identifier() {
       this.stateChanger.reset();
     },
   },
   mounted() {
-    this.scrollParent = this.getScrollParent();
+    this.$watch('forceUseInfiniteWrapper', () => {
+      this.scrollParent = this.getScrollParent();
+    }, { immediate: true });
 
     this.scrollHandler = function scrollHandlerOriginal(ev) {
       if (!this.isLoading) {
