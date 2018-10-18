@@ -16,8 +16,8 @@
 <script>
 /* eslint-disable no-console */
 import Spinner from './Spinner.vue';
-import config, { evt3rdArg, WARNINGS, ERRORS } from '../config';
-import { throttleer } from '../utils';
+import config, { evt3rdArg, WARNINGS } from '../config';
+import { throttleer, loopTracker } from '../utils';
 
 /**
  * determine slot is or not a empty element
@@ -42,9 +42,6 @@ export default {
       isLoading: false,
       isComplete: false,
       isFirstLoad: true, // save the current loading whether it is the first loading
-      infiniteLoopChecked: false, // save the status of infinite loop check
-      infiniteLoopTimer: null,
-      continuousCallTimes: 0,
       slots: config.slots,
     };
   },
@@ -213,21 +210,10 @@ export default {
           this.$emit('infinite', this.stateChanger);
         }
 
-        if (isContinuousCall && !this.forceUseInfiniteWrapper && !this.infiniteLoopChecked) {
+        if (isContinuousCall && !this.forceUseInfiniteWrapper && !loopTracker.isChecked) {
           // check this component whether be in an infinite loop if it is not checked
           // more details: https://github.com/PeachScript/vue-infinite-loading/issues/55#issuecomment-316934169
-          this.continuousCallTimes += 1; // save the times of calls
-
-          clearTimeout(this.infiniteLoopTimer);
-          this.infiniteLoopTimer = setTimeout(() => {
-            this.infiniteLoopChecked = true;
-          }, config.system.loopCheckTimeout);
-
-          // throw warning if the times of continuous calls large than the maximum times
-          if (this.continuousCallTimes > config.system.loopCheckMaxCalls) {
-            console.error(ERRORS.INFINITE_LOOP);
-            this.infiniteLoopChecked = true;
-          }
+          loopTracker.track();
         }
       } else {
         this.isLoading = false;

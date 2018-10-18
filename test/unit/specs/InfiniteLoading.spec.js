@@ -3,6 +3,7 @@
 import Vue from 'vue/dist/vue.common';
 import { isShow, continuesCall, fakeBox } from '../utils';
 import config from '../../../src/config';
+import { loopTracker } from '../../../src/utils';
 import InfiniteLoading from '../../../src/components/InfiniteLoading.vue';
 
 describe('vue-infinite-loading:component', () => {
@@ -497,9 +498,9 @@ describe('vue-infinite-loading:component', () => {
             console.error = fakeBox();
             // wait for the loop check flag be marked as true
             setTimeout(() => {
-              expect(this.$refs.infiniteLoading.infiniteLoopChecked).to.be.true;
+              expect(loopTracker.isChecked).to.be.true;
               done();
-            }, 1501);
+            }, config.system.loopCheckTimeout);
           }
         },
       },
