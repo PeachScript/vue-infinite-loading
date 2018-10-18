@@ -1,14 +1,14 @@
 <template>
   <div class="infinite-loading-container">
-    <div v-show="isLoading">
+    <div v-show="isShowSpinner">
       <slot name="spinner">
         <spinner :spinner="spinner" />
       </slot>
     </div>
-    <div class="infinite-status-prompt" v-show="isNoResults">
+    <div class="infinite-status-prompt" v-show="isShowNoResults">
       <slot name="no-results">{{ slots.noResults }}</slot>
     </div>
-    <div class="infinite-status-prompt" v-show="isNoMore">
+    <div class="infinite-status-prompt" v-show="isShowNoMore">
       <slot name="no-more">{{ slots.noMore }}</slot>
     </div>
   </div>
@@ -16,7 +16,7 @@
 <script>
 /* eslint-disable no-console */
 import Spinner from './Spinner.vue';
-import config, { evt3rdArg, WARNINGS } from '../config';
+import config, { evt3rdArg, WARNINGS, STATUS } from '../config';
 import { throttleer, loopTracker, isBlankSlotElm } from '../utils';
 
 export default {
@@ -25,9 +25,8 @@ export default {
     return {
       scrollParent: null,
       scrollHandler: null,
-      isLoading: false,
-      isComplete: false,
       isFirstLoad: true, // save the current loading whether it is the first loading
+      status: STATUS.READY,
       slots: config.slots,
     };
   },
@@ -35,23 +34,24 @@ export default {
     Spinner,
   },
   computed: {
-    isNoResults: {
+    isShowSpinner() {
+      return this.status === STATUS.LOADING;
+    },
+    isShowNoResults: {
       cache: false, // disable cache to fix the problem of get slot text delay
       get() {
         return (
-          !this.isLoading
-          && this.isComplete
+          this.status === STATUS.COMPLETE
           && this.isFirstLoad
           && !isBlankSlotElm(this.$slots['no-results'])
         );
       },
     },
-    isNoMore: {
+    isShowNoMore: {
       cache: false, // disable cache to fix the problem of get slot text delay
       get() {
         return (
-          !this.isLoading
-          && this.isComplete
+          this.status === STATUS.COMPLETE
           && !this.isFirstLoad
           && !isBlankSlotElm(this.$slots['no-more'])
         );
@@ -91,7 +91,7 @@ export default {
     }, { immediate: true });
 
     this.scrollHandler = function scrollHandlerOriginal(ev) {
-      if (!this.isLoading) {
+      if (this.status === STATUS.READY) {
         if (ev && ev.constructor === Event) {
           throttleer.throttle(this.attemptLoad);
         } else {
@@ -106,7 +106,7 @@ export default {
     this.$on('$InfiniteLoading:loaded', (ev) => {
       this.isFirstLoad = false;
 
-      if (this.isLoading) {
+      if (this.status === STATUS.LOADING) {
         this.$nextTick(this.attemptLoad.bind(null, true));
       }
 
@@ -116,8 +116,7 @@ export default {
     });
 
     this.$on('$InfiniteLoading:complete', (ev) => {
-      this.isLoading = false;
-      this.isComplete = true;
+      this.status = STATUS.COMPLETE;
 
       // force re-complation computed properties to fix the problem of get slot text delay
       this.$nextTick(() => {
@@ -132,8 +131,7 @@ export default {
     });
 
     this.$on('$InfiniteLoading:reset', (ev) => {
-      this.isLoading = false;
-      this.isComplete = false;
+      this.status = STATUS.READY;
       this.isFirstLoad = true;
       throttleer.reset();
       this.scrollParent.addEventListener('scroll', this.scrollHandler, evt3rdArg);
@@ -167,7 +165,10 @@ export default {
    * To adapt to keep-alive feature, but only work on Vue 2.2.0 and above, see: https://vuejs.org/v2/api/#keep-alive
    */
   deactivated() {
-    this.isLoading = false;
+    /* istanbul ignore else */
+    if (this.status === STATUS.LOADING) {
+      this.status = STATUS.READY;
+    }
     this.scrollParent.removeEventListener('scroll', this.scrollHandler, evt3rdArg);
   },
   activated() {
@@ -184,11 +185,11 @@ export default {
       const currentDistance = this.getCurrentDistance();
 
       if (
-        !this.isComplete
+        this.status !== STATUS.COMPLETE
         && currentDistance <= this.distance
         && (this.$el.offsetWidth + this.$el.offsetHeight) > 0
       ) {
-        this.isLoading = true;
+        this.status = STATUS.LOADING;
 
         if (typeof this.onInfinite === 'function') {
           this.onInfinite.call(null, this.stateChanger);
@@ -202,7 +203,7 @@ export default {
           loopTracker.track();
         }
       } else {
-        this.isLoading = false;
+        this.status = STATUS.READY;
       }
     },
     /**
@@ -253,7 +254,8 @@ export default {
     },
   },
   destroyed() {
-    if (!this.isComplete) {
+    /* istanbul ignore else */
+    if (!this.status !== STATUS.COMPLETE) {
       this.scrollParent.removeEventListener('scroll', this.scrollHandler, evt3rdArg);
     }
   },

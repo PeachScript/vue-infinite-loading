@@ -114,6 +114,15 @@ or
   ].join('\n'),
 };
 
+/**
+ * plugin status constants
+ */
+export const STATUS = {
+  READY: 0,
+  LOADING: 1,
+  COMPLETE: 2,
+};
+
 export default {
   mode: 'development',
   props,
@@ -121,4 +130,5 @@ export default {
   slots,
   WARNINGS,
   ERRORS,
+  STATUS,
 };
