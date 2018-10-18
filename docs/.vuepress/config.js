@@ -16,7 +16,12 @@ module.exports = {
         lang: 'en-US',
         selectText: 'Languages',
         label: 'English',
-        nav: [],
+        nav: [
+          {
+            text: 'Guide',
+            link: '/guide/',
+          },
+        ],
         sidebar: {
           '/guide/': [
             '',
@@ -41,7 +46,12 @@ module.exports = {
         lang: 'zh-CN',
         selectText: '选择语言',
         label: '简体中文',
-        nav: [],
+        nav: [
+          {
+            text: '指南',
+            link: '/zh/guide/',
+          },
+        ],
         sidebar: {
           '/zh/guide/': [
             '',
