@@ -40,7 +40,22 @@ export const loopTracker = {
   },
 };
 
+/**
+ * determine slot is or not a empty element
+ * @param   {Slot}    slot  target slot
+ * @return  {Boolean}
+ */
+export function isBlankSlotElm(slot) {
+  return (
+    slot
+    && slot[0].elm
+    && slot[0].elm.textContent === ''
+    && slot[0].elm.childNodes.length === 0
+  );
+}
+
 export default {
   throttleer,
   loopTracker,
+  isBlankSlotElm,
 };

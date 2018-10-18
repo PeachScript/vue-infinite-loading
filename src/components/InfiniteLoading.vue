@@ -17,21 +17,7 @@
 /* eslint-disable no-console */
 import Spinner from './Spinner.vue';
 import config, { evt3rdArg, WARNINGS } from '../config';
-import { throttleer, loopTracker } from '../utils';
-
-/**
- * determine slot is or not a empty element
- * @param   {Slot}    slot  target slot
- * @return  {Boolean}
- */
-function isBlankSlotElm(slot) {
-  return (
-    slot
-    && slot[0].elm
-    && slot[0].elm.textContent === ''
-    && slot[0].elm.childNodes.length === 0
-  );
-}
+import { throttleer, loopTracker, isBlankSlotElm } from '../utils';
 
 export default {
   name: 'InfiniteLoading',
