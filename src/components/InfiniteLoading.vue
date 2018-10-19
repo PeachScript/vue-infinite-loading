@@ -220,7 +220,7 @@ export default {
           // more details: https://github.com/PeachScript/vue-infinite-loading/issues/55#issuecomment-316934169
           loopTracker.track();
         }
-      } else {
+      } else if (this.status === STATUS.LOADING) {
         this.status = STATUS.READY;
       }
     },
