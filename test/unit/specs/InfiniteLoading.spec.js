@@ -618,4 +618,34 @@ describe('vue-infinite-loading:component', () => {
 
     vm.$mount('#app');
   });
+
+  it('should display error message and support retry when load failed', (done) => {
+    let triggerTimes = 0;
+
+    vm = new Vue(Object.assign({}, basicConfig, {
+      methods: {
+        infiniteHandler: function infiniteHandler($state) {
+          switch (triggerTimes += 1) {
+            case 1:
+              $state.error();
+              this.$nextTick(() => {
+                const btnRetry = this.$el.querySelector('.btn-try-infinite');
+
+                expect(btnRetry).to.be.not.null;
+
+                // trigger load again
+                btnRetry.click();
+              });
+              break;
+            case 2:
+              done();
+              break;
+            default:
+          }
+        },
+      },
+    }));
+
+    vm.$mount('#app');
+  });
 });
