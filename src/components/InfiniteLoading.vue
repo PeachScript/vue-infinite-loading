@@ -8,13 +8,13 @@
     <div class="infinite-status-prompt" v-show="isShowNoResults">
       <slot name="no-results">
         <component v-if="slots.noResults.render" :is="slots.noResults"></component>
-        <template v-else v-text="slots.noResults"></template>
+        <template v-else>{{ slots.noResults }}</template>
       </slot>
     </div>
     <div class="infinite-status-prompt" v-show="isShowNoMore">
       <slot name="no-more">
         <component v-if="slots.noMore.render" :is="slots.noMore"></component>
-        <template v-else v-text="slots.noMore"></template>
+        <template v-else>{{ slots.noMore }}</template>
       </slot>
     </div>
     <div class="infinite-status-prompt" v-show="isShowError">
