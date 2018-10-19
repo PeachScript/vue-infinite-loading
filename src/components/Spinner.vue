@@ -1,7 +1,10 @@
 <template>
   <component :is="spinnerView"></component>
 </template>
+
 <script>
+import config from '../config';
+
 const SPINNERS = {
   BUBBLES: {
     render(createElement) {
@@ -61,18 +64,23 @@ const SPINNERS = {
     },
   },
 };
+
 export default {
-  name: 'spinner',
+  name: 'Spinner',
   computed: {
     spinnerView() {
-      return SPINNERS[this.spinner.toUpperCase()];
+      const spinner = this.$attrs.spinner || config.props.spinner;
+
+      return (
+        typeof spinner === 'string'
+          ? (SPINNERS[spinner.toUpperCase()] || SPINNERS.DEFAULT)
+          : spinner
+      );
     },
-  },
-  props: {
-    spinner: String,
   },
 };
 </script>
+
 <style lang="less" scoped>
 @import '../styles/spinner';
 </style>

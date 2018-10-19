@@ -93,7 +93,6 @@ export default {
     },
     spinner: {
       type: String,
-      default: config.props.spinner,
     },
     direction: {
       type: String,
