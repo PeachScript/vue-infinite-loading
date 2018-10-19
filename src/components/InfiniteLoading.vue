@@ -25,10 +25,11 @@
   </div>
 </template>
 <script>
-/* eslint-disable no-console */
 import Spinner from './Spinner.vue';
 import config, { evt3rdArg, WARNINGS, STATUS } from '../config';
-import { throttleer, loopTracker, isBlankSlotElm } from '../utils';
+import {
+  warn, throttleer, loopTracker, isBlankSlotElm,
+} from '../utils';
 
 export default {
   name: 'InfiniteLoading',
@@ -125,7 +126,7 @@ export default {
       }
 
       if (!ev || ev.target !== this) {
-        console.warn(WARNINGS.STATE_CHANGER);
+        warn(WARNINGS.STATE_CHANGER);
       }
     });
 
@@ -140,7 +141,7 @@ export default {
       this.scrollParent.removeEventListener('scroll', this.scrollHandler, evt3rdArg);
 
       if (!ev || ev.target !== this) {
-        console.warn(WARNINGS.STATE_CHANGER);
+        warn(WARNINGS.STATE_CHANGER);
       }
     });
 
@@ -152,12 +153,12 @@ export default {
       setTimeout(this.scrollHandler, 1);
 
       if (!ev || ev.target !== this) {
-        console.warn(WARNINGS.IDENTIFIER);
+        warn(WARNINGS.IDENTIFIER);
       }
     });
 
     if (this.onInfinite) {
-      console.warn(WARNINGS.INFINITE_EVENT);
+      warn(WARNINGS.INFINITE_EVENT);
     }
 
     /**

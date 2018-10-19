@@ -2,6 +2,25 @@
 
 import config, { ERRORS } from './config';
 
+/**
+ * console warning in production
+ * @param {String} msg console content
+ */
+export function warn(msg) {
+  /* istanbul ignore else */
+  if (config.mode !== 'production') {
+    console.warn(`[Vue-infinite-loading warn]: ${msg}`);
+  }
+}
+
+/**
+ * console error
+ * @param {String} msg console content
+ */
+export function error(msg) {
+  console.error(`[Vue-infinite-loading error]: ${msg}`);
+}
+
 export const throttleer = {
   caches: [],
   throttle(fn) {
@@ -34,7 +53,7 @@ export const loopTracker = {
 
     // throw warning if the times of continuous calls large than the maximum times
     if (this.times > config.system.loopCheckMaxCalls) {
-      console.error(ERRORS.INFINITE_LOOP);
+      error(ERRORS.INFINITE_LOOP);
       this.isChecked = true;
     }
   },
@@ -55,6 +74,8 @@ export function isBlankSlotElm(slot) {
 }
 
 export default {
+  warn,
+  error,
   throttleer,
   loopTracker,
   isBlankSlotElm,

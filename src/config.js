@@ -67,7 +67,7 @@ export const evt3rdArg = (() => {
 
 export const WARNINGS = {
   STATE_CHANGER: [
-    '[Vue-infinite-loading warn]: emit `loaded` and `complete` event through component instance of `$refs` may cause error, so it will be deprecated soon, please use the `$state` argument instead (`$state` just the special `$event` variable):',
+    'emit `loaded` and `complete` event through component instance of `$refs` may cause error, so it will be deprecated soon, please use the `$state` argument instead (`$state` just the special `$event` variable):',
     '\ntemplate:',
     '<infinite-loading @infinite="infiniteHandler"></infinite-loading>',
     `
@@ -87,8 +87,8 @@ infiniteHandler($state) {
     '',
     'more details: https://github.com/PeachScript/vue-infinite-loading/issues/57#issuecomment-324370549',
   ].join('\n'),
-  INFINITE_EVENT: '[Vue-infinite-loading warn]: `:on-infinite` property will be deprecated soon, please use `@infinite` event instead.',
-  IDENTIFIER: '[Vue-infinite-loading warn]: the `reset` event will be deprecated soon, please reset this component by change the `identifier` property.',
+  INFINITE_EVENT: '`:on-infinite` property will be deprecated soon, please use `@infinite` event instead.',
+  IDENTIFIER: 'the `reset` event will be deprecated soon, please reset this component by change the `identifier` property.',
 };
 
 /**
@@ -97,7 +97,7 @@ infiniteHandler($state) {
 
 export const ERRORS = {
   INFINITE_LOOP: [
-    `[Vue-infinite-loading error]: executed the callback function more than ${system.loopCheckMaxCalls} times for a short time, it looks like searched a wrong scroll wrapper that doest not has fixed height or maximum height, please check it. If you want to force to set a element as scroll wrapper ranther than automatic searching, you can do this:`,
+    `executed the callback function more than ${system.loopCheckMaxCalls} times for a short time, it looks like searched a wrong scroll wrapper that doest not has fixed height or maximum height, please check it. If you want to force to set a element as scroll wrapper ranther than automatic searching, you can do this:`,
     `
 <!-- add a special attribute for the real scroll wrapper -->
 <div infinite-wrapper>

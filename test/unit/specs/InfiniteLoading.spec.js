@@ -58,11 +58,17 @@ describe('vue-infinite-loading:component', () => {
     `;
 
     document.body.appendChild(styles);
+
+    // use development mode
+    config.mode = 'development';
   });
 
   after(() => {
     // remove global CSS
     document.getElementById('testing-style').remove();
+
+    // restore app mode
+    config.mode = Vue.config.productionTip ? 'development' : 'production';
   });
 
   beforeEach(() => {
