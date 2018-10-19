@@ -34,6 +34,8 @@ const system = {
 const slots = {
   noResults: 'No results :(',
   noMore: 'No more data :)',
+  error: 'Opps, something went wrong :(',
+  errorBtnText: 'Retry',
 };
 
 /**
@@ -121,6 +123,7 @@ export const STATUS = {
   READY: 0,
   LOADING: 1,
   COMPLETE: 2,
+  ERROR: 3,
 };
 
 export default {

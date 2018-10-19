@@ -11,6 +11,17 @@
     <div class="infinite-status-prompt" v-show="isShowNoMore">
       <slot name="no-more">{{ slots.noMore }}</slot>
     </div>
+    <div class="infinite-status-prompt" v-show="isShowError">
+      <slot name="error" :trigger="attemptLoad">
+        {{ slots.error }}
+        <br>
+        <button
+          class="btn-try-infinite"
+          @click="attemptLoad"
+          v-text="slots.errorBtnText">
+        </button>
+      </slot>
+    </div>
   </div>
 </template>
 <script>
@@ -36,6 +47,9 @@ export default {
   computed: {
     isShowSpinner() {
       return this.status === STATUS.LOADING;
+    },
+    isShowError() {
+      return this.status === STATUS.ERROR;
     },
     isShowNoResults: {
       cache: false, // disable cache to fix the problem of get slot text delay
@@ -158,6 +172,10 @@ export default {
       },
       reset: () => {
         this.$emit('$InfiniteLoading:reset', { target: this });
+      },
+      error: () => {
+        this.status = STATUS.ERROR;
+        throttleer.reset();
       },
     };
   },
@@ -284,5 +302,22 @@ export default {
   font-size: 14px;
   text-align: center;
   padding: 10px 0;
+
+  .btn-try-infinite {
+    margin-top: 5px;
+    padding: 5px 10px;
+    color: #999;
+    font-size: 14px;
+    line-height: 1;
+    background: transparent;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+
+    &:not(:active):hover {
+      opacity: 0.8;
+    }
+  }
 }
 </style>
