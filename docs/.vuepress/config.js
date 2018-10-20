@@ -21,6 +21,10 @@ module.exports = {
             text: 'Guide',
             link: '/guide/',
           },
+          {
+            text: 'API',
+            link: '/api/',
+          },
         ],
         sidebar: {
           '/guide/': [
@@ -50,6 +54,10 @@ module.exports = {
           {
             text: '指南',
             link: '/zh/guide/',
+          },
+          {
+            text: 'API',
+            link: '/zh/api/',
           },
         ],
         sidebar: {
