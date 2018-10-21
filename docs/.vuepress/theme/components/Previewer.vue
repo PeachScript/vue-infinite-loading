@@ -1,9 +1,16 @@
 <template>
   <div class="previewer">
+    <a
+      class="edit-link"
+      target="_blank"
+      v-if="!$page.frontmatter.home && $page.frontmatter.previewLink"
+      :href="editLink">
+      Edit in JSFiddle
+    </a>
     <div class="previewer-content">
       <!-- add a wrapper to prevent overflow hidden property effect box-shadow -->
       <div class="iframe-wrapper" v-if="$page.frontmatter.previewLink">
-        <iframe :src="$page.frontmatter.previewLink" frameborder="0" width="100%" height="100%"></iframe>
+        <iframe :src="$page.frontmatter.previewLink" frameborder="0"></iframe>
       </div>
     </div>
   </div>
@@ -12,6 +19,11 @@
 <script>
 export default {
   name: 'Previewer',
+  computed: {
+    editLink() {
+      return this.$page.frontmatter.previewLink && this.$page.frontmatter.previewLink.replace(/embedded.*$/, '');
+    },
+  },
 };
 </script>
 
@@ -25,6 +37,17 @@ export default {
   width $s-preview-width
   height $s-preview-width * $ratio
   background url('../assets/images/16th-mockup.png') no-repeat center/100%
+
+  .edit-link
+    position absolute
+    top 94px
+    right 100%
+    font-size 0.9rem
+    font-weight normal
+    writing-mode vertical-lr
+
+    &:not(:hover)
+      color #ccc
 
   .previewer-content
     $s-vertical = 28px
@@ -46,4 +69,9 @@ export default {
       height 100%
       border-radius 32px
       overflow hidden
+
+      iframe
+        margin-top -50px
+        width 100%
+        height calc(100% + 50px)
 </style>
