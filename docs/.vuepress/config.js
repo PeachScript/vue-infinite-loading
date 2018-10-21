@@ -30,6 +30,7 @@ module.exports = {
           '/guide/': [
             '',
             'start-with-hn',
+            'use-with-filter-or-tabs',
           ],
         },
         footer: `
@@ -64,6 +65,7 @@ module.exports = {
           '/zh/guide/': [
             '',
             'start-with-hn',
+            'use-with-filter-or-tabs',
           ],
         },
         footer: `
