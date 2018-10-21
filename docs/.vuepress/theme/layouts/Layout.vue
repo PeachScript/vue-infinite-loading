@@ -4,6 +4,7 @@
     :class="[
       { 'doc-mode': !isHomepage },
       { 'start-mode': isInitializing },
+      { 'preview-mode': $page.frontmatter.previewLink },
       ...pageClasses
     ]"
     @touchstart="onTouchStart"
@@ -135,6 +136,11 @@ body
   @media (min-width $mq-narrow + 1)
     padding-left $s-sidebar-width
 
+  .content:not(.custom),
+  .page-edit,
+  .page-nav
+    margin-left 0
+
 .theme-container
   .previewer
     position absolute
@@ -143,6 +149,7 @@ body
     right 100% - $s-home-divide-ratio
     margin-right $s-home-middle-gap
     transition all 0.6s cubic-bezier(0.645, 0.045, 0.355, 1)
+    transform-origin right bottom
 
     @media (max-width 1080px)
       margin-right ($s-home-middle-gap / 4)
@@ -241,10 +248,6 @@ body
       color lighten($c-basic-light, 15%)
       font-size 14px
 
-  @media (min-width $mq-narrow + 1)
-    .page
-     margin-right $s-preview-width + $s-edge-gap
-
   &:not(.doc-mode)
     .navbar
       background transparent
@@ -330,7 +333,7 @@ body
         transform translate(-50%, 30px)
 
     .footer
-      margin-top 0
+      margin-top -80px
       opacity 0
       visibility hidden
 
@@ -340,6 +343,17 @@ body
         display block
         visibility hidden
         pointer-events none
+
+  &:not(.preview-mode)
+    .previewer
+      opacity 0
+      visibility hidden
+      transform scale(0)
+
+  &.preview-mode
+    @media (min-width $mq-narrow + 1)
+      .page
+        margin-right $s-preview-width + $s-edge-gap
 
 // content transition
 .content-fade-enter-active,
