@@ -1,5 +1,5 @@
 ---
-previewLink: //jsfiddle.net/PeachScript/2edu1k7o/embedded/result/
+previewLink: //jsfiddle.net/PeachScript/zqb73oLv/embedded/result/
 ---
 # Guide
 
