@@ -1,3 +1,6 @@
+---
+previewLink: //jsfiddle.net/PeachScript/2edu1k7o/embedded/result/
+---
 # Guide
 
 ## Installation

@@ -10,4 +10,5 @@ features:
   details: Support top and bottom directions currently, adapt to more different scenes
 - title: Result display
   details: Configurable load result display, for example no more data, no results and etc
+previewLink: //jsfiddle.net/PeachScript/2edu1k7o/embedded/result/
 ---

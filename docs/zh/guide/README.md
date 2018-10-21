@@ -1,3 +1,6 @@
+---
+previewLink: //jsfiddle.net/PeachScript/2edu1k7o/embedded/result/
+---
 # 指南
 
 ## 安装插件
