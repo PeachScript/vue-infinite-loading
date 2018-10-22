@@ -72,20 +72,17 @@ sidebar: auto
 
 ### error
 
-- 默认值：`Opps, something went wrong :(`
+- 默认值：`Opps, something went wrong :( <br> <button>Retry</button>`
 - 详细：
 
 该信息将会在加载出现错误时呈现给用户，即调用 `$state.error` 方法时。
 
-与其他插槽不同的是，该插槽的默认值除了会提供文字信息之外，还会提供一个重试按钮供用户重新尝试加载；在自定义该插槽时，如果你也希望提供一个重试按钮给用户，可以使用 [`slot-scope`](https://vuejs.org/v2/api/index.html#slot-scope) 功能实现，就像下面这样：
+### spinner
 
-``` html
-<infinite-loading @infinite="infiniteHandler">
-  <div slot="error" slot-scope="{ trigger }">
-    Network error, click <a href="javascript:;" @click="trigger">here</a> to retry
-  </div>
-</infinite-loading>
-```
+- 默认值：`Internal Spinner`
+- 详细：
+
+此插槽将会在加载数据时展示，你可以通过它自定义加载动画。
 
 ## 事件
 

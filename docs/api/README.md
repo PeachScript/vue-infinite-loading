@@ -72,20 +72,17 @@ This message will be displayed if there is no more data, it means we called the 
 
 ### error
 
-- Default: `Opps, something went wrong :(`
+- Default: `Opps, something went wrong :( <br> <button>Retry</button>`
 - Details: 
 
 This message will be displayed if loading failed, it means we called the `$state.error` method.
 
-Unlike other slots, the default value for this slot will provide a retry button for users to load data again. If you want to impletement a retry button for users when you customize this slot, you can use the [`slot-scope`](https://vuejs.org/v2/api/index.html#slot-scope) feature, like this:
+### spinner
 
-``` html
-<infinite-loading @infinite="infiniteHandler">
-  <div slot="error" slot-scope="{ trigger }">
-    Network error, click <a href="javascript:;" @click="trigger">here</a> to retry
-  </div>
-</infinite-loading>
-```
+- Default: `Internal Spinner`
+- Details: 
+
+This slot will be displayed when loading data, you can customize your own spinner through it.
 
 ## Events
 
