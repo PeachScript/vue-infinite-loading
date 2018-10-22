@@ -31,6 +31,7 @@ module.exports = {
             '',
             'start-with-hn',
             'use-with-filter-or-tabs',
+            'configure-plugin-opts',
           ],
         },
         footer: `
@@ -66,6 +67,7 @@ module.exports = {
             '',
             'start-with-hn',
             'use-with-filter-or-tabs',
+            'configure-plugin-opts',
           ],
         },
         footer: `
