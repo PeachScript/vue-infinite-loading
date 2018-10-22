@@ -41,7 +41,7 @@
 import Spinner from './Spinner.vue';
 import config, { evt3rdArg, WARNINGS, STATUS } from '../config';
 import {
-  warn, throttleer, loopTracker, isBlankSlotElm,
+  warn, throttleer, loopTracker, isBlankSlotElm, scrollBarStorage,
 } from '../utils';
 
 export default {
@@ -133,6 +133,13 @@ export default {
     this.$on('$InfiniteLoading:loaded', (ev) => {
       this.isFirstLoad = false;
 
+      if (this.direction === 'top') {
+        // wait for DOM updated
+        this.$nextTick(() => {
+          scrollBarStorage.restore(this.scrollParent);
+        });
+      }
+
       if (this.status === STATUS.LOADING) {
         this.$nextTick(this.attemptLoad.bind(null, true));
       }
@@ -161,6 +168,7 @@ export default {
       this.status = STATUS.READY;
       this.isFirstLoad = true;
       throttleer.reset();
+      scrollBarStorage.remove(this.scrollParent);
       this.scrollParent.addEventListener('scroll', this.scrollHandler, evt3rdArg);
       setTimeout(this.scrollHandler, 1);
 
@@ -221,6 +229,13 @@ export default {
         && (this.$el.offsetWidth + this.$el.offsetHeight) > 0
       ) {
         this.status = STATUS.LOADING;
+
+        if (this.direction === 'top') {
+          // wait for spinner display
+          this.$nextTick(() => {
+            scrollBarStorage.save(this.scrollParent);
+          });
+        }
 
         if (typeof this.onInfinite === 'function') {
           this.onInfinite.call(null, this.stateChanger);
@@ -287,6 +302,8 @@ export default {
   destroyed() {
     /* istanbul ignore else */
     if (!this.status !== STATUS.COMPLETE) {
+      throttleer.reset();
+      scrollBarStorage.remove(this.scrollParent);
       this.scrollParent.removeEventListener('scroll', this.scrollHandler, evt3rdArg);
     }
   },
