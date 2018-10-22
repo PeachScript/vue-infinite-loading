@@ -108,3 +108,78 @@ sidebar: auto
 #### $state.reset
 
 重设组件状态，等同于改变 `identifier` 属性。
+
+## 选项
+
+你可以通过插件 API 配置所有的插件选项。
+
+### props.spinner
+
+- 类型：`String` | `Vue Component`
+- 详细：
+
+配置 `spinner` 属性的默认值。
+
+- 参考：[属性 - spinner](#spinner)
+
+### props.distance
+
+- 类型：`Number`
+- 详细：
+
+配置 `distance` 属性的默认值。
+
+- 参考：[属性 - distance](#distance)
+
+### props.forceUseInfiniteWrapper
+
+- 类型：`Boolean` | `String`
+- 详细：
+
+配置 `forceUseInfiniteWrapper` 属性的默认值。
+
+- 参考：[属性 - forceUseInfiniteWrapper](#forceuseinfinitewrapper)
+
+### slots.noResults
+
+- 类型：`String` | `Vue Component`
+- 详细：
+
+配置 `no-results` 插槽的默认内容。
+
+- 参考：[插槽 - no-results](#no-results)
+
+### slots.noMore
+
+- 类型：`String` | `Vue Component`
+- 详细：
+
+配置 `no-more` 插槽的默认内容。
+
+- 参考：[插槽 - no-more](#no-more)
+
+### slots.error
+
+- 类型：`String` | `Vue Component`
+- 详细：
+
+配置 `error` 插槽的默认内容。
+
+- 参考：[插槽 - error](#error)
+
+### slots.spinner
+
+- 类型：`String` | `Vue Component`
+- 详细：
+
+配置 `spinner` 插槽的默认内容。
+
+- 参考：[插槽 - spinner](#spinner-2)
+
+### system.throttleLimit
+
+- 类型：`Number`
+- 默认值：`50`
+- 详细：
+
+配置 `scroll` 事件节流的间隔时间（单位：毫秒）。

@@ -108,3 +108,78 @@ Inform the comopnent that this loading failed, the content of `error` slot will 
 #### $state.reset
 
 Reset the component, same as changing the `identifier` property.
+
+## Options
+
+You can configure all these plugin options via the plugin API.
+
+### props.spinner
+
+- Type: `String`
+- Details:
+
+Configure the default value for `spinner` property.
+
+- See also: [Properties - spinner](#spinner)
+
+### props.distance
+
+- Type: `Number`
+- Details:
+
+Configure the default value for  `distance` property.
+
+- See also: [Properties - distance](#distance)
+
+### props.forceUseInfiniteWrapper
+
+- Type: `Boolean` | `String`
+- Details:
+
+Configure the default value for `forceUseInfiniteWrapper` property.
+
+- See also: [Properties -  forceUseInfiniteWrapper](#forceuseinfinitewrapper)
+
+### slots.noResults
+
+- Type: `String` | `Vue Component`
+- Details:
+
+Configure the default content for `no-results` slot.
+
+- See also: [Slots - no-results](#no-results)
+
+### slots.noMore
+
+- Type: `String` | `Vue Component`
+- Details:
+
+Configure the default content for `no-more` slot.
+
+- See also: [Slots - no-more](#no-more)
+
+### slots.error
+
+- Type: `String` | `Vue Component`
+- Details:
+
+Configure the default content for `error` slot.
+
+- See also: [Slots - error](#error)
+
+### slots.spinner
+
+- Type: `String` | `Vue Component`
+- Details:
+
+Configure the default content for `spinner` slot.
+
+- See also: [Slots - spinner](#spinner-2)
+
+### system.throttleLimit
+
+- Type: `Number`
+- Default: `50`
+- Details:
+
+Configure the default throttle space of time for `scroll` event (unit: ms).
