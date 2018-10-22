@@ -682,4 +682,38 @@ describe('vue-infinite-loading:component', () => {
 
     vm.$mount('#app');
   });
+
+  it('should save and restore scroll bar when using top direction', (done) => {
+    vm = new Vue(Object.assign({}, basicConfig, {
+      data: {
+        list: [1, 2, 3, 4, 5],
+      },
+      template: `
+        <div style="overflow: auto; height: 100px;">
+          <ul>
+            <li v-for="item in list" v-text="item"></li>
+          </ul>
+          <infinite-loading
+            direction="top"
+            @infinite="infiniteHandler">
+          </infinite-loading>
+        </div>
+      `,
+      methods: {
+        infiniteHandler($state) {
+          expect(this.$el.scrollTop).to.equal(0);
+          this.list.push(6, 7, 8, 9, 10);
+          $state.loaded();
+
+          // wait for scroll bar restore
+          setTimeout(() => {
+            expect(this.$el.scrollTop).to.not.equal(0);
+            done();
+          }, 100);
+        },
+      },
+    }));
+
+    vm.$mount('#app');
+  });
 });
