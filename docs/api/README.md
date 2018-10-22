@@ -6,7 +6,9 @@ sidebar: auto
 
 ## Props
 
-The default value for these properties can be overridden through the Plugin API.
+The default value for most of properties can be overridden through the Plugin API.
+
+- See also: [Configure Plugin Options - Props/Settings](../guide/configure-plugin-opts.md#props-settings)
 
 ### distance
 
@@ -23,7 +25,7 @@ The `infinite` event will be fired if the scroll distance is less than this valu
 - Available: `default` | `spiral` | `circles` | `bubbles` | `waveDots`
 - Details: 
 
-This property is used to set the loading animation, you can choose one from the internal spinners that you like, you can also customize it with a [named slot](https://vuejs.org/v2/guide/components.html#Named-Slots) that called `spinner`.
+This property is used to set the loading animation, you can choose one from the internal spinners that you like, you can also customize it with a [named slot](#spinner-2) that called `spinner`.
 
 ### direction
 
@@ -55,6 +57,10 @@ The comopnent will be reset if this property has changed, just like recreating a
 ## Slots
 
 The contents for these slots can be configured via the [`slot` special attribute](https://vuejs.org/v2/api/index.html#slot), also can be configure via the plugin API.
+
+- See also:
+  - [Configure Load Messages](../guide/configure-load-msg.md)
+  - [Configure Plugin Options - Slots](../guide/configure-plugin-opts.md#slots)
 
 ### no-results
 

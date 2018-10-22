@@ -6,7 +6,9 @@ sidebar: auto
 
 ## 属性
 
-所有属性都可以通过插件 API 改写全局默认值。
+大多数属性都可以通过插件 API 改写全局默认值。
+
+- 参考：[配置插件选项 - 属性/设置](../guide/configure-plugin-opts.md#属性-设置)
 
 ### distance
 
@@ -23,7 +25,7 @@ sidebar: auto
 - 有效值：`default` | `spiral` | `circles` | `bubbles` | `waveDots`
 - 详细：
 
-此选项用于设置加载动画，你可以从内置选项中选择一个你喜欢的，你也可以通过名为 `spinner` 的[具名插槽](https://vuejs.org/v2/guide/components.html#Named-Slots)来进行自定义。
+此选项用于设置加载动画，你可以从内置选项中选择一个你喜欢的，你也可以通过名为 `spinner` 的[具名插槽](#spinner-2)来进行自定义。
 
 ### direction
 
@@ -55,6 +57,10 @@ sidebar: auto
 ## 插槽
 
 插槽的内容可以通过 `Vue.js` 官方提供的 [`slot` 特殊属性](https://vuejs.org/v2/api/index.html#slot)进行设置，也可以通过插件 API 进行全局设置。
+
+- 参考：
+  - [配置加载提示](../guide/configure-load-msg.md)
+  - [配置插件选项 - 插槽](../guide/configure-plugin-opts.md#插槽)
 
 ### no-results
 
