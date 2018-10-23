@@ -36,6 +36,7 @@ const slots = {
   noMore: 'No more data :)',
   error: 'Opps, something went wrong :(',
   errorBtnText: 'Retry',
+  spinner: '',
 };
 
 /**
