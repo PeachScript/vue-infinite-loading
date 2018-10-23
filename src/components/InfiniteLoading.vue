@@ -1,23 +1,35 @@
 <template>
   <div class="infinite-loading-container">
-    <div v-show="isShowSpinner">
+    <div
+      class="infinite-status-prompt"
+      v-show="isShowSpinner"
+      :style="slotStyles.spinner">
       <slot name="spinner">
         <spinner :spinner="spinner" />
       </slot>
     </div>
-    <div class="infinite-status-prompt" v-show="isShowNoResults">
+    <div
+      class="infinite-status-prompt"
+      :style="slotStyles.noResults"
+      v-show="isShowNoResults">
       <slot name="no-results">
         <component v-if="slots.noResults.render" :is="slots.noResults"></component>
         <template v-else>{{ slots.noResults }}</template>
       </slot>
     </div>
-    <div class="infinite-status-prompt" v-show="isShowNoMore">
+    <div
+      class="infinite-status-prompt"
+      :style="slotStyles.noMore"
+      v-show="isShowNoMore">
       <slot name="no-more">
         <component v-if="slots.noMore.render" :is="slots.noMore"></component>
         <template v-else>{{ slots.noMore }}</template>
       </slot>
     </div>
-    <div class="infinite-status-prompt" v-show="isShowError">
+    <div
+      class="infinite-status-prompt"
+      :style="slotStyles.error"
+      v-show="isShowError">
       <slot name="error" :trigger="attemptLoad">
         <component
           v-if="slots.error.render"
@@ -39,9 +51,11 @@
 </template>
 <script>
 import Spinner from './Spinner.vue';
-import config, { evt3rdArg, WARNINGS, STATUS } from '../config';
+import config, {
+  evt3rdArg, WARNINGS, STATUS, SLOT_STYLES,
+} from '../config';
 import {
-  warn, throttleer, loopTracker, isBlankSlotElm, scrollBarStorage,
+  warn, throttleer, loopTracker, scrollBarStorage, kebabCase,
 } from '../utils';
 
 export default {
@@ -65,25 +79,42 @@ export default {
     isShowError() {
       return this.status === STATUS.ERROR;
     },
-    isShowNoResults: {
-      cache: false, // disable cache to fix the problem of get slot text delay
-      get() {
-        return (
-          this.status === STATUS.COMPLETE
-          && this.isFirstLoad
-          && !isBlankSlotElm(this.$slots['no-results'])
-        );
-      },
+    isShowNoResults() {
+      return (
+        this.status === STATUS.COMPLETE
+        && this.isFirstLoad
+      );
     },
-    isShowNoMore: {
-      cache: false, // disable cache to fix the problem of get slot text delay
-      get() {
-        return (
-          this.status === STATUS.COMPLETE
-          && !this.isFirstLoad
-          && !isBlankSlotElm(this.$slots['no-more'])
-        );
-      },
+    isShowNoMore() {
+      return (
+        this.status === STATUS.COMPLETE
+        && !this.isFirstLoad
+      );
+    },
+    slotStyles() {
+      const styles = {};
+
+      Object.keys(config.slots).forEach((key) => {
+        const name = kebabCase(key);
+
+        if (
+          // no slot and the configured default slot is not a Vue component
+          (
+            !this.$slots[name]
+            && !config.slots[key].render
+          )
+          // has slot and slot is pure text node
+          || (
+            this.$slots[name]
+            && !this.$slots[name][0].tag
+          )
+        ) {
+          // only apply default styles for pure text slot
+          styles[key] = SLOT_STYLES;
+        }
+      });
+
+      return styles;
     },
   },
   props: {
@@ -177,10 +208,6 @@ export default {
       }
     });
 
-    if (this.onInfinite) {
-      warn(WARNINGS.INFINITE_EVENT);
-    }
-
     /**
      * change state for this component, pass to the callback
      */
@@ -199,6 +226,10 @@ export default {
         throttleer.reset();
       },
     };
+
+    if (this.onInfinite) {
+      warn(WARNINGS.INFINITE_EVENT);
+    }
   },
   /**
    * To adapt to keep-alive feature, but only work on Vue 2.2.0 and above, see: https://vuejs.org/v2/api/#keep-alive
@@ -315,10 +346,11 @@ export default {
 .infinite-loading-container {
   clear: both;
   text-align: center;
+
   @{deep} *[class^=loading-] {
     @size: 28px;
     display: inline-block;
-    margin: 15px 0;
+    margin: 5px 0;
     width: @size;
     height: @size;
     font-size: @size;
@@ -327,27 +359,20 @@ export default {
   }
 }
 
-.infinite-status-prompt {
-  color: #666;
+.btn-try-infinite {
+  margin-top: 5px;
+  padding: 5px 10px;
+  color: #999;
   font-size: 14px;
-  text-align: center;
-  padding: 10px 0;
+  line-height: 1;
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
 
-  .btn-try-infinite {
-    margin-top: 5px;
-    padding: 5px 10px;
-    color: #999;
-    font-size: 14px;
-    line-height: 1;
-    background: transparent;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    outline: none;
-    cursor: pointer;
-
-    &:not(:active):hover {
-      opacity: 0.8;
-    }
+  &:not(:active):hover {
+    opacity: 0.8;
   }
 }
 </style>

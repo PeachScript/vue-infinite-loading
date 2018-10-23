@@ -127,6 +127,15 @@ export const STATUS = {
   ERROR: 3,
 };
 
+/**
+ * default slot styles
+ */
+export const SLOT_STYLES = {
+  color: '#666',
+  fontSize: '14px',
+  padding: '10px 0',
+};
+
 export default {
   mode: 'development',
   props,

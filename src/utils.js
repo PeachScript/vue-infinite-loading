@@ -89,17 +89,12 @@ export const scrollBarStorage = {
 };
 
 /**
- * determine slot is or not a empty element
- * @param   {Slot}    slot  target slot
- * @return  {Boolean}
+ * kebab-case a camel-case string
+ * @param   {String}    str  source string
+ * @return  {String}
  */
-export function isBlankSlotElm(slot) {
-  return (
-    slot
-    && slot[0].elm
-    && slot[0].elm.textContent === ''
-    && slot[0].elm.childNodes.length === 0
-  );
+export function kebabCase(str) {
+  return str.replace(/[A-Z]/g, s => `-${s.toLowerCase()}`);
 }
 
 export default {
@@ -107,6 +102,6 @@ export default {
   error,
   throttleer,
   loopTracker,
-  isBlankSlotElm,
+  kebabCase,
   scrollBarStorage,
 };
