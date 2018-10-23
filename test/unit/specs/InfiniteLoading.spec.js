@@ -119,7 +119,7 @@ describe('vue-infinite-loading:component', () => {
 
             if (isComplete) {
               // check no more text
-              expect(isShow(this.$el.querySelectorAll('.infinite-status-prompt')[1])).to.be.true;
+              expect(isShow(this.$el.querySelector('.infinite-status-prompt:nth-child(3)'))).to.be.true;
               done();
             }
           });
@@ -179,7 +179,7 @@ describe('vue-infinite-loading:component', () => {
             $state.complete();
             this.$nextTick(() => {
               // check no results text
-              expect(isShow(this.$el.querySelectorAll('.infinite-status-prompt')[0])).to.be.true;
+              expect(isShow(this.$el.querySelector('.infinite-status-prompt:nth-child(2)'))).to.be.true;
 
               // reset component
               $state.reset();
@@ -343,40 +343,22 @@ describe('vue-infinite-loading:component', () => {
     vm.$mount('#app');
   });
 
-  it('should support hide load result through blank slots', (done) => {
-    let calledTimes = 0;
-
+  it('should remove slot styles if does not configure with `template` tag', (done) => {
     vm = new Vue(Object.assign({}, basicConfig, {
       methods: {
         infiniteHandler: function infiniteHandler($state) {
-          if (calledTimes) {
-            $state.loaded();
-            $state.complete();
-            this.$nextTick(() => {
-              // check for no-more result display
-              expect(isShow(this.$el.querySelectorAll('.infinite-status-prompt')[1])).to.be.false;
-              done();
-            });
-          } else {
-            calledTimes += 1;
-            $state.complete();
-            this.$nextTick(() => {
-              // check for no-result result display
-              expect(isShow(this.$el.querySelectorAll('.infinite-status-prompt')[0])).to.be.false;
+          // expect empty styles for no results slot
+          expect(this.$el.querySelector('.infinite-status-prompt:nth-child(2)').style.color).to.be.empty;
 
-              // reset component to check no-more status
-              $state.reset();
-            });
-          }
+          // expect valid styles for no more slot
+          expect(this.$el.querySelector('.infinite-status-prompt:nth-child(3)').style.color).to.not.be.empty;
+          $state.complete();
+          done();
         },
       },
       template: `
-        <infinite-loading
-          @infinite="infiniteHandler"
-          ref="infiniteLoading"
-          >
+        <infinite-loading @infinite="infiniteHandler">
           <span slot="no-results"></span>
-          <span slot="no-more"></span>
         </infinite-loading>
       `,
     }));
