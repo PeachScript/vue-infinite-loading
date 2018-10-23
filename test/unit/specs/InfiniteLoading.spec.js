@@ -657,10 +657,9 @@ describe('vue-infinite-loading:component', () => {
 
   it('should support use a component as the default spinner', (done) => {
     const spinnerId = 'custom-spinner';
-    const originalSpinner = config.props.spinner;
 
-    // override default spinner and slot
-    config.props.spinner = { template: `<div id="${spinnerId}">Loading...</div>` };
+    // override default slot spinner
+    config.slots.spinner = { template: `<div id="${spinnerId}">Loading...</div>` };
 
     vm = new Vue(Object.assign({}, basicConfig, {
       template: `
@@ -674,7 +673,31 @@ describe('vue-infinite-loading:component', () => {
           expect(this.$el.querySelector(`#${spinnerId}`)).to.be.not.null;
 
           // restore config
-          config.props.spinner = originalSpinner;
+          config.slots.spinner = '';
+          done();
+        },
+      },
+    }));
+
+    vm.$mount('#app');
+  });
+
+  it('should support use a string as the default spinner', (done) => {
+    config.slots.spinner = 'custom-spinner';
+
+    vm = new Vue(Object.assign({}, basicConfig, {
+      template: `
+        <infinite-loading
+          @infinite="infiniteHandler">
+        </infinite-loading>
+      `,
+      methods: {
+        infiniteHandler: function infiniteHandler() {
+          // assert custom spinner
+          expect(this.$el.innerHTML).to.contain(config.slots.spinner);
+
+          // restore config
+          config.slots.spinner = '';
           done();
         },
       },
