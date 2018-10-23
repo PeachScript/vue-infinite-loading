@@ -122,9 +122,7 @@ export default {
       type: Number,
       default: config.props.distance,
     },
-    spinner: {
-      type: String,
-    },
+    spinner: String,
     direction: {
       type: String,
       default: config.props.direction,

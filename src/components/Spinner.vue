@@ -70,9 +70,8 @@ export default {
   computed: {
     spinnerView() {
       return (
-        typeof this.$attrs.spinner === 'string'
-          ? SPINNERS[this.$attrs.spinner.toUpperCase()]
-          : this.spinnerInConfig // fallback to spinner of config
+        SPINNERS[(this.$attrs.spinner || '').toUpperCase()]
+        || this.spinnerInConfig // fallback to spinner of config
       );
     },
     spinnerInConfig() {
