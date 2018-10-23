@@ -1,6 +1,6 @@
 # Configure Plugin Options
 
-We can configure default properties, default slots and default system settings for this plugin via the plugin API, they will apply for all the `InfiniteLoading` components in your project.
+We can configure default properties, default slots and default system settings for this plugin via the plugin API, they will be the default values for all the `InfiniteLoading` components in your project, you can still override them through property or slot in every component.
 
 ## Props/Settings
 

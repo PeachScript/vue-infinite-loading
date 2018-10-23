@@ -119,12 +119,18 @@ sidebar: auto
 
 你可以通过插件 API 配置所有的插件选项。
 
+- 参考：[配置插件选项](../guide/configure-plugin-opts.md)
+
 ### props.spinner
 
-- 类型：`String` | `Vue Component`
+- 类型：`String`
 - 详细：
 
 配置 `spinner` 属性的默认值。
+
+::: warning 注意
+该配置被读取的优先级低于 [选项 - slots.spinner](#slots-spinner)，这意味着如果你正确配置了 `slots.spinner`，该配置就永远不会生效
+:::
 
 - 参考：[属性 - spinner](#spinner)
 

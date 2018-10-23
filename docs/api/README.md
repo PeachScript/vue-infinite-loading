@@ -119,6 +119,8 @@ Reset the component, same as changing the `identifier` property.
 
 You can configure all these plugin options via the plugin API.
 
+- See also: [Configure Plugin Options](../guide/configure-plugin-opts.md)
+
 ### props.spinner
 
 - Type: `String`
@@ -134,6 +136,10 @@ Configure the default value for `spinner` property.
 - Details:
 
 Configure the default value for  `distance` property.
+
+::: warning
+This option is read with a lower priority than [Options - slots.spinner](#slots-spinner), it means if you configure `slots.spinner` correctly, this option will never take effect
+:::
 
 - See also: [Properties - distance](#distance)
 
