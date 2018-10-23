@@ -15,7 +15,7 @@ npm install vue-infinite-loading -S
 
 ### Direct `<script>` Include
 
-After you imported this plugin through `script` tag, it will register `InfiniteLoading` component automatically, so you can use it in globally.
+After you imported this plugin through `script` tag, it will register `InfiniteLoading` component automatically, so you can use it in global.
 
 #### CDN
 

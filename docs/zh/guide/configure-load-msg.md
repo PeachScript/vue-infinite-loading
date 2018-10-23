@@ -51,3 +51,56 @@ export default {
   /* ... */
 };
 ```
+
+## 关于隐藏与默认样式
+
+为了便于使用，该组件为插槽内容提供了一些默认样式（`font-size`、`color` 和 `padding`），如果你希望在通过 `slot` 特殊属性配置插槽时保持默认样式的存在，你需要将插槽内容用 `template` 标签包裹：
+
+``` html
+<infinite-loading>
+  <!-- The no-more message will has default styles -->
+  <template slot="no-more">No more message</template>
+</infinite-loading>
+
+```
+
+如果你希望隐藏某个插槽，你可以创建一个不是 `template` 标签的空元素，因为 Vue.js 会忽略空的 `template` 元素：
+
+``` html
+<infinite-loading>
+  <!-- The no-more slot will not be displayed -->
+  <span slot="no-more"></span>
+</infinite-loading>
+```
+
+如果你希望移除默认样式以避免影响自己的样式，你可以将插槽内容用不是 `template` 标签的元素包裹：
+
+``` html
+<infinite-loading>
+  <!-- The no-more message will has no default styles -->
+  <div slot="no-more">No more message</div>
+</infinite-loading>
+```
+
+差点忘了，如果你想通过插件 API 全局配置插槽内容，可以像这样进行控制：
+
+``` js
+import Vue from 'vue';
+import InfiniteLoading from 'vue-infinite-loading';
+import InfiniteError from 'path/to/your/components/InfiniteError',
+
+Vue.use(InfiniteLoading, {
+  slots: {
+    // keep default styles
+    noResults: 'No results message',
+
+    // remove default styles
+    noMore: InfiniteError,
+
+    // hide slot
+    error: {
+      render: h => h('div'),
+    },
+  },
+});
+```

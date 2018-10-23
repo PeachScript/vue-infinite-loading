@@ -51,3 +51,56 @@ export default {
   /* ... */
 };
 ```
+
+## About Hide & Default Styles
+
+For easy to use, this component provide some default styles (`font-size`, `color` and `padding`) for slot content, if you want to keep all default styles when you configure via `slot` special attribute, you have to wrap the content with `template` tag:
+
+``` html
+<infinite-loading>
+  <!-- The no-more message will has default styles -->
+  <template slot="no-more">No more message</template>
+</infinite-loading>
+
+```
+
+If you want to hide a slot, you can create an empty element that is not a `template` element, because the empty `template` element will be ignored by Vue.js:
+
+``` html
+<infinite-loading>
+  <!-- The no-more slot will not be displayed -->
+  <span slot="no-more"></span>
+</infinite-loading>
+```
+
+If you want to remove all default styles to avoid affecting your own styles, you can wrap the content with an element that is not a `template` element:
+
+``` html
+<infinite-loading>
+  <!-- The no-more message will has no default styles -->
+  <div slot="no-more">No more message</div>
+</infinite-loading>
+```
+
+Almost forgot, if you want to configure slot content globally via plugin API, you can control them like this:
+
+``` js
+import Vue from 'vue';
+import InfiniteLoading from 'vue-infinite-loading';
+import InfiniteError from 'path/to/your/components/InfiniteError',
+
+Vue.use(InfiniteLoading, {
+  slots: {
+    // keep default styles
+    noResults: 'No results message',
+
+    // remove default styles
+    noMore: InfiniteError,
+
+    // hide slot
+    error: {
+      render: h => h('div'),
+    },
+  },
+});
+```
