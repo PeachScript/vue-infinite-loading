@@ -12,6 +12,9 @@ Object.defineProperty(InfiniteLoading, 'install', {
     // override default props
     Object.assign(config.props, options && options.props);
 
+    // override default slots
+    Object.assign(config.slots, options && options.slots);
+
     // override default system settings
     Object.assign(config.system, options && options.system);
 
