@@ -14,6 +14,7 @@
         <span class="select-wrapper">
           <select v-model="docVersion">
             <optgroup label="For Vue.js 2.0">
+              <option value="2.3">v2.3</option>
               <option value="2.2">v2.2</option>
               <option value="2.1">v2.1</option>
               <option value="2.01">v2.0</option>
@@ -77,7 +78,7 @@
   export default {
     data() {
       return {
-        docVersion: 2.2,
+        docVersion: 2.3,
         currentVersion: process.env.VERSION,
         sideMenus: [],
       };
