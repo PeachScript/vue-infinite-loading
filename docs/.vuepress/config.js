@@ -3,6 +3,8 @@ module.exports = {
   head: [
     ['link', { rel: 'shortcut icon', href: '/favicon.ico' }],
   ],
+  base: '/vue-infinite-loading/',
+  ga: 'UA-128069695-1',
   locales: {
     '/': {
       description: 'An infinite scroll plugin for Vue.js',
@@ -13,12 +15,15 @@ module.exports = {
   },
   themeConfig: {
     sidebar: 'auto',
-    repo: 'https://github.com/PeachScript/vue-infinite-loading',
+    repo: '/PeachScript/vue-infinite-loading',
+    editLinks: true,
+    docsDir: 'docs',
     locales: {
       '/': {
         lang: 'en-US',
         selectText: 'Languages',
         label: 'English',
+        lastUpdated: true,
         nav: [
           {
             text: 'Guide',
@@ -60,6 +65,8 @@ module.exports = {
         lang: 'zh-CN',
         selectText: '选择语言',
         label: '简体中文',
+        lastUpdated: '上次更新',
+        editLinkText: '在 GitHub 上编辑此页',
         nav: [
           {
             text: '指南',
