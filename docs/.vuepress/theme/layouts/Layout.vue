@@ -37,14 +37,7 @@
       />
     </Sidebar>
 
-    <div
-      class="custom-layout"
-      v-if="$page.frontmatter.layout"
-    >
-      <component :is="$page.frontmatter.layout"/>
-    </div>
-
-    <template v-else-if="$page.frontmatter.home"/>
+    <template v-if="$page.frontmatter.home"/>
 
     <transition name="content-fade" appear v-else>
       <Page :sidebar-items="sidebarItems">
@@ -107,41 +100,43 @@ body
   font 16px/1.42857 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif
   background-color $c-bg
 
-.navbar
-  transition all 0.3s
-  border-bottom-color transparent
-
-  .home-link
-    margin-left 5px
-    padding-right 40px
-    pointer-events none
-    visibility hidden
-
-  .links,
-  .sidebar-button
-    transition all 0.3s
-
-.sidebar
-  @media (min-width $mq-mobile + 1)
-    width $s-sidebar-width * 0.82
-    background $c-bg
-
-  @media (min-width $mq-narrow + 1)
-    width $s-sidebar-width
-
-.page
-  @media (min-width $mq-mobile + 1)
-    padding-left $s-sidebar-width * 0.82
-
-  @media (min-width $mq-narrow + 1)
-    padding-left $s-sidebar-width
-
-  .content:not(.custom),
-  .page-edit,
-  .page-nav
-    margin-left 0
-
 .theme-container
+  // override layout styles in default theme
+  .navbar
+    transition all 0.3s
+    border-bottom-color transparent
+
+    .home-link
+      margin-left 5px
+      padding-right 40px
+      pointer-events none
+      visibility hidden
+
+    .links,
+    .sidebar-button
+      transition all 0.3s
+
+  .sidebar
+    @media (min-width $mq-mobile + 1)
+      width $s-sidebar-width * 0.82
+      background $c-bg
+
+    @media (min-width $mq-narrow + 1)
+      width $s-sidebar-width
+
+  .page
+    @media (min-width $mq-mobile + 1)
+      padding-left $s-sidebar-width * 0.82
+
+    @media (min-width $mq-narrow + 1)
+      padding-left $s-sidebar-width
+
+    .content:not(.custom),
+    .page-edit,
+    .page-nav
+      margin-left 0
+
+  // custom layout styles
   .previewer
     position absolute
     z-index 10
@@ -340,7 +335,7 @@ body
   &.no-sidebar
     .sidebar
       @media (min-width $mq-mobile + 1)
-        display block
+        display block !important
         visibility hidden
         pointer-events none
 
