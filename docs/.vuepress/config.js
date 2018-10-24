@@ -1,5 +1,8 @@
 module.exports = {
   title: 'Vue-infinite-loading',
+  head: [
+    ['link', { rel: 'shortcut icon', href: '/favicon.ico' }],
+  ],
   locales: {
     '/': {
       description: 'An infinite scroll plugin for Vue.js',
