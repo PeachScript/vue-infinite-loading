@@ -18,6 +18,7 @@
     "build": "NODE_ENV=production webpack --config scripts/webpack.config.js -p --progress --hide-modules",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
+    "docs:deploy": "bash ./scripts/deploy_docs.sh",
     "lint": "eslint -f friendly --ext .js,.vue ./",
     "test": "BABEL_ENV=test karma start scripts/karma.conf.js",
     "precommit": "npm run lint",
