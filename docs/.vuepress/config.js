@@ -28,6 +28,10 @@ module.exports = {
             text: 'API',
             link: '/api/',
           },
+          {
+            text: 'Old Version',
+            link: 'https://peachscript.github.io/vue-infinite-loading/old/',
+          },
         ],
         sidebar: {
           '/guide/': [
@@ -64,6 +68,10 @@ module.exports = {
           {
             text: 'API',
             link: '/zh/api/',
+          },
+          {
+            text: '旧版文档',
+            link: 'https://peachscript.github.io/vue-infinite-loading/old/',
           },
         ],
         sidebar: {
