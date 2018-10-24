@@ -9,14 +9,13 @@
 <p align="center"><img src="http://www.peachis.me/assets/vue-infinite-loading/demo.gif"></p>
 
 ## Intro
-This plugin is an infinite scroll plugin for Vue.js, it can help you create an infinite scroll list fastly.
+An infinite scroll plugin for Vue.js, it can help you impletement infinite scroll list more easily.
 
 ### Features
 - Mobile friendly
-- Compatible with any scrollable element
-- Diverse spinners as loading animation
-- Support result display after loading
-- Support two direction load
+- Internal spinners
+- 2-directions support
+- Load result message display
 
 ## Usage & Guide
 To check out live examples and docs, visit [Vue-infinite-loading GitHub Pages](https://peachscript.github.io/vue-infinite-loading/).
@@ -24,20 +23,8 @@ To check out live examples and docs, visit [Vue-infinite-loading GitHub Pages](h
 ## Changelog
 Details changes for each release are documented in the [release notes](https://github.com/PeachScript/vue-infinite-loading/releases).
 
-## Development Setup
-```bash
-# install dependencies
-npm install
-
-# run dev-server
-npm run dev
-
-# lint
-npm run lint
-
-# test
-npm test
-```
+## Contribution
+Please make sure to read the [Contributing Guide](https://github.com/PeachScript/vue-infinite-loading/blob/master/.github/CONTRIBUTING.md) before making a pull request.
 
 ## Licence
 The MIT License (MIT)
