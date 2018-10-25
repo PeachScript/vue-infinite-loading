@@ -1,6 +1,11 @@
 <template>
   <div class="intro-container">
     <p v-text="$description || 'Welcome to your VuePress site'"></p>
+    <p v-if="languages.length">
+      <template v-for="(lang, $index) in languages">
+        <router-link :to="lang.path" v-text="lang.name"></router-link><span v-if="$index < languages.length - 1"> | </span>
+      </template>
+    </p>
     <router-link
       class="button button-large button-basic"
       v-if="data.actionText && data.actionLink"
@@ -47,6 +52,22 @@ export default {
         ? link
         : `https://github.com/${link}`;
     },
+    languages() {
+      const locales = this.$themeConfig.$locales || this.$site.locales || [];
+      const localeMapping = {
+        '/': 'EN',
+        'en-US': 'EN',
+        '/zh/': '中文',
+        'zh-CN': '中文',
+      };
+
+      return Object.keys(locales).map((path) => {
+        return {
+          name: localeMapping[locales[path].lang] || localeMapping[path] || path.replace(/\//g).toUpperCase(),
+          path: path,
+        };
+      });
+    },
   },
 };
 </script>
@@ -66,11 +87,21 @@ export default {
     width auto
 
   > p
-    margin 0 0 40px
+    margin 0
     color $c-basic-light
 
     @media (max-width $mq-mobile)
       line-height 1.28
+
+    + p
+      margin-bottom 40px
+
+    a:not(.router-link-exact-active)
+      font-weight 400
+      color #aaa
+
+    span
+      color #ddd
 
   .button
     white-space nowrap
@@ -88,7 +119,7 @@ export default {
   .feat-list
     list-style none
     display flex
-    margin-top 60px
+    margin-top 50px
     padding 0
 
     @media (max-width $mq-mobile)

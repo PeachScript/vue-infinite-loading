@@ -157,7 +157,7 @@ body
   #logo
     position absolute
     z-index 21
-    top 100px
+    top 90px
     left $s-home-divide-ratio
     display inline-block
     margin-left 216px + $s-home-middle-gap
@@ -181,7 +181,7 @@ body
     + h1
       position absolute
       z-index 21
-      top 280px
+      top 260px
       left $s-home-divide-ratio
       margin-left 164px + $s-home-middle-gap
       color $c-basic
@@ -207,7 +207,7 @@ body
   .intro-container
     position absolute
     z-index 1
-    top 346px
+    top 316px
     left $s-home-divide-ratio
     margin-left $s-home-middle-gap
     transition all 0.3s
