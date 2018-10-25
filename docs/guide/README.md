@@ -1,5 +1,5 @@
 ---
-previewLink: //jsfiddle.net/PeachScript/zqb73oLv/embedded/result/
+previewLink: //jsfiddle.net/PeachScript/a4Lxbf9w/embedded/result/
 ---
 # Guide
 
@@ -7,7 +7,7 @@ previewLink: //jsfiddle.net/PeachScript/zqb73oLv/embedded/result/
 
 ### NPM
 
-If you are building big application now, recommend you use the way.
+If you are building large application now, recommend you use the way.
 
 ``` bash
 npm install vue-infinite-loading -S
@@ -22,7 +22,7 @@ After you imported this plugin through `script` tag, it will register `InfiniteL
 You can import this plugin from [unpkg](https://unpkg.com):
 
 ``` html
-<script src="https://unpkg.com/vue-infinite-loading@2.3.5/dist/vue-infinite-loading.js"></script>
+<script src="https://unpkg.com/vue-infinite-loading@^2/dist/vue-infinite-loading.js"></script>
 ```
 
 #### Manual

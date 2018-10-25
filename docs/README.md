@@ -10,5 +10,5 @@ features:
   details: Support top and bottom directions currently, adapt to more different scenes
 - title: Result display
   details: Configurable load result display, for example no more data, no results and etc
-previewLink: //jsfiddle.net/PeachScript/zqb73oLv/embedded/result/
+previewLink: //jsfiddle.net/PeachScript/a4Lxbf9w/embedded/result/
 ---

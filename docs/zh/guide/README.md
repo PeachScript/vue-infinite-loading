@@ -1,5 +1,5 @@
 ---
-previewLink: //jsfiddle.net/PeachScript/zqb73oLv/embedded/result/
+previewLink: //jsfiddle.net/PeachScript/a4Lxbf9w/embedded/result/
 ---
 # 指南
 
@@ -22,7 +22,7 @@ npm install vue-infinite-loading -S
 你可以借助 [unpkg](https://unpkg.com) 引入此插件：
 
 ``` html
-<script src="https://unpkg.com/vue-infinite-loading@2.3.5/dist/vue-infinite-loading.js"></script>
+<script src="https://unpkg.com/vue-infinite-loading@^2/dist/vue-infinite-loading.js"></script>
 ```
 
 #### 手动引入

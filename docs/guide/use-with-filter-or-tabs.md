@@ -1,12 +1,12 @@
 ---
-previewLink: //jsfiddle.net/PeachScript/bv9Lgj2k/embedded/result/
+previewLink: //jsfiddle.net/PeachScript/w197rfy0/embedded/result/
 ---
 
 # Use With Filter/Tabs
 
-The loading process is exactly same as the previous example, the key point is how to reset the component when we changing filter or tabs. The component will reset itself whenever the `identifier` is changed, sounds ease, let's do it!
+The loading process is exactly same as the previous example, the key point is how to reset the component when we changing filter or tabs. In fact, this component will reset itself whenever the `identifier` is changed, sounds ease, let's do it!
 
-``` html
+``` html {12}
 <header>
   <!-- Hacker News header -->
   <select v-model="newsType" @change="changeType">
@@ -14,7 +14,7 @@ The loading process is exactly same as the previous example, the key point is ho
   </select>
 </header>
 
-<div v-for="(item, key) in list">
+<div v-for="(item, $index) in list" :key="$index">
   <!-- Hacker News item loop -->
 </div>
 
@@ -23,10 +23,10 @@ The loading process is exactly same as the previous example, the key point is ho
 
 In the template, we add a `select` element and listen it's `change` event, for `InfiniteLoading` component, we add an `identifier` property.
 
-``` js
+``` js {10,11,19,31,32,33,34,35}
 import axios from 'axios';
 
-const api = '//hn.algolia.com/api/v1/search_by_date?tags=story';
+const api = '//hn.algolia.com/api/v1/search_by_date';
 
 export default {
   data() {
@@ -47,7 +47,7 @@ export default {
       }).then(({ data }) => {
         if (data.hits.length) {
           this.page += 1;
-          this.list = this.list.concat(data.hits);
+          this.list.push(...data.hits);
           $state.loaded();
         } else {
           $state.complete();

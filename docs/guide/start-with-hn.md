@@ -1,5 +1,5 @@
 ---
-previewLink: //jsfiddle.net/PeachScript/zqb73oLv/embedded/result/
+previewLink: //jsfiddle.net/PeachScript/a4Lxbf9w/embedded/result/
 ---
 
 # Start With Hacker News
@@ -8,12 +8,12 @@ As the first step in learning this plugin, we will create a infinite scroll vers
 
 Firstly, we need to write template, it similar to this (ommited unimportant code):
 
-``` html
+``` html {9}
 <header>
   <!-- Hacker News header -->
 </header>
 
-<div v-for="(item, key) in list">
+<div v-for="(item, $index) in list" :key="$index">
   <!-- Hacker News item loop -->
 </div>
 
@@ -45,7 +45,7 @@ export default {
       }).then(({ data }) => {
         if (data.hits.length) {
           this.page += 1;
-          this.list = this.list.concat(data.hits);
+          this.list.push(...data.hits);
           $state.loaded();
         } else {
           $state.complete();
