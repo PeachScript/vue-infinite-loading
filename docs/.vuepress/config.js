@@ -117,5 +117,8 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@vuepress/theme-default/index')],
+  plugins: [
+    require('@vuepress/theme-default/index'),
+    '@vuepress/google-analytics'
+  ],
 };

@@ -47,6 +47,7 @@
     "@babel/runtime": "^7.0.0",
     "@commitlint/cli": "^7.0.0",
     "@commitlint/config-conventional": "^7.0.1",
+    "@vuepress/plugin-google-analytics": "^1.0.0-alpha.16",
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.2",
     "babel-plugin-istanbul": "^5.0.1",
