@@ -37,6 +37,10 @@ module.exports = {
             text: 'Old Version',
             link: 'https://peachscript.github.io/vue-infinite-loading/old/',
           },
+          {
+            text: 'Changelog',
+            link: 'https://github.com/PeachScript/vue-infinite-loading/releases',
+          },
         ],
         sidebar: {
           '/guide/': [
@@ -80,6 +84,10 @@ module.exports = {
           {
             text: '旧版文档',
             link: 'https://peachscript.github.io/vue-infinite-loading/old/',
+          },
+          {
+            text: '更新日志',
+            link: 'https://github.com/PeachScript/vue-infinite-loading/releases',
           },
         ],
         sidebar: {
