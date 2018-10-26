@@ -24,7 +24,7 @@ Hi! I’m really excited that you are interested in contributing to Vue-infinite
 
 - Issues with no clear repro steps will not be triaged. If an issue labeled "need repro" receives no further input from the issue author for more than 5 days, it will be closed.
 
-- It is recommended that you make a JSFiddle/JSBin/Codepen to demonstrate your issue. You could start with [this template](https://jsfiddle.net/0uhj7epo/) that already includes the latest version of Vue-infinite-loading.
+- It is recommended that you make a JSFiddle/JSBin/Codepen to demonstrate your issue. You could start with [this template](https://jsfiddle.net/PeachScript/qax0dbnc/) that already includes the latest version of Vue-infinite-loading.
 
 - If your issue is resolved but still open, don’t hesitate to close it. In case you found a solution by yourself, it could be helpful to explain how you fixed it.
 
