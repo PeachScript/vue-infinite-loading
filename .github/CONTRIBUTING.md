@@ -82,7 +82,7 @@ There are some other scripts available in the `scripts` section of the `package.
 
 - **`dist`**: contains built file for distribution. Note this directory is only updated when a release happens; they do not reflect the latest changes in development.
 
-- **`test`**: contains unit tests. They are written with [Mocha](https://mochajs.org/) and run with [Karma](https://karma-runner.github.io/2.0/index.html).
+- **`docs`**: contains documentation. Powered by [Vuepress](https://github.com/vuejs/vuepress).
 
 - **`src`**: contains the source code, obviously. The codebase is written in ES2015.
 
@@ -90,4 +90,14 @@ There are some other scripts available in the `scripts` section of the `package.
 
   - **`styles`**: contains code for styles of different spinners, they are written with [Less](http://lesscss.org/).
 
-- **`types`**: contains TypeScript type definitions
+  - **`config.js`**: contains all the runtime configurations for this plugin.
+
+  - **`utils.js`**: contains all the tool functions for this plugin.
+
+  - **`index.js`**: entry file, contains plugin `install` API definition and the logic to register `InfiniteLoading` component.
+
+- **`scripts`**: contains all the scripts use to developing, testing, building and deploying documentation.
+
+- **`test`**: contains unit tests. They are written with [Mocha](https://mochajs.org/) and run with [Karma](https://karma-runner.github.io/2.0/index.html).
+
+- **`types`**: contains TypeScript type definitions.
