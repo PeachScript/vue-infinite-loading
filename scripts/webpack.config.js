@@ -94,7 +94,7 @@ if (process.env.NODE_ENV === 'production') {
   // development configurations
   module.exports.plugins.push(new HtmlWebpackPlugin({
     filename: 'index.html',
-    template: './example/index.html',
+    template: './scripts/dev_template.js',
     inject: false
   }));
 }

@@ -91,5 +91,3 @@ There are some other scripts available in the `scripts` section of the `package.
   - **`styles`**: contains code for styles of different spinners, they are written with [Less](http://lesscss.org/).
 
 - **`types`**: contains TypeScript type definitions
-
-- **`example`**: contains basic example for development.

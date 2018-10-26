@@ -1,16 +1,17 @@
+module.exports = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, maximum-scale=1, minimum-scale=1, initial-scale=1, user-scalable=no, shrink-to-fit=no">
-  <title>Vue-infinite-loading Simple</title>
+  <title>Vue-infinite-loading Testing</title>
   <script src="../node_modules/vue/dist/vue.js"></script>
   <script src="../vue-infinite-loading.js"></script>
   <style>
     body{
       margin: 0;
     }
-    .example-list-item{
+    .item{
       margin: 0;
       padding: 0 10px;
       font-size: 14px;
@@ -20,26 +21,25 @@
       border-top: 1px solid #fff;
       border-bottom: 1px solid #e3e3e3;
     }
-    .example-list-item::before{
+    .item::before{
       content: 'Line: ';
     }
   </style>
 </head>
 <body>
   <div id="app">
-    <p class="example-list-item" v-for="item in list" v-text="item"></p>
-    <infinite-loading @infinite="infiniteHandler" :distance="distance" ref="infiniteLoading"></infinite-loading>
+    <p class="item" v-for="item in list" :key="item" v-text="item"></p>
+    <infinite-loading @infinite="infiniteHandler"></infinite-loading>
   </div>
   <script>
     new Vue({
       el: '#app',
       data: {
-        distance: 100,
         list: []
       },
       methods: {
         infiniteHandler: function ($state) {
-          if (this.list.length > 200) {
+          if (this.list.length > 100) {
             $state.complete();
           } else {
             setTimeout(function () {
@@ -58,3 +58,4 @@
   </script>
 </body>
 </html>
+`;
