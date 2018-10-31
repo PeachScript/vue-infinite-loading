@@ -63,6 +63,6 @@ export default {
 };
 ```
 
-In the script, we set default values for `select` (`newsType: 'story'`) and `identifier` (`infiniteId: +new Date()`) properties, then add the type parameter in API request logic. And we create the `changeType` method to reset the list data and infinite component. Please note, we must change the `identifier` property (`this.infiniteId += 1`) *after* we empty the list (`this.list = []`). Otherwise, the component may not trigger the `infinite` event immediately after reset.
+In the script, we set default values for `select` and `identifier` properties, then add the type parameter in API request logic. And we create the `changeType` method to reset the list data and infinite component. Please note, we must change the `identifier` property *after* we empty the `list`. Otherwise, the component may not trigger the `infinite` event immediately after reset.
 
 That's all, you're done!
