@@ -59,7 +59,7 @@ If you want to configure default options, you can register this plugin through `
 
 ``` js
 // main.js or index.js
-import InfiniteLoading from 'vue-infinite-loading;
+import InfiniteLoading from 'vue-infinite-loading';
 
 Vue.use(InfiniteLoading, { /* options */ });
 ```

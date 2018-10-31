@@ -59,7 +59,7 @@ export default {
 
 ``` js
 // main.js or index.js
-import InfiniteLoading from 'vue-infinite-loading;
+import InfiniteLoading from 'vue-infinite-loading';
 
 Vue.use(InfiniteLoading, { /* 配置 */ });
 ```
