@@ -2,7 +2,7 @@
 <p align="center">
   <a href="https://travis-ci.org/PeachScript/vue-infinite-loading"><img src="https://img.shields.io/travis/PeachScript/vue-infinite-loading/master.svg"></a>
   <a href="https://codecov.io/github/PeachScript/vue-infinite-loading?branch=master"><img src="https://img.shields.io/codecov/c/github/PeachScript/vue-infinite-loading/master.svg"></a>
-  <a href="https://www.npmjs.com/package/vue-infinite-loading"><img src="https://img.shields.io/npm/dt/vue-infinite-loading.svg"></a>
+  <a href="https://www.npmjs.com/package/vue-infinite-loading"><img src="https://img.shields.io/npm/dm/vue-infinite-loading.svg"></a>
   <a href="https://www.npmjs.com/package/vue-infinite-loading"><img src="https://img.shields.io/npm/v/vue-infinite-loading.svg"></a>
   <a href="https://www.npmjs.com/package/vue-infinite-loading"><img src="https://img.shields.io/npm/l/vue-infinite-loading.svg"></a>
 </p>
