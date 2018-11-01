@@ -1,6 +1,20 @@
+---
+previewLink: //jsfiddle.net/PeachScript/94kL0bvs/embedded/result/
+---
+
 # Configure Load Messages
 
-This component provide four different slots use to display different load messages: `spinner`, `no-more`, `no-results`, `error`, you can read more about it in [here](../api/#slots).
+This component provide four different slots use to display different load messages: `spinner`, `no-more`, `no-results`, `error`, all the default values are listed in the preview container on the right, you can read more about them in [here](../api/#slots).
+
+## Via Component Prop
+
+Only the `spinner` slot can be configured via the prop, and the set value can only be the built-in spinner type:
+
+``` html
+<infinite-loading spinner="spiral"></infinite-loading>
+```
+
+You can preview all built-in spinner types on the right, please use other ways if you want to create your own spinner.
 
 ## Via `slot` Sepcial Attribute
 

@@ -1,6 +1,20 @@
+---
+previewLink: //jsfiddle.net/PeachScript/94kL0bvs/embedded/result/
+---
+
 # 配置加载提示
 
-此组件提供了四种不同的插槽用来显示不同的加载提示：`spinner`、`no-more`、`no-results`、`error`，你可以通过[这里](../api/#插槽)了解更多。
+此组件提供了四种不同的插槽用来显示不同的加载提示：`spinner`、`no-more`、`no-results`、`error`，所有插槽的默认值都在右边的预览中列出来了，你还可以通过[这里](../api/#插槽)了解更多。
+
+## 通过组件 Prop
+
+只有 `spinner` 插槽可以通过 prop 进行配置，并且此时的设定值只能是内置的动画类型：
+
+``` html
+<infinite-loading spinner="spiral"></infinite-loading>
+```
+
+你可以在右边预览所有内置加载动画，如果你希望创建自己的加载动画，请使用其他方式。
 
 ## 通过 `slot` 特殊属性
 
