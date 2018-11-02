@@ -28,7 +28,7 @@ We can use the [`slot` special attribute](https://vuejs.org/v2/api/index.html#sl
 </infinite-loading>
 ```
 
-Unlike other slots, the default value for the `error` slot will provide a retry button for users to load data again. If you want to impletement a retry button for users when you customize the `error` slot, you can use the [`slot-scope`](https://vuejs.org/v2/api/index.html#slot-scope) feature, like this:
+Unlike other slots, the default value for the `error` slot will provide a retry button for users to load data again. If you want to implement a retry button for users when you customize the `error` slot, you can use the [`slot-scope`](https://vuejs.org/v2/api/index.html#slot-scope) feature, like this:
 
 ``` html
 <infinite-loading>
@@ -42,7 +42,7 @@ Unlike other slots, the default value for the `error` slot will provide a retry 
 
 In order to maintain consistent behavior for all load message when we building large application, this plugin support configure all slot using the plugin API, we just need to pass a string or Vue component for it, click [here](./configure-plugin-opts.md#slots) to read more about it.
 
-The `error` slot is still the special one in this way, same as the `slot` special attribute way, if you want to impletement a retry button for users in your own error component, you can use the [`vm.$attrs`](https://cn.vuejs.org/v2/api/#vm-attrs) property, like this:
+The `error` slot is still the special one in this way, same as the `slot` special attribute way, if you want to implement a retry button for users in your own error component, you can use the [`vm.$attrs`](https://cn.vuejs.org/v2/api/#vm-attrs) property, like this:
 
 ``` html
 <!-- your own error component -->

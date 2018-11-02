@@ -12,7 +12,7 @@ It is easy to use this plugin with the standard table component, just place the 
 2. Set the `forceUseInfiniteWrapper` property to the CSS selector of the real scroll container, because the scroll bar of Element UI table component was enable dynamically according to content height, this plugin cannot find the correct scroll container automatically.
 
 ::: warning
-If there has multiple Element UI table components in a same page, we need a more detailed CSS selector instead of the `.el-table__body-wrapper`, if not, this plugin may find a error table component as the scroll container
+If there has multiple Element UI table components in a same page, we need a more detailed CSS selector instead of the `.el-table__body-wrapper`, if not, this plugin may find an error table component as the scroll container
 :::
 
 The final template should be similar to:

@@ -9,7 +9,7 @@
 <p align="center"><img src="http://www.peachis.me/assets/vue-infinite-loading/demo.gif"></p>
 
 ## Intro
-An infinite scroll plugin for Vue.js, it can help you impletement infinite scroll list more easily.
+An infinite scroll plugin for Vue.js, it can help you implement infinite scroll list more easily.
 
 ### Features
 - Mobile friendly
