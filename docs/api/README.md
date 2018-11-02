@@ -27,6 +27,8 @@ The `infinite` event will be fired if the scroll distance is less than this valu
 
 This property is used to set the loading animation, you can choose one from the internal spinners that you like, you can also customize it with a [named slot](#spinner-2) that called `spinner`.
 
+- See also: [Configure Load Messages](../guide/configure-load-msg.md)
+
 ### direction
 
 - Type: `String`
@@ -178,6 +180,18 @@ Configure the default content for `no-more` slot.
 Configure the default content for `error` slot.
 
 - See also: [Slots - error](#error)
+
+### slots.errorBtnText
+
+- Type: `String`
+- Default: `Retry`
+- Details:
+
+Configure the default text for retry button in the default `error` slot. Please note, it won't work if you customize the `error` slot, you need to configure retry button yourself.
+
+- See also:
+  - [Slots - error](#error)
+  - [Configure Load Messages](../guide/configure-load-msg.md)
 
 ### slots.spinner
 

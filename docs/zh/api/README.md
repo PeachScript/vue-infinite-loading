@@ -27,6 +27,8 @@ sidebar: auto
 
 此选项用于设置加载动画，你可以从内置选项中选择一个你喜欢的，你也可以通过名为 `spinner` 的[具名插槽](#spinner-2)来进行自定义。
 
+- 参考：[配置加载提示](../guide/configure-load-msg.md)
+
 ### direction
 
 - 类型：`String`
@@ -178,6 +180,18 @@ sidebar: auto
 配置 `error` 插槽的默认内容。
 
 - 参考：[插槽 - error](#error)
+
+### slots.errorBtnText
+
+- 类型：`String`
+- 默认值：`Retry`
+- 详细：
+
+配置默认 `error` 插槽中重试按钮的显示文案。请注意，如果你自定义了 `error` 插槽的内容，此配置将没有任何作用，你需要自行创建重试按钮。
+
+- 参考：
+  - [插槽 - error](#error)
+  - [配置加载提示](../guide/configure-load-msg.md)
 
 ### slots.spinner
 
