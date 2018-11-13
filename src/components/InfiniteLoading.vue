@@ -194,12 +194,16 @@ export default {
     });
 
     this.$on('$InfiniteLoading:reset', (ev) => {
-      this.status = STATUS.READY;
-      this.isFirstLoad = true;
-      throttleer.reset();
-      scrollBarStorage.remove(this.scrollParent);
       this.scrollParent.addEventListener('scroll', this.scrollHandler, evt3rdArg);
-      setTimeout(this.scrollHandler, 1);
+
+      // wait for list to be empty and the empty action may trigger a scroll event
+      setTimeout(() => {
+        this.status = STATUS.READY;
+        this.isFirstLoad = true;
+        throttleer.reset();
+        scrollBarStorage.remove(this.scrollParent);
+        this.scrollHandler();
+      }, 1);
 
       if (!ev || ev.target !== this) {
         warn(WARNINGS.IDENTIFIER);
