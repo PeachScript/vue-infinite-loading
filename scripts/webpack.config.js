@@ -10,9 +10,9 @@ module.exports = {
   output: {
     path: path.join(__dirname, '../dist'),
     filename: '[name].js',
-    publicPath: '/',
     library: 'VueInfiniteLoading',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
+    globalObject: 'this'
   },
   resolve: {
     extensions: ['.js', '.vue'],
@@ -48,7 +48,10 @@ module.exports = {
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        use: [
+          path.join(__dirname, './ssr_vue_loader'),
+          'vue-loader'
+        ]
       },
       {
         test: /\.less$/,
