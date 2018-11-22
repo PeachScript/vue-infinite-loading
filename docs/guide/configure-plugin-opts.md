@@ -4,7 +4,7 @@ We can configure default properties, default slots and default system settings f
 
 ## Props/Settings
 
-Simply passing a object contains `props`/`settings` filed to configure them, to check out all available options, click [here](../api/#options).
+Simply passing an object contains `props`/`settings` field to configure them, to check out all available options, click [here](../api/#options).
 
 ``` js
 import Vue from 'vue';
