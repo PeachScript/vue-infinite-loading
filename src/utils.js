@@ -111,6 +111,15 @@ export function kebabCase(str) {
   return str.replace(/[A-Z]/g, s => `-${s.toLowerCase()}`);
 }
 
+/**
+ * get visibility for element
+ * @param   {DOM}     elm
+ * @return  {Boolean}
+ */
+export function isVisible(elm) {
+  return (elm.offsetWidth + elm.offsetHeight) > 0;
+}
+
 export default {
   warn,
   error,
@@ -118,4 +127,5 @@ export default {
   loopTracker,
   kebabCase,
   scrollBarStorage,
+  isVisible,
 };

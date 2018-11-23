@@ -55,7 +55,7 @@ import config, {
   evt3rdArg, WARNINGS, STATUS, SLOT_STYLES,
 } from '../config';
 import {
-  warn, throttleer, loopTracker, scrollBarStorage, kebabCase,
+  warn, throttleer, loopTracker, scrollBarStorage, kebabCase, isVisible,
 } from '../utils';
 
 export default {
@@ -125,7 +125,7 @@ export default {
     spinner: String,
     direction: {
       type: String,
-      default: config.props.direction,
+      default: 'bottom',
     },
     forceUseInfiniteWrapper: {
       type: [Boolean, String],
@@ -148,7 +148,7 @@ export default {
 
     this.scrollHandler = function scrollHandlerOriginal(ev) {
       if (this.status === STATUS.READY) {
-        if (ev && ev.constructor === Event) {
+        if (ev && ev.constructor === Event && isVisible(this.$el)) {
           throttleer.throttle(this.attemptLoad);
         } else {
           this.attemptLoad();
@@ -254,12 +254,10 @@ export default {
     *                                    event handler
     */
     attemptLoad(isContinuousCall) {
-      const currentDistance = this.getCurrentDistance();
-
       if (
         this.status !== STATUS.COMPLETE
-        && currentDistance <= this.distance
-        && (this.$el.offsetWidth + this.$el.offsetHeight) > 0
+        && isVisible(this.$el)
+        && this.getCurrentDistance() <= this.distance
       ) {
         this.status = STATUS.LOADING;
 
