@@ -568,11 +568,14 @@ describe('vue-infinite-loading:component', () => {
         identifier: '',
       },
       template: `
-        <infinite-loading
-          :identifier="identifier"
-          @infinite="infiniteHandler"
-          ref="infiniteLoading">
-        </infinite-loading>
+        <div style="overflow: auto; height: 10px;">
+          <p style="height: 15px;">balabala</p>
+          <infinite-loading
+            :identifier="identifier"
+            @infinite="infiniteHandler"
+            ref="infiniteLoading">
+          </infinite-loading>
+        </div>
       `,
       methods: {
         infiniteHandler: function infiniteHandler() {
@@ -592,8 +595,12 @@ describe('vue-infinite-loading:component', () => {
               // expect get warning if use reset event
               expect(isThrowWarn).to.be.true;
 
-              // change identifier to reset component
+              // trigger scroll manually to test throttle
+              this.$refs.infiniteLoading.scrollParent.scrollTop += 1;
+
+              // change identifier to reset component (also clear the throttleer)
               this.identifier = +new Date();
+
               break;
             case 3:
               done();
