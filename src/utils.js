@@ -22,30 +22,29 @@ export function error(msg) {
 }
 
 export const throttleer = {
-  timers: {},
+  timers: [],
   caches: [],
   throttle(fn) {
     if (this.caches.indexOf(fn) === -1) {
-      const fnIndex = this.caches.length;
-
       // cache current handler
       this.caches.push(fn);
 
       // save timer for current handler
-      this.timers[fnIndex] = setTimeout(() => {
+      this.timers.push(setTimeout(() => {
         fn();
 
         // empty cache and timer
-        this.caches.splice(fnIndex, 1);
-      }, config.system.throttleLimit);
+        this.caches.splice(this.caches.indexOf(fn), 1);
+        this.timers.shift();
+      }, config.system.throttleLimit));
     }
   },
   reset() {
     // reset all timers
-    Object.keys(this.timers).forEach((key) => {
-      clearTimeout(this.timers[key]);
-      delete this.timers[key];
+    this.timers.forEach((timer) => {
+      clearTimeout(timer);
     });
+    this.timers.length = 0;
 
     // empty caches
     this.caches = [];
