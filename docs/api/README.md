@@ -54,7 +54,7 @@ If this value set be `true`, the component will search the closest parent elemen
 - Default: `+new Date()`
 - Details: 
 
-The comopnent will be reset if this property has changed, just like recreating a new comopnent, usually used when the case has filter or tabs.
+The component will be reset if this property has changed, just like recreating a new component, usually used when the case has filter or tabs.
 
 ## Slots
 
@@ -111,7 +111,7 @@ Inform the component that all the data has been loaded successfully, if the `$st
 
 #### $state.error
 
-Inform the comopnent that this loading failed, the content of `error` slot will be diplayed.
+Inform the component that this loading failed, the content of `error` slot will be displayed.
 
 #### $state.reset
 
