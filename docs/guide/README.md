@@ -64,4 +64,4 @@ import InfiniteLoading from 'vue-infinite-loading';
 Vue.use(InfiniteLoading, { /* options */ });
 ```
 
-Same as the `script` include way, the `InfiniteLoading` component will be registered as a global comopnent if use the plugin API, you don't need to re-register it through `components` property in your own components.
+Same as the `script` include way, the `InfiniteLoading` component will be registered as a global component if use the plugin API, you don't need to re-register it through `components` property in your own components.
