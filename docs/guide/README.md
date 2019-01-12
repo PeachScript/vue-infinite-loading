@@ -7,7 +7,7 @@ previewLink: //jsfiddle.net/PeachScript/a4Lxbf9w/embedded/result/
 
 ### NPM
 
-If you are building large application now, recommend you use the way.
+If you are building a large application, we recommend you use the following method:
 
 ``` bash
 npm install vue-infinite-loading -S
@@ -15,7 +15,7 @@ npm install vue-infinite-loading -S
 
 ### Direct `<script>` Include
 
-After you imported this plugin through `script` tag, it will register `InfiniteLoading` component automatically, so you can use it in global.
+After you import this plugin through the `script` tag, it will register the `InfiniteLoading` component automatically, so you can use it in the global scope.
 
 #### CDN
 
@@ -27,7 +27,7 @@ You can import this plugin from [unpkg](https://unpkg.com):
 
 #### Manual
 
-You also can download and import it manually:
+You can also download and import it manually:
 
 <a target="_blank" href="https://github.com/PeachScript/vue-infinite-loading/raw/master/dist/vue-infinite-loading.js" class="button button-small button-basic">Download</a>
 
@@ -55,7 +55,7 @@ export default {
 
 ### Plugin API
 
-If you want to configure default options, you can register this plugin through `use` API of Vue.js:
+If you want to configure default options, you can register this plugin through the `use` API of Vue.js:
 
 ``` js
 // main.js or index.js
@@ -64,4 +64,4 @@ import InfiniteLoading from 'vue-infinite-loading';
 Vue.use(InfiniteLoading, { /* options */ });
 ```
 
-Same as the `script` include way, the `InfiniteLoading` component will be registered as a global component if use the plugin API, you don't need to re-register it through `components` property in your own components.
+If you use the plugin API, the `InfiniteLoading` component will be registered as a global component just like when including it with the `script` tag, but you won't need to re-register it through the `components` property in your own components.
