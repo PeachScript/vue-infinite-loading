@@ -4,7 +4,7 @@ previewLink: //jsfiddle.net/PeachScript/qac2h5v1/embedded/result/
 
 # Top Direction Scroll
 
-Okay, it's the time to try the top direction scroll list, this plugin will save and restore scroll height automatically since `v2.4.0`, it means top direction feature can be used out of the box now!
+Okay, it's time to try the top direction scroll list. This plugin will save and restore the scroll height automatically since `v2.4.0`, which means that the top direction feature can be used out of the box now!
 
 ``` html {5}
 <header>
@@ -18,7 +18,7 @@ Okay, it's the time to try the top direction scroll list, this plugin will save 
 </div>
 ```
 
-In the template, we moved the `InfiniteLoading` component to the top of the news list, and set `direction` property to `top`.
+In the template, we moved the `InfiniteLoading` component to the top of the news list, and set the `direction` property to `top`.
 
 ``` js {21}
 import axios from 'axios';
@@ -52,4 +52,4 @@ export default {
 };
 ```
 
-The script part is almost the same as the [basic Hacker News](./start-with-hn.md), the difference is, we reverse the news data from server and unshift them into the `list`. That's it, this plugin will do the remaining work, is it very easy?
+The script part is almost the same as the [basic Hacker News](./start-with-hn.md). The only difference is that we reverse the news data from the server and unshift it into the `list`. That's it! This plugin will do the remaining work, isn't it very easy?
