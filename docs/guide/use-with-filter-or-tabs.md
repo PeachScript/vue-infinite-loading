@@ -4,7 +4,7 @@ previewLink: //jsfiddle.net/PeachScript/w197rfy0/embedded/result/
 
 # Use With Filter/Tabs
 
-The loading process is exactly same as in the previous example. The key point here is how to reset the component when we change the filter or tabs. The infinite component will reset itself whenever the `identifier` property has changed. It sounds easy, so let's do it!
+The loading process is exactly the same as in the previous example. The key point here is how to reset the component when we change the filter or tabs. The infinite loading component will reset itself whenever the `identifier` property has changed. It sounds easy, so let's do it!
 
 ``` html {12}
 <header>
@@ -21,7 +21,7 @@ The loading process is exactly same as in the previous example. The key point he
 <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler"></infinite-loading>
 ```
 
-In the template, we add a `select` element and listen its `change` event. For the `InfiniteLoading` component, we add an `identifier` property.
+In the template, we add a `select` element and listen for its `change` event. For the `InfiniteLoading` component, we add an `identifier` property.
 
 ``` js {10,11,19,31,32,33,34,35}
 import axios from 'axios';
@@ -63,6 +63,6 @@ export default {
 };
 ```
 
-In the script, we set default values for `select` and `identifier` properties, then add the type parameter in API request logic. And we create the `changeType` method to reset the list data and infinite component. Please note, we must change the `identifier` property *after* we empty the `list`. Otherwise, the component may not trigger the `infinite` event immediately after reset.
+In the script, we set default values for the `select` and `identifier` properties, then add the type parameter in the API request logic, and we create the `changeType` method to reset the list data and infinite loading component. Please note, we must change the `identifier` property *after* we empty the `list`. Otherwise, the component may not trigger the `infinite` event immediately after reset.
 
 That's all, you're done!
