@@ -4,7 +4,7 @@ previewLink: //jsfiddle.net/PeachScript/94kL0bvs/embedded/result/
 
 # Configure Load Messages
 
-This component provide four different slots use to display different load messages: `spinner`, `no-more`, `no-results`, `error`, all the default values are listed in the preview container on the right, you can read more about them in [here](../api/#slots).
+This component provides four different slots that you can use to display different load messages: `spinner`, `no-more`, `no-results`, `error`. All of the default values are listed in the preview container on the right, and you can read more about them [here](../api/#slots).
 
 ## Via Component Prop
 
@@ -14,7 +14,7 @@ Only the `spinner` slot can be configured via the prop, and the set value can on
 <infinite-loading spinner="spiral"></infinite-loading>
 ```
 
-You can preview all built-in spinner types on the right, please use other ways if you want to create your own spinner.
+You can preview all built-in spinner types on the right. Please use other ways if you want to create your own spinner.
 
 ## Via `slot` Sepcial Attribute
 
@@ -28,7 +28,7 @@ We can use the [`slot` special attribute](https://vuejs.org/v2/api/index.html#sl
 </infinite-loading>
 ```
 
-Unlike other slots, the default value for the `error` slot will provide a retry button for users to load data again. If you want to implement a retry button for users when you customize the `error` slot, you can use the [`slot-scope`](https://vuejs.org/v2/api/index.html#slot-scope) feature, like this:
+Unlike other slots, the default value for the `error` slot will provide a retry button for users to load the data again. If you want to implement a retry button for users when you customize the `error` slot, you can use the [`slot-scope`](https://vuejs.org/v2/api/index.html#slot-scope) feature, like this:
 
 ``` html
 <infinite-loading>
@@ -40,9 +40,9 @@ Unlike other slots, the default value for the `error` slot will provide a retry 
 
 ## Via Plugin API
 
-In order to maintain consistent behavior for all load message when we building large application, this plugin support configure all slot using the plugin API, we just need to pass a string or Vue component for it, click [here](./configure-plugin-opts.md#slots) to read more about it.
+In order to maintain consistent behavior for all load messages when we are building a large application, this plugin supports configuration on all slots using the plugin API. We just need to pass a string or Vue component to it, click [here](./configure-plugin-opts.md#slots) to read more about that.
 
-The `error` slot is still the special one in this way, same as the `slot` special attribute way, if you want to implement a retry button for users in your own error component, you can use the [`vm.$attrs`](https://cn.vuejs.org/v2/api/#vm-attrs) property, like this:
+The `error` slot is still special in this way. Just as with the `slot` special attribute, if you want to implement a retry button for users in your own error component, you can use the [`vm.$attrs`](https://cn.vuejs.org/v2/api/#vm-attrs) property, like this:
 
 ``` html
 <!-- your own error component -->
@@ -53,7 +53,7 @@ The `error` slot is still the special one in this way, same as the `slot` specia
 </div>
 ```
 
-If you want to keep variable clear, you also can define a function property named `trigger`, and bind it on your retry button:
+If you want to keep variables clear, you can also define a function property named `trigger`, and bind it to your retry button:
 
 ``` js
 // your own error component
@@ -68,7 +68,7 @@ export default {
 
 ## About Hide & Default Styles
 
-For easy to use, this component provide some default styles (`font-size`, `color` and `padding`) for slot content, if you want to keep all default styles when you configure via `slot` special attribute, you have to wrap the content with `template` tag:
+For easy use, this component provides some default styles (`font-size`, `color` and `padding`) for slot content. If you want to keep all default styles when you configure via the `slot` special attribute, you have to wrap the content with a `template` tag:
 
 ``` html
 <infinite-loading>
@@ -96,7 +96,7 @@ If you want to remove all default styles to avoid affecting your own styles, you
 </infinite-loading>
 ```
 
-Almost forgot, if you want to configure slot content globally via plugin API, you can control them like this:
+I almost forgot, if you want to configure the slot content globally via the plugin API, you can control it like this:
 
 ``` js
 import Vue from 'vue';
