@@ -1,10 +1,10 @@
 # Configure Plugin Options
 
-We can configure default properties, default slots and default system settings for this plugin via the plugin API, they will be the default values for all the `InfiniteLoading` components in your project, you can still override them through property or slot in every component.
+We can configure default properties, default slots and default system settings for this plugin via the plugin API, which will then be the default values for all of the `InfiniteLoading` components in your project. You can still override them through properties or slots in every component.
 
 ## Props/Settings
 
-Simply passing an object contains `props`/`settings` field to configure them, to check out all available options, click [here](../api/#options).
+Simply pass an object containing the `props`/`settings` field to configure them. To check out all available options, click [here](../api/#options).
 
 ``` js
 import Vue from 'vue';
@@ -24,7 +24,7 @@ Vue.use(InfiniteLoading, {
 
 ## Slots
 
-Unlike properties and settings, slot option can be a string or a `Vue Component`:
+Unlike properties and settings, slot options can be either a string or a `Vue Component`:
 
 ``` js
 import Vue from 'vue';
