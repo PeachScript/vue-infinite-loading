@@ -3,7 +3,7 @@
 // Definitions by: Phil Scott <https://github.com/enkafan>
 //                 PeachScript <https://github.com/PeachScript>
 
-import Vue, { VNode, Component } from 'vue';
+import Vue, { VNode, Component, PluginFunction } from 'vue';
 
 export type SpinnerType = 'default' | 'bubbles' | 'circles' | 'spiral' | 'waveDots';
 export type DirectionType = 'top' | 'bottom';
