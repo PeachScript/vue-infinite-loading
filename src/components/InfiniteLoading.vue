@@ -118,6 +118,10 @@ export default {
     },
   },
   props: {
+    keepScrollTop: {
+      type: Boolean,
+      default: false,
+    },
     distance: {
       type: Number,
       default: config.props.distance,
@@ -171,6 +175,13 @@ export default {
 
       if (this.status === STATUS.LOADING) {
         this.$nextTick(this.attemptLoad.bind(null, true));
+      }
+
+      if (this.keepScrollTop) {
+        const scrollTop = this.getScrollParentOffset();
+        this.$nextTick(() => {
+          this.setScrollParentOffset(scrollTop);
+        });
       }
 
       if (!ev || ev.target !== this) {
@@ -328,6 +339,19 @@ export default {
       }
 
       return result || this.getScrollParent(elm.parentNode);
+    },
+    getScrollParentOffset() {
+      const scrollParent = this.getScrollParent();
+      return (scrollParent === window
+        ? document.documentElement.scrollTop
+        : scrollParent.scrollTop
+      );
+    },
+    setScrollParentOffset(scrollTop) {
+      (this.scrollParent === window
+        ? document.documentElement
+        : this.scrollParent
+      ).scrollTop = scrollTop;
     },
   },
   destroyed() {
