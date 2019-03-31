@@ -146,7 +146,7 @@ export default {
       this.scrollParent = this.getScrollParent();
     }, { immediate: true });
 
-    this.scrollHandler = function scrollHandlerOriginal(ev) {
+    this.scrollHandler = (ev) => {
       if (this.status === STATUS.READY) {
         if (ev && ev.constructor === Event && isVisible(this.$el)) {
           throttleer.throttle(this.attemptLoad);
@@ -154,10 +154,12 @@ export default {
           this.attemptLoad();
         }
       }
-    }.bind(this);
+    };
 
-    setTimeout(this.scrollHandler, 1);
-    this.scrollParent.addEventListener('scroll', this.scrollHandler, evt3rdArg);
+    setTimeout(() => {
+      this.scrollHandler();
+      this.scrollParent.addEventListener('scroll', this.scrollHandler, evt3rdArg);
+    }, 1);
 
     this.$on('$InfiniteLoading:loaded', (ev) => {
       this.isFirstLoad = false;
