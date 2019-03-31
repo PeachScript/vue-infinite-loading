@@ -1,6 +1,6 @@
 {
   "name": "vue-infinite-loading",
-  "version": "2.4.3",
+  "version": "2.4.4",
   "description": "An infinite scroll plugin for Vue.js",
   "main": "dist/vue-infinite-loading.js",
   "typings": "types/index.d.ts",
