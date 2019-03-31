@@ -40,7 +40,7 @@ module.exports = {
           plugins: ['@babel/plugin-transform-runtime'],
           env: {
             test: {
-              presets: [['@babel/preset-env', { useBuiltIns: 'usage' }]],
+              presets: [['@babel/preset-env', { useBuiltIns: 'usage', corejs: '3.0.0' }]],
               plugins: ['babel-plugin-istanbul']
             }
           }
