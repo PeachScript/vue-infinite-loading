@@ -58,7 +58,11 @@ sidebar: auto
 
 ## 插槽
 
-插槽的内容可以通过 `Vue.js` 官方提供的 [`slot` 特殊属性](https://vuejs.org/v2/api/index.html#slot)进行设置，也可以通过插件 API 进行全局设置。
+::: warning
+Vue.js 官方于 v2.6.0 后[废弃 slot 特殊特性](https://cn.vuejs.org/v2/api/#slot-废弃)，推荐使用[v-slot 指令](https://cn.vuejs.org/v2/api/#v-slot)。
+:::
+
+插槽的内容可以通过 `Vue.js` 官方提供的[`v-slot` 指令](https://cn.vuejs.org/v2/api/#v-slot)进行设置，也可以通过插件 API 进行全局设置。
 
 - 参考：
   - [配置加载提示](../guide/configure-load-msg.md)

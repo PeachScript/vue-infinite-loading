@@ -16,24 +16,28 @@ previewLink: //jsfiddle.net/PeachScript/94kL0bvs/embedded/result/
 
 你可以在右边预览所有内置加载动画，如果你希望创建自己的加载动画，请使用其他方式。
 
-## 通过 `slot` 特殊属性
+## 通过 `v-slot` 指令
 
-我们可以通过 [`slot` 特殊属性](https://vuejs.org/v2/api/index.html#slot)来配置它们：
+::: warning
+Vue.js 官方于 v2.6.0 后[废弃 slot 特殊特性](https://cn.vuejs.org/v2/api/#slot-废弃)，推荐使用[v-slot 指令](https://cn.vuejs.org/v2/api/#v-slot)。
+:::
+
+我们可以通过[`v-slot` 指令](https://cn.vuejs.org/v2/api/#v-slot)来配置它们：
 
 ``` html
 <infinite-loading>
-  <div slot="spinner">Loading...</div>
-  <div slot="no-more">No more message</div>
-  <div slot="no-results">No results message</div>
+  <div v-slot:spinner>Loading...</div>
+  <div v-slot:no-more>No more message</div>
+  <div v-slot:no-results>No results message</div>
 </infinite-loading>
 ```
 
-与其他插槽不同的是，`error` 插槽的默认值除了会提供文字信息之外，还会提供一个重试按钮供用户重新尝试加载；在自定义 `error` 插槽时，如果你也希望提供一个重试按钮给用户，可以使用 [`slot-scope`](https://vuejs.org/v2/api/index.html#slot-scope) 功能实现，就像下面这样：
+与其他插槽不同的是，`error` 插槽的默认值除了会提供文字信息之外，还会提供一个重试按钮供用户重新尝试加载；在自定义 `error` 插槽时，如果你也希望提供一个重试按钮给用户，可以接收 prop 中的重試的方法 `trigger` 並注入到按鈕，就像下面这样：
 
 ``` html
 <infinite-loading>
-  <div slot="error" slot-scope="{ trigger }">
-    Error message, click <a href="javascript:;" @click="trigger">here</a> to retry
+  <div v-slot:error="{ trigger }">
+    Error message, click <a href="#retry" @click.prevent="trigger">here</a> to retry
   </div>
 </infinite-loading>
 ```
@@ -42,13 +46,13 @@ previewLink: //jsfiddle.net/PeachScript/94kL0bvs/embedded/result/
 
 在我们构建大型应用时，为了保证所有加载提示的行为一致，此插件支持通过插件 API 统一配置所有的插槽内容，我们只需要传递一个字符串或者 Vue 组件给它就可以了，点击[这里](./configure-plugin-opts.md#插槽)了解更多。
 
-在这里 `error` 插槽仍然是最特殊的哪一个，和使用 `slot` 特殊属性一样，如果你希望提供一个重试按钮给用户，你可以使用 [`vm.$attrs`](https://cn.vuejs.org/v2/api/#vm-attrs) 属性，就像这样：
+在这里 `error` 插槽仍然是最特殊的哪一个，和使用 `v-slot` 指令一样，如果你希望提供一个重试按钮给用户，你可以使用 [`vm.$attrs`](https://cn.vuejs.org/v2/api/#vm-attrs) 属性，就像这样：
 
 ``` html
 <!-- your own error component -->
 <div>
   Error message, click
-  <a href="javascript:;" @click="$attrs.trigger">here</a>
+  <a href="#retry" @click.prevent="$attrs.trigger">here</a>
   to retry
 </div>
 ```
@@ -68,12 +72,12 @@ export default {
 
 ## 关于隐藏与默认样式
 
-为了便于使用，该组件为插槽内容提供了一些默认样式（`font-size`、`color` 和 `padding`），如果你希望在通过 `slot` 特殊属性配置插槽时保持默认样式的存在，你需要将插槽内容用 `template` 标签包裹：
+为了便于使用，该组件为插槽内容提供了一些默认样式（`font-size`、`color` 和 `padding`），如果你希望在通过 `v-slot` 指令配置插槽时保持默认样式的存在，你需要将插槽内容用 `template` 标签包裹：
 
 ``` html
 <infinite-loading>
   <!-- The no-more message will has default styles -->
-  <template slot="no-more">No more message</template>
+  <template v-slot:no-more>No more message</template>
 </infinite-loading>
 
 ```
@@ -83,7 +87,7 @@ export default {
 ``` html
 <infinite-loading>
   <!-- The no-more slot will not be displayed -->
-  <span slot="no-more"></span>
+  <span v-slot:no-more></span>
 </infinite-loading>
 ```
 
@@ -92,7 +96,7 @@ export default {
 ``` html
 <infinite-loading>
   <!-- The no-more message will has no default styles -->
-  <div slot="no-more">No more message</div>
+  <div v-slot:no-more>No more message</div>
 </infinite-loading>
 ```
 

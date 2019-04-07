@@ -23,7 +23,7 @@ The final template should be similar to:
     <!-- el-table-column items -->
 
     <infinite-loading
-      slot="append"
+      v-slot:append
       @infinite="infiniteHandler"
       force-use-infinite-wrapper=".el-table__body-wrapper">
     </infinite-loading>
