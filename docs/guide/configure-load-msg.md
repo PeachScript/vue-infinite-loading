@@ -16,7 +16,7 @@ Only the `spinner` slot can be configured via the prop, and the set value can on
 
 You can preview all built-in spinner types on the right. Please use other ways if you want to create your own spinner.
 
-## Via `slot` Sepcial Attribute
+## Via `slot` Special Attribute
 
 We can use the [`slot` special attribute](https://vuejs.org/v2/api/index.html#slot) to configure them:
 
