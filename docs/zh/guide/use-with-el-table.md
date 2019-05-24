@@ -23,7 +23,7 @@ previewLink: //jsfiddle.net/PeachScript/uyjb6z34/embedded/result/
     <!-- el-table-column items -->
 
     <infinite-loading
-      slot="append"
+      v-slot:append
       @infinite="infiniteHandler"
       force-use-infinite-wrapper=".el-table__body-wrapper">
     </infinite-loading>

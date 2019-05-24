@@ -58,7 +58,11 @@ The component will be reset if this property has changed, just like recreating a
 
 ## Slots
 
-The contents for these slots can be configured via the [`slot` special attribute](https://vuejs.org/v2/api/index.html#slot), also can be configure via the plugin API.
+::: warning
+Vue.js [deprecated slot special attributes](https://vuejs.org/v2/api/#slot-deprecated) after v2.6.0, it is recommended to use the [v-slot directive](https://vuejs.org/v2/api/#v-slot).
+:::
+
+The contents for these slots can be configured via the [`v-slot` directives](https://vuejs.org/v2/api/#v-slot), also can be configure via the plugin API.
 
 - See also:
   - [Configure Load Messages](../guide/configure-load-msg.md)
