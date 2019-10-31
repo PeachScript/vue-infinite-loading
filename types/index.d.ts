@@ -65,6 +65,6 @@ export default class InfiniteLoading extends Vue {
   // Slots
   $slots: Slots;
   
-  static install: PluginFunction<never>;
+  static install: PluginFunction<InfiniteOptions>;
 }
 
