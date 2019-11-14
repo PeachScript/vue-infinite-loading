@@ -31,7 +31,7 @@ describe('vue-infinite-loading:component', () => {
     `,
     components: { InfiniteLoading },
     methods: {
-      infiniteHandler() {},
+      infiniteHandler() { },
     },
   };
 
@@ -521,6 +521,37 @@ describe('vue-infinite-loading:component', () => {
           expect(this.$refs.infiniteLoading.scrollParent).to.equal(this.$el.querySelector('div'));
           done();
         });
+      },
+    }));
+
+    vm.$mount('#app');
+  });
+
+  it('should use HTMLBodyElement when using forceBodyWrapper', (done) => {
+    vm = new Vue(Object.assign({}, basicConfig, {
+      template: `
+        <div class="scroll">
+          <div style="overflow: auto;">
+            <div style="overflow: auto;">
+              <ul>
+                <li v-for="item in list" v-text="item"></li>
+              </ul>
+              <infinite-loading
+                :direction="direction"
+                @infinite="infiniteHandler"
+                ref="infiniteLoading"
+                :forceBodyWrapper="true"
+                >
+              </infinite-loading>
+            </div>
+          </div>
+        </div>
+      `,
+      methods: {
+        infiniteHandler: function infiniteHandler() {
+          expect(this.$refs.infiniteLoading.scrollParent.tagName).to.equal('BODY');
+          done();
+        },
       },
     }));
 

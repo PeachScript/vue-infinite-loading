@@ -127,6 +127,10 @@ export default {
       type: String,
       default: 'bottom',
     },
+    forceBodyWrapper: {
+      type: Boolean,
+      default: false,
+    },
     forceUseInfiniteWrapper: {
       type: [Boolean, String],
       default: config.props.forceUseInfiniteWrapper,
@@ -320,6 +324,10 @@ export default {
       }
 
       if (!result) {
+        if (this.forceBodyWrapper) {
+          return document.body;
+        }
+
         if (elm.tagName === 'BODY') {
           result = window;
         } else if (!this.forceUseInfiniteWrapper && ['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
