@@ -316,7 +316,11 @@ export default {
       let result;
 
       if (typeof this.forceUseInfiniteWrapper === 'string') {
-        result = elm.querySelector(this.forceUseInfiniteWrapper);
+        if (this.forceUseInfiniteWrapper === 'window') {
+          result = window;
+        } else {
+          result = elm.querySelector(this.forceUseInfiniteWrapper);
+        }
       }
 
       if (!result) {
