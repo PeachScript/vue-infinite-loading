@@ -316,7 +316,7 @@ export default {
       let result;
 
       if (typeof this.forceUseInfiniteWrapper === 'string') {
-        result = elm.querySelector(this.forceUseInfiniteWrapper);
+        result = document.querySelector(this.forceUseInfiniteWrapper);
       }
 
       if (!result) {
