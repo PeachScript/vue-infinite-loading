@@ -23,7 +23,8 @@
     "test": "BABEL_ENV=test karma start scripts/karma.conf.js",
     "precommit": "npm run lint",
     "commitmsg": "commitlint -E GIT_PARAMS",
-    "release": "bash ./scripts/release.sh"
+    "release": "bash ./scripts/release.sh",
+    "prepare": "npm run build"
   },
   "keywords": [
     "vue",
