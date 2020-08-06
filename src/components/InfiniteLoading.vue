@@ -322,7 +322,7 @@ export default {
       if (!result) {
         if (elm.tagName === 'BODY') {
           result = window;
-        } else if (!this.forceUseInfiniteWrapper && ['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
+        } else if (!this.forceUseInfiniteWrapper && ['scroll', 'auto', 'overlay'].indexOf(getComputedStyle(elm).overflowY) > -1) {
           result = elm;
         } else if (elm.hasAttribute('infinite-wrapper') || elm.hasAttribute('data-infinite-wrapper')) {
           result = elm;
