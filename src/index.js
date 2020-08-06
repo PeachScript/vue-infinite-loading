@@ -19,7 +19,7 @@ Object.defineProperty(InfiniteLoading, 'install', {
     Object.assign(config.system, options && options.system);
 
     // register component
-    Vue.component('infinite-loading', InfiniteLoading);
+    Vue.component('InfiniteLoading', InfiniteLoading);
 
     syncModeFromVue(Vue);
   },
@@ -28,7 +28,7 @@ Object.defineProperty(InfiniteLoading, 'install', {
 // register component automatically if there has global Vue
 /* istanbul ignore else */
 if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.component('infinite-loading', InfiniteLoading);
+  window.Vue.component('InfiniteLoading', InfiniteLoading);
   syncModeFromVue(window.Vue);
 }
 
