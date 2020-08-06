@@ -320,7 +320,7 @@ export default {
       }
 
       if (!result) {
-        if (elm.tagName === 'BODY') {
+        if (elm.tagName === 'BODY' || !elm.parentNode) {
           result = window;
         } else if (!this.forceUseInfiniteWrapper && ['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
           result = elm;
