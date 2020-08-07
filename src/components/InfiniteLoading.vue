@@ -2,7 +2,7 @@
   <div class="infinite-loading-container">
     <div
       class="infinite-status-prompt"
-      v-show="isShowSpinner"
+      v-if="isShowSpinner"
       :style="slotStyles.spinner">
       <slot name="spinner" v-bind="{ isFirstLoad }">
         <spinner :spinner="spinner" />
@@ -11,7 +11,7 @@
     <div
       class="infinite-status-prompt"
       :style="slotStyles.noResults"
-      v-show="isShowNoResults">
+      v-if="isShowNoResults">
       <slot name="no-results">
         <component v-if="slots.noResults.render" :is="slots.noResults"></component>
         <template v-else>{{ slots.noResults }}</template>
@@ -20,7 +20,7 @@
     <div
       class="infinite-status-prompt"
       :style="slotStyles.noMore"
-      v-show="isShowNoMore">
+      v-if="isShowNoMore">
       <slot name="no-more">
         <component v-if="slots.noMore.render" :is="slots.noMore"></component>
         <template v-else>{{ slots.noMore }}</template>
@@ -29,7 +29,7 @@
     <div
       class="infinite-status-prompt"
       :style="slotStyles.error"
-      v-show="isShowError">
+      v-if="isShowError">
       <slot name="error" :trigger="attemptLoad">
         <component
           v-if="slots.error.render"
