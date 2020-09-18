@@ -13,7 +13,7 @@
       :style="slotStyles.noResults"
       v-show="isShowNoResults">
       <slot name="no-results">
-        <component v-if="slots.noResults.render" :is="slots.noResults"></component>
+        <component v-if="typeof slots.noResults === 'object'" :is="slots.noResults"></component>
         <template v-else>{{ slots.noResults }}</template>
       </slot>
     </div>
@@ -22,7 +22,7 @@
       :style="slotStyles.noMore"
       v-show="isShowNoMore">
       <slot name="no-more">
-        <component v-if="slots.noMore.render" :is="slots.noMore"></component>
+        <component v-if="typeof slots.noMore === 'object'" :is="slots.noMore"></component>
         <template v-else>{{ slots.noMore }}</template>
       </slot>
     </div>
@@ -32,7 +32,7 @@
       v-show="isShowError">
       <slot name="error" :trigger="attemptLoad">
         <component
-          v-if="slots.error.render"
+          v-if="typeof slots.error === 'object'"
           :is="slots.error"
           :trigger="attemptLoad">
         </component>
@@ -185,6 +185,9 @@ export default {
 
       // force re-complation computed properties to fix the problem of get slot text delay
       this.$nextTick(() => {
+        if (this.direction === 'top') {
+          scrollBarStorage.restore(this.scrollParent);
+        }
         this.$forceUpdate();
       });
 
@@ -316,11 +319,15 @@ export default {
       let result;
 
       if (typeof this.forceUseInfiniteWrapper === 'string') {
-        result = document.querySelector(this.forceUseInfiniteWrapper);
+        if (this.forceUseInfiniteWrapper === 'window') {
+          result = window;
+        } else {
+          result = elm.querySelector(this.forceUseInfiniteWrapper);
+        }
       }
 
       if (!result) {
-        if (elm.tagName === 'BODY') {
+        if (elm.tagName === 'BODY' || !elm.parentNode) {
           result = window;
         } else if (!this.forceUseInfiniteWrapper && ['scroll', 'auto'].indexOf(getComputedStyle(elm).overflowY) > -1) {
           result = elm;

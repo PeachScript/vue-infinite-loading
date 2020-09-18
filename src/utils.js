@@ -76,7 +76,7 @@ export const loopTracker = {
 export const scrollBarStorage = {
   key: '_infiniteScrollHeight',
   getScrollElm(elm) {
-    return elm === window ? document.documentElement : elm;
+    return elm === window ? (document.scrollingElement || document.documentElement) : elm;
   },
   save(elm) {
     const target = this.getScrollElm(elm);
