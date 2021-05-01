@@ -1,64 +1,18 @@
-<template>
-  <div class="infinite-loading-container">
-    <div
-      class="infinite-status-prompt"
-      v-show="isShowSpinner"
-      :style="slotStyles.spinner">
-      <slot name="spinner" v-bind="{ isFirstLoad }">
-        <spinner :spinner="spinner" />
-      </slot>
-    </div>
-    <div
-      class="infinite-status-prompt"
-      :style="slotStyles.noResults"
-      v-show="isShowNoResults">
-      <slot name="no-results">
-        <component v-if="slots.noResults.render" :is="slots.noResults"></component>
-        <template v-else>{{ slots.noResults }}</template>
-      </slot>
-    </div>
-    <div
-      class="infinite-status-prompt"
-      :style="slotStyles.noMore"
-      v-show="isShowNoMore">
-      <slot name="no-more">
-        <component v-if="slots.noMore.render" :is="slots.noMore"></component>
-        <template v-else>{{ slots.noMore }}</template>
-      </slot>
-    </div>
-    <div
-      class="infinite-status-prompt"
-      :style="slotStyles.error"
-      v-show="isShowError">
-      <slot name="error" :trigger="attemptLoad">
-        <component
-          v-if="slots.error.render"
-          :is="slots.error"
-          :trigger="attemptLoad">
-        </component>
-        <template v-else>
-          {{ slots.error }}
-          <br>
-          <button
-            class="btn-try-infinite"
-            @click="attemptLoad"
-            v-text="slots.errorBtnText">
-          </button>
-        </template>
-      </slot>
-    </div>
-  </div>
-</template>
 <script>
+import { defineComponent } from 'vue';
+
+import eventHub from '../eventHub';
 import Spinner from './Spinner.vue';
+
 import config, {
   evt3rdArg, WARNINGS, STATUS, SLOT_STYLES,
 } from '../config';
+
 import {
   warn, throttleer, loopTracker, scrollBarStorage, kebabCase, isVisible,
 } from '../utils';
 
-export default {
+export default /* #__PURE__ */defineComponent({
   name: 'InfiniteLoading',
   data() {
     return {
@@ -72,6 +26,7 @@ export default {
   components: {
     Spinner,
   },
+  emits: ['infinite', '$InfiniteLoading:loaded', '$InfiniteLoading:complete', '$InfiniteLoading:reset'],
   computed: {
     isShowSpinner() {
       return this.status === STATUS.LOADING;
@@ -134,7 +89,6 @@ export default {
     identifier: {
       default: +new Date(),
     },
-    onInfinite: Function,
   },
   watch: {
     identifier() {
@@ -161,7 +115,7 @@ export default {
       this.scrollParent.addEventListener('scroll', this.scrollHandler, evt3rdArg);
     }, 1);
 
-    this.$on('$InfiniteLoading:loaded', (ev) => {
+    eventHub.$on('$InfiniteLoading:loaded', (ev) => {
       this.isFirstLoad = false;
 
       if (this.direction === 'top') {
@@ -180,7 +134,7 @@ export default {
       }
     });
 
-    this.$on('$InfiniteLoading:complete', (ev) => {
+    eventHub.$on('$InfiniteLoading:complete', (ev) => {
       this.status = STATUS.COMPLETE;
 
       // force re-complation computed properties to fix the problem of get slot text delay
@@ -195,7 +149,7 @@ export default {
       }
     });
 
-    this.$on('$InfiniteLoading:reset', (ev) => {
+    eventHub.$on('$InfiniteLoading:reset', (ev) => {
       this.status = STATUS.READY;
       this.isFirstLoad = true;
       scrollBarStorage.remove(this.scrollParent);
@@ -218,12 +172,15 @@ export default {
     this.stateChanger = {
       loaded: () => {
         this.$emit('$InfiniteLoading:loaded', { target: this });
+        eventHub.$emit('$InfiniteLoading:loaded', { target: this });
       },
       complete: () => {
         this.$emit('$InfiniteLoading:complete', { target: this });
+        eventHub.$emit('$InfiniteLoading:complete', { target: this });
       },
       reset: () => {
         this.$emit('$InfiniteLoading:reset', { target: this });
+        eventHub.$emit('$InfiniteLoading:reset', { target: this });
       },
       error: () => {
         this.status = STATUS.ERROR;
@@ -250,11 +207,11 @@ export default {
   },
   methods: {
     /**
-    * attempt trigger load
-    * @param {Boolean} isContinuousCall  the flag of continuous call, it will be true
-    *                                    if this method be called in the `loaded`
-    *                                    event handler
-    */
+     * attempt trigger load
+     * @param {Boolean} isContinuousCall  the flag of continuous call, it will be true
+     *                                    if this method be called in the `loaded`
+     *                                    event handler
+     */
     attemptLoad(isContinuousCall) {
       if (
         this.status !== STATUS.COMPLETE
@@ -286,9 +243,9 @@ export default {
       }
     },
     /**
-    * get current distance from the specified direction
-    * @return {Number}     distance
-    */
+     * get current distance from the specified direction
+     * @return {Number}     distance
+     */
     getCurrentDistance() {
       let distance;
 
@@ -308,10 +265,10 @@ export default {
       return distance;
     },
     /**
-    * get the first scroll parent of an element
-    * @param  {DOM} elm    cache element for recursive search
-    * @return {DOM}        the first scroll parent
-    */
+     * get the first scroll parent of an element
+     * @param  {DOM} elm    cache element for recursive search
+     * @return {DOM}        the first scroll parent
+     */
     getScrollParent(elm = this.$el) {
       let result;
 
@@ -332,7 +289,7 @@ export default {
       return result || this.getScrollParent(elm.parentNode);
     },
   },
-  destroyed() {
+  unmounted() {
     /* istanbul ignore else */
     if (!this.status !== STATUS.COMPLETE) {
       throttleer.reset();
@@ -340,41 +297,94 @@ export default {
       this.scrollParent.removeEventListener('scroll', this.scrollHandler, evt3rdArg);
     }
   },
-};
+});
 </script>
+
+<template>
+  <div class="infinite-loading-container">
+    <div
+      class="infinite-status-prompt"
+      v-show="isShowSpinner"
+      :style="slotStyles.spinner">
+      <slot name="spinner" v-bind="{ isFirstLoad }">
+        <spinner :spinner="spinner" />
+      </slot>
+    </div>
+    <div
+      class="infinite-status-prompt"
+      :style="slotStyles.noResults"
+      v-show="isShowNoResults">
+      <slot name="no-results">
+        <component v-if="slots.noResults.render" :is="slots.noResults"></component>
+        <template v-else>{{ slots.noResults }}</template>
+      </slot>
+    </div>
+    <div
+      class="infinite-status-prompt"
+      :style="slotStyles.noMore"
+      v-show="isShowNoMore">
+      <slot name="no-more">
+        <component v-if="slots.noMore.render" :is="slots.noMore"></component>
+        <template v-else>{{ slots.noMore }}</template>
+      </slot>
+    </div>
+    <div
+      class="infinite-status-prompt"
+      :style="slotStyles.error"
+      v-show="isShowError">
+      <slot name="error" :trigger="attemptLoad">
+        <component
+          v-if="slots.error.render"
+          :is="slots.error"
+          :trigger="attemptLoad">
+        </component>
+        <template v-else>
+          {{ slots.error }}
+          <br>
+          <button
+            class="btn-try-infinite"
+            @click="attemptLoad"
+            v-text="slots.errorBtnText">
+          </button>
+        </template>
+      </slot>
+    </div>
+  </div>
+</template>
+
 <style lang="less" scoped>
-@deep: ~'>>>';
+  @deep: ~'>>>';
 
-.infinite-loading-container {
-  clear: both;
-  text-align: center;
+  .infinite-loading-container {
+    clear: both;
+    text-align: center;
 
-  @{deep} *[class^=loading-] {
-    @size: 28px;
-    display: inline-block;
-    margin: 5px 0;
-    width: @size;
-    height: @size;
-    font-size: @size;
-    line-height: @size;
-    border-radius: 50%;
+    @{deep} *[class^=loading-] {
+      @size: 28px;
+      display: inline-block;
+      margin: 5px 0;
+      width: @size;
+      height: @size;
+      font-size: @size;
+      line-height: @size;
+      border-radius: 50%;
+    }
   }
-}
 
-.btn-try-infinite {
-  margin-top: 5px;
-  padding: 5px 10px;
-  color: #999;
-  font-size: 14px;
-  line-height: 1;
-  background: transparent;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  outline: none;
-  cursor: pointer;
+  .btn-try-infinite {
+    margin-top: 5px;
+    padding: 5px 10px;
+    color: #999;
+    font-size: 14px;
+    line-height: 1;
+    background: transparent;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
 
-  &:not(:active):hover {
-    opacity: 0.8;
+    &:not(:active):hover {
+      opacity: 0.8;
+    }
   }
-}
 </style>
