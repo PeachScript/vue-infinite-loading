@@ -115,7 +115,7 @@ export default /* #__PURE__ */defineComponent({
       this.scrollParent.addEventListener('scroll', this.scrollHandler, evt3rdArg);
     }, 1);
 
-    eventHub.$on('$InfiniteLoading:loaded', (ev) => {
+    eventHub.$on('$InfiniteLoading:loaded', () => {
       this.isFirstLoad = false;
 
       if (this.direction === 'top') {
@@ -128,13 +128,9 @@ export default /* #__PURE__ */defineComponent({
       if (this.status === STATUS.LOADING) {
         this.$nextTick(this.attemptLoad.bind(null, true));
       }
-
-      if (!ev || ev.target !== this) {
-        warn(WARNINGS.STATE_CHANGER);
-      }
     });
 
-    eventHub.$on('$InfiniteLoading:complete', (ev) => {
+    eventHub.$on('$InfiniteLoading:complete', () => {
       this.status = STATUS.COMPLETE;
 
       // force re-complation computed properties to fix the problem of get slot text delay
@@ -143,13 +139,9 @@ export default /* #__PURE__ */defineComponent({
       });
 
       this.scrollParent.removeEventListener('scroll', this.scrollHandler, evt3rdArg);
-
-      if (!ev || ev.target !== this) {
-        warn(WARNINGS.STATE_CHANGER);
-      }
     });
 
-    eventHub.$on('$InfiniteLoading:reset', (ev) => {
+    eventHub.$on('$InfiniteLoading:reset', () => {
       this.status = STATUS.READY;
       this.isFirstLoad = true;
       scrollBarStorage.remove(this.scrollParent);
@@ -160,10 +152,6 @@ export default /* #__PURE__ */defineComponent({
         throttleer.reset();
         this.scrollHandler();
       }, 1);
-
-      if (!ev || ev.target !== this) {
-        warn(WARNINGS.IDENTIFIER);
-      }
     });
 
     /**
