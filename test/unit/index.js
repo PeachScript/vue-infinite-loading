@@ -1,4 +1,4 @@
-import Vue from 'vue/dist/vue.common';
+import Vue from 'vue';
 
 // mock passive event listener support and not support
 (() => {

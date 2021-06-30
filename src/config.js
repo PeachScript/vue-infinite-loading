@@ -67,29 +67,7 @@ export const evt3rdArg = (() => {
  */
 
 export const WARNINGS = {
-  STATE_CHANGER: [
-    'emit `loaded` and `complete` event through component instance of `$refs` may cause error, so it will be deprecated soon, please use the `$state` argument instead (`$state` just the special `$event` variable):',
-    '\ntemplate:',
-    '<infinite-loading @infinite="infiniteHandler"></infinite-loading>',
-    `
-script:
-...
-infiniteHandler($state) {
-  ajax('https://www.example.com/api/news')
-    .then((res) => {
-      if (res.data.length) {
-        $state.loaded();
-      } else {
-        $state.complete();
-      }
-    });
-}
-...`,
-    '',
-    'more details: https://github.com/PeachScript/vue-infinite-loading/issues/57#issuecomment-324370549',
-  ].join('\n'),
   INFINITE_EVENT: '`:on-infinite` property will be deprecated soon, please use `@infinite` event instead.',
-  IDENTIFIER: 'the `reset` event will be deprecated soon, please reset this component by change the `identifier` property.',
 };
 
 /**

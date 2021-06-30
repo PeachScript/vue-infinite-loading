@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import Vue from 'vue/dist/vue.common';
+import Vue from 'vue';
 import { isShow, continuesCall, fakeBox } from '../utils';
 import config from '../../../src/config';
 import { loopTracker } from '../../../src/utils';

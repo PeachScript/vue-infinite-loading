@@ -1,4 +1,6 @@
+// eslint-disable-next-line import/no-unresolved
 import Vue from 'vue/dist/vue.common';
+// eslint-disable-next-line import/extensions,import/no-unresolved
 import InfiniteLoading from '../../../src';
 import config from '../../../src/config';
 
