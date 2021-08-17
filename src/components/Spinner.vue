@@ -28,10 +28,9 @@ export default /* #__PURE__ */defineComponent({
   props: ['spinner'],
   computed: {
     spinnerView() {
-      return (
-        SPINNERS[(this.spinner || '')]
-        || 'default' // fallback to spinner of config
-      );
+      return !SPINNERS.includes(this.spinner)
+        ? 'default'
+        : this.spinner;
     },
   },
 });

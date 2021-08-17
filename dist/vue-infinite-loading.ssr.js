@@ -140,13 +140,12 @@ var script$1 = /* #__PURE__ */vue.defineComponent({
   props: ['spinner'],
   computed: {
     spinnerView: function spinnerView() {
-      return SPINNERS[this.spinner || ''] || 'default' // fallback to spinner of config
-      ;
+      return !SPINNERS.includes(this.spinner) ? 'default' : this.spinner;
     }
   }
-});var _withId$1 = /*#__PURE__*/vue.withScopeId("data-v-10593c59");
+});var _withId$1 = /*#__PURE__*/vue.withScopeId("data-v-18ae5a62");
 
-vue.pushScopeId("data-v-10593c59");
+vue.pushScopeId("data-v-18ae5a62");
 
 var _hoisted_1$1 = {
   key: 0,
@@ -213,9 +212,9 @@ var render$1 = /*#__PURE__*/_withId$1(function (_ctx, _cache, $props, $setup, $d
   } else {
     style.appendChild(document.createTextNode(css));
   }
-}var css_248z$1 = ".loading-wave-dots[data-v-10593c59] {\n  position: relative;\n}\n.loading-wave-dots[data-v-10593c59] .wave-item {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  display: inline-block;\n  margin-top: -8px/2;\n  width: 8px;\n  height: 8px;\n  border-radius: 50%;\n  animation: loading-wave-dots-10593c59 linear 2.8s infinite;\n}\n.loading-wave-dots[data-v-10593c59] .wave-item:first-child {\n  margin-left: -8px/2 + -32px;\n}\n.loading-wave-dots[data-v-10593c59] .wave-item:nth-child(2) {\n  margin-left: -8px/2 + -16px;\n  animation-delay: 0.14s;\n}\n.loading-wave-dots[data-v-10593c59] .wave-item:nth-child(3) {\n  margin-left: -8px/2;\n  animation-delay: 0.28s;\n}\n.loading-wave-dots[data-v-10593c59] .wave-item:nth-child(4) {\n  margin-left: -8px/2 + 16px;\n  animation-delay: 0.42s;\n}\n.loading-wave-dots[data-v-10593c59] .wave-item:last-child {\n  margin-left: -8px/2 + 32px;\n  animation-delay: 0.56s;\n}\n@keyframes loading-wave-dots-10593c59 {\n0% {\n    transform: translateY(0);\n    background: #bbb;\n}\n10% {\n    transform: translateY(-6px);\n    background: #999;\n}\n20% {\n    transform: translateY(0);\n    background: #bbb;\n}\n100% {\n    transform: translateY(0);\n    background: #bbb;\n}\n}\n.loading-circles[data-v-10593c59] .circle-item {\n  width: 5px;\n  height: 5px;\n  animation: loading-circles-10593c59 linear 0.75s infinite;\n}\n.loading-circles[data-v-10593c59] .circle-item:first-child {\n  margin-top: -5px/2 + -12px;\n  margin-left: -5px/2;\n}\n.loading-circles[data-v-10593c59] .circle-item:nth-child(2) {\n  margin-top: -5px/2 + -8.76px;\n  margin-left: -5px/2 + 8.76px;\n}\n.loading-circles[data-v-10593c59] .circle-item:nth-child(3) {\n  margin-top: -5px/2;\n  margin-left: -5px/2 + 12px;\n}\n.loading-circles[data-v-10593c59] .circle-item:nth-child(4) {\n  margin-top: -5px/2 + 8.76px;\n  margin-left: -5px/2 + 8.76px;\n}\n.loading-circles[data-v-10593c59] .circle-item:nth-child(5) {\n  margin-top: -5px/2 + 12px;\n  margin-left: -5px/2;\n}\n.loading-circles[data-v-10593c59] .circle-item:nth-child(6) {\n  margin-top: -5px/2 + 8.76px;\n  margin-left: -5px/2 + -8.76px;\n}\n.loading-circles[data-v-10593c59] .circle-item:nth-child(7) {\n  margin-top: -5px/2;\n  margin-left: -5px/2 + -12px;\n}\n.loading-circles[data-v-10593c59] .circle-item:last-child {\n  margin-top: -5px/2 + -8.76px;\n  margin-left: -5px/2 + -8.76px;\n}\n@keyframes loading-circles-10593c59 {\n0% {\n    background: #dfdfdf;\n}\n90% {\n    background: #505050;\n}\n100% {\n    background: #dfdfdf;\n}\n}\n.loading-bubbles[data-v-10593c59] .bubble-item {\n  background: #666;\n  animation: loading-bubbles-10593c59 linear 0.75s infinite;\n}\n.loading-bubbles[data-v-10593c59] .bubble-item:first-child {\n  margin-top: -1px/2 + -12px;\n  margin-left: -1px/2;\n}\n.loading-bubbles[data-v-10593c59] .bubble-item:nth-child(2) {\n  margin-top: -1px/2 + -8.76px;\n  margin-left: -1px/2 + 8.76px;\n}\n.loading-bubbles[data-v-10593c59] .bubble-item:nth-child(3) {\n  margin-top: -1px/2;\n  margin-left: -1px/2 + 12px;\n}\n.loading-bubbles[data-v-10593c59] .bubble-item:nth-child(4) {\n  margin-top: -1px/2 + 8.76px;\n  margin-left: -1px/2 + 8.76px;\n}\n.loading-bubbles[data-v-10593c59] .bubble-item:nth-child(5) {\n  margin-top: -1px/2 + 12px;\n  margin-left: -1px/2;\n}\n.loading-bubbles[data-v-10593c59] .bubble-item:nth-child(6) {\n  margin-top: -1px/2 + 8.76px;\n  margin-left: -1px/2 + -8.76px;\n}\n.loading-bubbles[data-v-10593c59] .bubble-item:nth-child(7) {\n  margin-top: -1px/2;\n  margin-left: -1px/2 + -12px;\n}\n.loading-bubbles[data-v-10593c59] .bubble-item:last-child {\n  margin-top: -1px/2 + -8.76px;\n  margin-left: -1px/2 + -8.76px;\n}\n@keyframes loading-bubbles-10593c59 {\n0% {\n    width: 1px;\n    height: 1px;\n    box-shadow: 0 0 0 3px #666;\n}\n90% {\n    width: 1px;\n    height: 1px;\n    box-shadow: 0 0 0 0 #666;\n}\n100% {\n    width: 1px;\n    height: 1px;\n    box-shadow: 0 0 0 3px #666;\n}\n}\n.loading-default[data-v-10593c59] {\n  position: relative;\n  border: 1px solid #999;\n  animation: loading-rotating-10593c59 ease 1.5s infinite;\n}\n.loading-default[data-v-10593c59]:before {\n  content: '';\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 50%;\n  margin-top: -6px/2;\n  margin-left: -6px/2;\n  width: 6px;\n  height: 6px;\n  background-color: #999;\n  border-radius: 50%;\n}\n.loading-spiral[data-v-10593c59] {\n  border: 2px solid #777;\n  border-right-color: transparent;\n  animation: loading-rotating-10593c59 linear 0.85s infinite;\n}\n@keyframes loading-rotating-10593c59 {\n0% {\n    transform: rotate(0);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n.loading-bubbles[data-v-10593c59],\n.loading-circles[data-v-10593c59] {\n  position: relative;\n}\n.loading-circles[data-v-10593c59] .circle-item,\n.loading-bubbles[data-v-10593c59] .bubble-item {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  display: inline-block;\n  border-radius: 50%;\n}\n.loading-circles[data-v-10593c59] .circle-item:nth-child(2),\n.loading-bubbles[data-v-10593c59] .bubble-item:nth-child(2) {\n  animation-delay: 0.093s;\n}\n.loading-circles[data-v-10593c59] .circle-item:nth-child(3),\n.loading-bubbles[data-v-10593c59] .bubble-item:nth-child(3) {\n  animation-delay: 0.186s;\n}\n.loading-circles[data-v-10593c59] .circle-item:nth-child(4),\n.loading-bubbles[data-v-10593c59] .bubble-item:nth-child(4) {\n  animation-delay: 0.279s;\n}\n.loading-circles[data-v-10593c59] .circle-item:nth-child(5),\n.loading-bubbles[data-v-10593c59] .bubble-item:nth-child(5) {\n  animation-delay: 0.372s;\n}\n.loading-circles[data-v-10593c59] .circle-item:nth-child(6),\n.loading-bubbles[data-v-10593c59] .bubble-item:nth-child(6) {\n  animation-delay: 0.465s;\n}\n.loading-circles[data-v-10593c59] .circle-item:nth-child(7),\n.loading-bubbles[data-v-10593c59] .bubble-item:nth-child(7) {\n  animation-delay: 0.558s;\n}\n.loading-circles[data-v-10593c59] .circle-item:last-child,\n.loading-bubbles[data-v-10593c59] .bubble-item:last-child {\n  animation-delay: 0.651s;\n}\n";
+}var css_248z$1 = ".loading-wave-dots[data-v-18ae5a62] {\n  position: relative;\n}\n.loading-wave-dots[data-v-18ae5a62] .wave-item {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  display: inline-block;\n  margin-top: -8px/2;\n  width: 8px;\n  height: 8px;\n  border-radius: 50%;\n  animation: loading-wave-dots-18ae5a62 linear 2.8s infinite;\n}\n.loading-wave-dots[data-v-18ae5a62] .wave-item:first-child {\n  margin-left: -8px/2 + -32px;\n}\n.loading-wave-dots[data-v-18ae5a62] .wave-item:nth-child(2) {\n  margin-left: -8px/2 + -16px;\n  animation-delay: 0.14s;\n}\n.loading-wave-dots[data-v-18ae5a62] .wave-item:nth-child(3) {\n  margin-left: -8px/2;\n  animation-delay: 0.28s;\n}\n.loading-wave-dots[data-v-18ae5a62] .wave-item:nth-child(4) {\n  margin-left: -8px/2 + 16px;\n  animation-delay: 0.42s;\n}\n.loading-wave-dots[data-v-18ae5a62] .wave-item:last-child {\n  margin-left: -8px/2 + 32px;\n  animation-delay: 0.56s;\n}\n@keyframes loading-wave-dots-18ae5a62 {\n0% {\n    transform: translateY(0);\n    background: #bbb;\n}\n10% {\n    transform: translateY(-6px);\n    background: #999;\n}\n20% {\n    transform: translateY(0);\n    background: #bbb;\n}\n100% {\n    transform: translateY(0);\n    background: #bbb;\n}\n}\n.loading-circles[data-v-18ae5a62] .circle-item {\n  width: 5px;\n  height: 5px;\n  animation: loading-circles-18ae5a62 linear 0.75s infinite;\n}\n.loading-circles[data-v-18ae5a62] .circle-item:first-child {\n  margin-top: -5px/2 + -12px;\n  margin-left: -5px/2;\n}\n.loading-circles[data-v-18ae5a62] .circle-item:nth-child(2) {\n  margin-top: -5px/2 + -8.76px;\n  margin-left: -5px/2 + 8.76px;\n}\n.loading-circles[data-v-18ae5a62] .circle-item:nth-child(3) {\n  margin-top: -5px/2;\n  margin-left: -5px/2 + 12px;\n}\n.loading-circles[data-v-18ae5a62] .circle-item:nth-child(4) {\n  margin-top: -5px/2 + 8.76px;\n  margin-left: -5px/2 + 8.76px;\n}\n.loading-circles[data-v-18ae5a62] .circle-item:nth-child(5) {\n  margin-top: -5px/2 + 12px;\n  margin-left: -5px/2;\n}\n.loading-circles[data-v-18ae5a62] .circle-item:nth-child(6) {\n  margin-top: -5px/2 + 8.76px;\n  margin-left: -5px/2 + -8.76px;\n}\n.loading-circles[data-v-18ae5a62] .circle-item:nth-child(7) {\n  margin-top: -5px/2;\n  margin-left: -5px/2 + -12px;\n}\n.loading-circles[data-v-18ae5a62] .circle-item:last-child {\n  margin-top: -5px/2 + -8.76px;\n  margin-left: -5px/2 + -8.76px;\n}\n@keyframes loading-circles-18ae5a62 {\n0% {\n    background: #dfdfdf;\n}\n90% {\n    background: #505050;\n}\n100% {\n    background: #dfdfdf;\n}\n}\n.loading-bubbles[data-v-18ae5a62] .bubble-item {\n  background: #666;\n  animation: loading-bubbles-18ae5a62 linear 0.75s infinite;\n}\n.loading-bubbles[data-v-18ae5a62] .bubble-item:first-child {\n  margin-top: -1px/2 + -12px;\n  margin-left: -1px/2;\n}\n.loading-bubbles[data-v-18ae5a62] .bubble-item:nth-child(2) {\n  margin-top: -1px/2 + -8.76px;\n  margin-left: -1px/2 + 8.76px;\n}\n.loading-bubbles[data-v-18ae5a62] .bubble-item:nth-child(3) {\n  margin-top: -1px/2;\n  margin-left: -1px/2 + 12px;\n}\n.loading-bubbles[data-v-18ae5a62] .bubble-item:nth-child(4) {\n  margin-top: -1px/2 + 8.76px;\n  margin-left: -1px/2 + 8.76px;\n}\n.loading-bubbles[data-v-18ae5a62] .bubble-item:nth-child(5) {\n  margin-top: -1px/2 + 12px;\n  margin-left: -1px/2;\n}\n.loading-bubbles[data-v-18ae5a62] .bubble-item:nth-child(6) {\n  margin-top: -1px/2 + 8.76px;\n  margin-left: -1px/2 + -8.76px;\n}\n.loading-bubbles[data-v-18ae5a62] .bubble-item:nth-child(7) {\n  margin-top: -1px/2;\n  margin-left: -1px/2 + -12px;\n}\n.loading-bubbles[data-v-18ae5a62] .bubble-item:last-child {\n  margin-top: -1px/2 + -8.76px;\n  margin-left: -1px/2 + -8.76px;\n}\n@keyframes loading-bubbles-18ae5a62 {\n0% {\n    width: 1px;\n    height: 1px;\n    box-shadow: 0 0 0 3px #666;\n}\n90% {\n    width: 1px;\n    height: 1px;\n    box-shadow: 0 0 0 0 #666;\n}\n100% {\n    width: 1px;\n    height: 1px;\n    box-shadow: 0 0 0 3px #666;\n}\n}\n.loading-default[data-v-18ae5a62] {\n  position: relative;\n  border: 1px solid #999;\n  animation: loading-rotating-18ae5a62 ease 1.5s infinite;\n}\n.loading-default[data-v-18ae5a62]:before {\n  content: '';\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 50%;\n  margin-top: -6px/2;\n  margin-left: -6px/2;\n  width: 6px;\n  height: 6px;\n  background-color: #999;\n  border-radius: 50%;\n}\n.loading-spiral[data-v-18ae5a62] {\n  border: 2px solid #777;\n  border-right-color: transparent;\n  animation: loading-rotating-18ae5a62 linear 0.85s infinite;\n}\n@keyframes loading-rotating-18ae5a62 {\n0% {\n    transform: rotate(0);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n.loading-bubbles[data-v-18ae5a62],\n.loading-circles[data-v-18ae5a62] {\n  position: relative;\n}\n.loading-circles[data-v-18ae5a62] .circle-item,\n.loading-bubbles[data-v-18ae5a62] .bubble-item {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  display: inline-block;\n  border-radius: 50%;\n}\n.loading-circles[data-v-18ae5a62] .circle-item:nth-child(2),\n.loading-bubbles[data-v-18ae5a62] .bubble-item:nth-child(2) {\n  animation-delay: 0.093s;\n}\n.loading-circles[data-v-18ae5a62] .circle-item:nth-child(3),\n.loading-bubbles[data-v-18ae5a62] .bubble-item:nth-child(3) {\n  animation-delay: 0.186s;\n}\n.loading-circles[data-v-18ae5a62] .circle-item:nth-child(4),\n.loading-bubbles[data-v-18ae5a62] .bubble-item:nth-child(4) {\n  animation-delay: 0.279s;\n}\n.loading-circles[data-v-18ae5a62] .circle-item:nth-child(5),\n.loading-bubbles[data-v-18ae5a62] .bubble-item:nth-child(5) {\n  animation-delay: 0.372s;\n}\n.loading-circles[data-v-18ae5a62] .circle-item:nth-child(6),\n.loading-bubbles[data-v-18ae5a62] .bubble-item:nth-child(6) {\n  animation-delay: 0.465s;\n}\n.loading-circles[data-v-18ae5a62] .circle-item:nth-child(7),\n.loading-bubbles[data-v-18ae5a62] .bubble-item:nth-child(7) {\n  animation-delay: 0.558s;\n}\n.loading-circles[data-v-18ae5a62] .circle-item:last-child,\n.loading-bubbles[data-v-18ae5a62] .bubble-item:last-child {\n  animation-delay: 0.651s;\n}\n";
 styleInject(css_248z$1);script$1.render = render$1;
-script$1.__scopeId = "data-v-10593c59";/*
+script$1.__scopeId = "data-v-18ae5a62";/*
  * default property values
  */
 var props = {
@@ -279,9 +278,7 @@ var evt3rdArg = function () {
  */
 
 var WARNINGS = {
-  STATE_CHANGER: ['emit `loaded` and `complete` event through component instance of `$refs` may cause error, so it will be deprecated soon, please use the `$state` argument instead (`$state` just the special `$event` variable):', '\ntemplate:', '<infinite-loading @infinite="infiniteHandler"></infinite-loading>', "\nscript:\n...\ninfiniteHandler($state) {\n  ajax('https://www.example.com/api/news')\n    .then((res) => {\n      if (res.data.length) {\n        $state.loaded();\n      } else {\n        $state.complete();\n      }\n    });\n}\n...", '', 'more details: https://github.com/PeachScript/vue-infinite-loading/issues/57#issuecomment-324370549'].join('\n'),
-  INFINITE_EVENT: '`:on-infinite` property will be deprecated soon, please use `@infinite` event instead.',
-  IDENTIFIER: 'the `reset` event will be deprecated soon, please reset this component by change the `identifier` property.'
+  INFINITE_EVENT: '`:on-infinite` property will be deprecated soon, please use `@infinite` event instead.'
 };
 /**
  * error messages
@@ -526,7 +523,7 @@ function isVisible(elm) {
 
       _this2.scrollParent.addEventListener('scroll', _this2.scrollHandler, evt3rdArg);
     }, 1);
-    eventHub.$on('$InfiniteLoading:loaded', function (ev) {
+    eventHub.$on('$InfiniteLoading:loaded', function () {
       _this2.isFirstLoad = false;
 
       if (_this2.direction === 'top') {
@@ -539,12 +536,8 @@ function isVisible(elm) {
       if (_this2.status === STATUS.LOADING) {
         _this2.$nextTick(_this2.attemptLoad.bind(null, true));
       }
-
-      if (!ev || ev.target !== _this2) {
-        warn(WARNINGS.STATE_CHANGER);
-      }
     });
-    eventHub.$on('$InfiniteLoading:complete', function (ev) {
+    eventHub.$on('$InfiniteLoading:complete', function () {
       _this2.status = STATUS.COMPLETE; // force re-complation computed properties to fix the problem of get slot text delay
 
       _this2.$nextTick(function () {
@@ -552,12 +545,8 @@ function isVisible(elm) {
       });
 
       _this2.scrollParent.removeEventListener('scroll', _this2.scrollHandler, evt3rdArg);
-
-      if (!ev || ev.target !== _this2) {
-        warn(WARNINGS.STATE_CHANGER);
-      }
     });
-    eventHub.$on('$InfiniteLoading:reset', function (ev) {
+    eventHub.$on('$InfiniteLoading:reset', function () {
       _this2.status = STATUS.READY;
       _this2.isFirstLoad = true;
       scrollBarStorage.remove(_this2.scrollParent);
@@ -570,10 +559,6 @@ function isVisible(elm) {
 
         _this2.scrollHandler();
       }, 1);
-
-      if (!ev || ev.target !== _this2) {
-        warn(WARNINGS.IDENTIFIER);
-      }
     });
     /**
      * change state for this component, pass to the callback
@@ -720,9 +705,9 @@ function isVisible(elm) {
       this.scrollParent.removeEventListener('scroll', this.scrollHandler, evt3rdArg);
     }
   }
-});var _withId = /*#__PURE__*/vue.withScopeId("data-v-c0896196");
+});var _withId = /*#__PURE__*/vue.withScopeId("data-v-ce57e962");
 
-vue.pushScopeId("data-v-c0896196");
+vue.pushScopeId("data-v-ce57e962");
 
 var _hoisted_1 = {
   class: "infinite-loading-container"
@@ -781,9 +766,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       textContent: vue.toDisplayString(_ctx.slots.errorBtnText)
     }, null, 8, ["textContent"])], 64))];
   })], 4), [[vue.vShow, _ctx.isShowError]])]);
-});var css_248z = ".infinite-loading-container[data-v-c0896196] {\n  clear: both;\n  text-align: center;\n}\n.infinite-loading-container[data-v-c0896196] *[class^=loading-] {\n  display: inline-block;\n  margin: 5px 0;\n  width: 28px;\n  height: 28px;\n  font-size: 28px;\n  line-height: 28px;\n  border-radius: 50%;\n}\n.btn-try-infinite[data-v-c0896196] {\n  margin-top: 5px;\n  padding: 5px 10px;\n  color: #999;\n  font-size: 14px;\n  line-height: 1;\n  background: transparent;\n  border: 1px solid #ccc;\n  border-radius: 3px;\n  outline: none;\n  cursor: pointer;\n}\n.btn-try-infinite[data-v-c0896196]:not(:active):hover {\n  opacity: 0.8;\n}\n";
+});var css_248z = ".infinite-loading-container[data-v-ce57e962] {\n  clear: both;\n  text-align: center;\n}\n.infinite-loading-container[data-v-ce57e962] *[class^=loading-] {\n  display: inline-block;\n  margin: 5px 0;\n  width: 28px;\n  height: 28px;\n  font-size: 28px;\n  line-height: 28px;\n  border-radius: 50%;\n}\n.btn-try-infinite[data-v-ce57e962] {\n  margin-top: 5px;\n  padding: 5px 10px;\n  color: #999;\n  font-size: 14px;\n  line-height: 1;\n  background: transparent;\n  border: 1px solid #ccc;\n  border-radius: 3px;\n  outline: none;\n  cursor: pointer;\n}\n.btn-try-infinite[data-v-ce57e962]:not(:active):hover {\n  opacity: 0.8;\n}\n";
 styleInject(css_248z);script.render = render;
-script.__scopeId = "data-v-c0896196";// Import vue component
+script.__scopeId = "data-v-ce57e962";// Import vue component
 // IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),
 
