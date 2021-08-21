@@ -7,7 +7,7 @@ function _arrayWithHoles(arr) {
 }
 
 function _iterableToArrayLimit(arr, i) {
-  var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]);
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
 
   if (_i == null) return;
   var _arr = [];
@@ -121,18 +121,20 @@ E.prototype = {
 
 var tinyEmitter = E;
 var TinyEmitter = E;
-tinyEmitter.TinyEmitter = TinyEmitter;var instance = new tinyEmitter();var eventHub = {
+tinyEmitter.TinyEmitter = TinyEmitter;var instance = new tinyEmitter();
+
+var emitter = instance;var eventHub = {
   $on: function $on() {
-    return instance.on.apply(instance, arguments);
+    return emitter.on.apply(emitter, arguments);
   },
   $once: function $once() {
-    return instance.once.apply(instance, arguments);
+    return emitter.once.apply(emitter, arguments);
   },
   $off: function $off() {
-    return instance.off.apply(instance, arguments);
+    return emitter.off.apply(emitter, arguments);
   },
   $emit: function $emit() {
-    return instance.emit.apply(instance, arguments);
+    return emitter.emit.apply(emitter, arguments);
   }
 };var SPINNERS = ['bubbles', 'circles', 'spiral', 'wavedots'];
 var script$1 = /* #__PURE__ */vue.defineComponent({
@@ -143,9 +145,7 @@ var script$1 = /* #__PURE__ */vue.defineComponent({
       return !SPINNERS.includes(this.spinner) ? 'default' : this.spinner;
     }
   }
-});var _withId$1 = /*#__PURE__*/vue.withScopeId("data-v-18ae5a62");
-
-vue.pushScopeId("data-v-18ae5a62");
+});vue.pushScopeId("data-v-18ae5a62");
 
 var _hoisted_1$1 = {
   key: 0,
@@ -155,7 +155,7 @@ var _hoisted_2$1 = {
   key: 1,
   class: "loading-bubbles"
 };
-var _hoisted_3 = {
+var _hoisted_3$1 = {
   key: 2,
   class: "loading-circles"
 };
@@ -170,24 +170,24 @@ var _hoisted_5 = {
 
 vue.popScopeId();
 
-var render$1 = /*#__PURE__*/_withId$1(function (_ctx, _cache, $props, $setup, $data, $options) {
-  return _ctx.spinnerView === 'default' ? (vue.openBlock(), vue.createBlock("i", _hoisted_1$1)) : _ctx.spinnerView === 'bubbles' ? (vue.openBlock(), vue.createBlock("span", _hoisted_2$1, [(vue.openBlock(), vue.createBlock(vue.Fragment, null, vue.renderList(8, function (x) {
-    return vue.createVNode("span", {
+function render$1(_ctx, _cache, $props, $setup, $data, $options) {
+  return _ctx.spinnerView === 'default' ? (vue.openBlock(), vue.createElementBlock("i", _hoisted_1$1)) : _ctx.spinnerView === 'bubbles' ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_2$1, [(vue.openBlock(), vue.createElementBlock(vue.Fragment, null, vue.renderList(8, function (x) {
+    return vue.createElementVNode("span", {
       class: "bubble-item",
       key: x
     });
-  }), 64))])) : _ctx.spinnerView === 'circles' ? (vue.openBlock(), vue.createBlock("span", _hoisted_3, [(vue.openBlock(), vue.createBlock(vue.Fragment, null, vue.renderList(8, function (x) {
-    return vue.createVNode("span", {
+  }), 64))])) : _ctx.spinnerView === 'circles' ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_3$1, [(vue.openBlock(), vue.createElementBlock(vue.Fragment, null, vue.renderList(8, function (x) {
+    return vue.createElementVNode("span", {
       class: "circle-item",
       key: x
     });
-  }), 64))])) : _ctx.spinnerView === 'spiral' ? (vue.openBlock(), vue.createBlock("i", _hoisted_4)) : _ctx.spinnerView === 'wavedots' ? (vue.openBlock(), vue.createBlock("span", _hoisted_5, [(vue.openBlock(), vue.createBlock(vue.Fragment, null, vue.renderList(5, function (x) {
-    return vue.createVNode("span", {
+  }), 64))])) : _ctx.spinnerView === 'spiral' ? (vue.openBlock(), vue.createElementBlock("i", _hoisted_4)) : _ctx.spinnerView === 'wavedots' ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_5, [(vue.openBlock(), vue.createElementBlock(vue.Fragment, null, vue.renderList(5, function (x) {
+    return vue.createElementVNode("span", {
       class: "wave-item",
       key: x
     });
   }), 64))])) : vue.createCommentVNode("", true);
-});function styleInject(css, ref) {
+}function styleInject(css, ref) {
   if ( ref === void 0 ) ref = {};
   var insertAt = ref.insertAt;
 
@@ -467,8 +467,7 @@ function isVisible(elm) {
         var name = kebabCase(key);
 
         if ( // no slot and the configured default slot is not a Vue component
-        !_this.$slots[name] && !config.slots[key].render || // has slot and slot is pure text node
-        _this.$slots[name] && _this.$slots[name]()[0].type === vue.Text) {
+        !_this.$slots[name] && !config.slots[key].render || _this.$slots[name] && _this.$slots[name]()[0].type === vue.Text) {
           // only apply default styles for pure text slot
           styles[key] = SLOT_STYLES;
         }
@@ -705,68 +704,68 @@ function isVisible(elm) {
       this.scrollParent.removeEventListener('scroll', this.scrollHandler, evt3rdArg);
     }
   }
-});var _withId = /*#__PURE__*/vue.withScopeId("data-v-ce57e962");
-
-vue.pushScopeId("data-v-ce57e962");
+});vue.pushScopeId("data-v-ce57e962");
 
 var _hoisted_1 = {
   class: "infinite-loading-container"
 };
 
-var _hoisted_2 = /*#__PURE__*/vue.createVNode("br", null, null, -1);
+var _hoisted_2 = /*#__PURE__*/vue.createElementVNode("br", null, null, -1);
+
+var _hoisted_3 = ["textContent"];
 
 vue.popScopeId();
 
-var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
+function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_spinner = vue.resolveComponent("spinner");
 
-  return vue.openBlock(), vue.createBlock("div", _hoisted_1, [vue.withDirectives(vue.createVNode("div", {
+  return vue.openBlock(), vue.createElementBlock("div", _hoisted_1, [vue.withDirectives(vue.createElementVNode("div", {
     class: "infinite-status-prompt",
-    style: _ctx.slotStyles.spinner
-  }, [vue.renderSlot(_ctx.$slots, "spinner", {
+    style: vue.normalizeStyle(_ctx.slotStyles.spinner)
+  }, [vue.renderSlot(_ctx.$slots, "spinner", vue.normalizeProps(vue.guardReactiveProps({
     isFirstLoad: _ctx.isFirstLoad
-  }, function () {
+  })), function () {
     return [vue.createVNode(_component_spinner, {
       spinner: _ctx.spinner
     }, null, 8, ["spinner"])];
-  })], 4), [[vue.vShow, _ctx.isShowSpinner]]), vue.withDirectives(vue.createVNode("div", {
+  })], 4), [[vue.vShow, _ctx.isShowSpinner]]), vue.withDirectives(vue.createElementVNode("div", {
     class: "infinite-status-prompt",
-    style: _ctx.slotStyles.noResults
+    style: vue.normalizeStyle(_ctx.slotStyles.noResults)
   }, [vue.renderSlot(_ctx.$slots, "no-results", {}, function () {
     return [_ctx.slots.noResults.render ? (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(_ctx.slots.noResults), {
       key: 0
-    })) : (vue.openBlock(), vue.createBlock(vue.Fragment, {
+    })) : (vue.openBlock(), vue.createElementBlock(vue.Fragment, {
       key: 1
     }, [vue.createTextVNode(vue.toDisplayString(_ctx.slots.noResults), 1)], 64))];
-  })], 4), [[vue.vShow, _ctx.isShowNoResults]]), vue.withDirectives(vue.createVNode("div", {
+  })], 4), [[vue.vShow, _ctx.isShowNoResults]]), vue.withDirectives(vue.createElementVNode("div", {
     class: "infinite-status-prompt",
-    style: _ctx.slotStyles.noMore
+    style: vue.normalizeStyle(_ctx.slotStyles.noMore)
   }, [vue.renderSlot(_ctx.$slots, "no-more", {}, function () {
     return [_ctx.slots.noMore.render ? (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(_ctx.slots.noMore), {
       key: 0
-    })) : (vue.openBlock(), vue.createBlock(vue.Fragment, {
+    })) : (vue.openBlock(), vue.createElementBlock(vue.Fragment, {
       key: 1
     }, [vue.createTextVNode(vue.toDisplayString(_ctx.slots.noMore), 1)], 64))];
-  })], 4), [[vue.vShow, _ctx.isShowNoMore]]), vue.withDirectives(vue.createVNode("div", {
+  })], 4), [[vue.vShow, _ctx.isShowNoMore]]), vue.withDirectives(vue.createElementVNode("div", {
     class: "infinite-status-prompt",
-    style: _ctx.slotStyles.error
+    style: vue.normalizeStyle(_ctx.slotStyles.error)
   }, [vue.renderSlot(_ctx.$slots, "error", {
     trigger: _ctx.attemptLoad
   }, function () {
     return [_ctx.slots.error.render ? (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(_ctx.slots.error), {
       key: 0,
       trigger: _ctx.attemptLoad
-    }, null, 8, ["trigger"])) : (vue.openBlock(), vue.createBlock(vue.Fragment, {
+    }, null, 8, ["trigger"])) : (vue.openBlock(), vue.createElementBlock(vue.Fragment, {
       key: 1
-    }, [vue.createTextVNode(vue.toDisplayString(_ctx.slots.error) + " ", 1), _hoisted_2, vue.createVNode("button", {
+    }, [vue.createTextVNode(vue.toDisplayString(_ctx.slots.error) + " ", 1), _hoisted_2, vue.createElementVNode("button", {
       class: "btn-try-infinite",
-      onClick: _cache[1] || (_cache[1] = function () {
+      onClick: _cache[0] || (_cache[0] = function () {
         return _ctx.attemptLoad && _ctx.attemptLoad.apply(_ctx, arguments);
       }),
       textContent: vue.toDisplayString(_ctx.slots.errorBtnText)
-    }, null, 8, ["textContent"])], 64))];
+    }, null, 8, _hoisted_3)], 64))];
   })], 4), [[vue.vShow, _ctx.isShowError]])]);
-});var css_248z = ".infinite-loading-container[data-v-ce57e962] {\n  clear: both;\n  text-align: center;\n}\n.infinite-loading-container[data-v-ce57e962] *[class^=loading-] {\n  display: inline-block;\n  margin: 5px 0;\n  width: 28px;\n  height: 28px;\n  font-size: 28px;\n  line-height: 28px;\n  border-radius: 50%;\n}\n.btn-try-infinite[data-v-ce57e962] {\n  margin-top: 5px;\n  padding: 5px 10px;\n  color: #999;\n  font-size: 14px;\n  line-height: 1;\n  background: transparent;\n  border: 1px solid #ccc;\n  border-radius: 3px;\n  outline: none;\n  cursor: pointer;\n}\n.btn-try-infinite[data-v-ce57e962]:not(:active):hover {\n  opacity: 0.8;\n}\n";
+}var css_248z = ".infinite-loading-container[data-v-ce57e962] {\n  clear: both;\n  text-align: center;\n}\n.infinite-loading-container[data-v-ce57e962] *[class^=loading-] {\n  display: inline-block;\n  margin: 5px 0;\n  width: 28px;\n  height: 28px;\n  font-size: 28px;\n  line-height: 28px;\n  border-radius: 50%;\n}\n.btn-try-infinite[data-v-ce57e962] {\n  margin-top: 5px;\n  padding: 5px 10px;\n  color: #999;\n  font-size: 14px;\n  line-height: 1;\n  background: transparent;\n  border: 1px solid #ccc;\n  border-radius: 3px;\n  outline: none;\n  cursor: pointer;\n}\n.btn-try-infinite[data-v-ce57e962]:not(:active):hover {\n  opacity: 0.8;\n}\n";
 styleInject(css_248z);script.render = render;
 script.__scopeId = "data-v-ce57e962";// Import vue component
 // IIFE injects install function into component, allowing component

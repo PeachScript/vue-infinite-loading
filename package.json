@@ -64,7 +64,7 @@
     "@rollup/plugin-replace": "^2.3.4",
     "@vue/cli-plugin-babel": "^4.5.10",
     "@vue/cli-service": "^4.5.10",
-    "@vue/compiler-sfc": "^3.0.5",
+    "@vue/compiler-sfc": "^3.2.4",
     "@vuepress/plugin-google-analytics": "^1.0.0-alpha.16",
     "autoprefixer": "^9.1.5",
     "chai": "^3.5.0",

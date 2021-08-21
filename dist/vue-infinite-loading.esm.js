@@ -1,4 +1,4 @@
-import { defineComponent, pushScopeId, popScopeId, openBlock, createBlock, Fragment, renderList, createVNode, createCommentVNode, withScopeId, Text, resolveComponent, withDirectives, renderSlot, vShow, resolveDynamicComponent, createTextVNode, toDisplayString } from 'vue';
+import { defineComponent, pushScopeId, popScopeId, openBlock, createElementBlock, Fragment, renderList, createElementVNode, createCommentVNode, Text, resolveComponent, withDirectives, normalizeStyle, renderSlot, normalizeProps, guardReactiveProps, createVNode, vShow, createBlock, resolveDynamicComponent, createTextVNode, toDisplayString } from 'vue';
 
 function E () {
   // Keep this empty so it's easier to inherit from
@@ -70,11 +70,13 @@ tinyEmitter.TinyEmitter = TinyEmitter;
 
 var instance = new tinyEmitter();
 
+var emitter = instance;
+
 var eventHub = {
-  $on: (...args) => instance.on(...args),
-  $once: (...args) => instance.once(...args),
-  $off: (...args) => instance.off(...args),
-  $emit: (...args) => instance.emit(...args)
+  $on: (...args) => emitter.on(...args),
+  $once: (...args) => emitter.once(...args),
+  $off: (...args) => emitter.off(...args),
+  $emit: (...args) => emitter.emit(...args)
 };
 
 const SPINNERS = ['bubbles', 'circles', 'spiral', 'wavedots'];
@@ -89,8 +91,6 @@ var script$1 = /* #__PURE__ */defineComponent({
   }
 });
 
-const _withId$1 = /*#__PURE__*/withScopeId("data-v-18ae5a62");
-
 pushScopeId("data-v-18ae5a62");
 
 const _hoisted_1$1 = {
@@ -101,7 +101,7 @@ const _hoisted_2$1 = {
   key: 1,
   class: "loading-bubbles"
 };
-const _hoisted_3 = {
+const _hoisted_3$1 = {
   key: 2,
   class: "loading-circles"
 };
@@ -116,24 +116,24 @@ const _hoisted_5 = {
 
 popScopeId();
 
-const render$1 = /*#__PURE__*/_withId$1((_ctx, _cache, $props, $setup, $data, $options) => {
-  return _ctx.spinnerView === 'default' ? (openBlock(), createBlock("i", _hoisted_1$1)) : _ctx.spinnerView === 'bubbles' ? (openBlock(), createBlock("span", _hoisted_2$1, [(openBlock(), createBlock(Fragment, null, renderList(8, x => {
-    return createVNode("span", {
+function render$1(_ctx, _cache, $props, $setup, $data, $options) {
+  return _ctx.spinnerView === 'default' ? (openBlock(), createElementBlock("i", _hoisted_1$1)) : _ctx.spinnerView === 'bubbles' ? (openBlock(), createElementBlock("span", _hoisted_2$1, [(openBlock(), createElementBlock(Fragment, null, renderList(8, x => {
+    return createElementVNode("span", {
       class: "bubble-item",
       key: x
     });
-  }), 64))])) : _ctx.spinnerView === 'circles' ? (openBlock(), createBlock("span", _hoisted_3, [(openBlock(), createBlock(Fragment, null, renderList(8, x => {
-    return createVNode("span", {
+  }), 64))])) : _ctx.spinnerView === 'circles' ? (openBlock(), createElementBlock("span", _hoisted_3$1, [(openBlock(), createElementBlock(Fragment, null, renderList(8, x => {
+    return createElementVNode("span", {
       class: "circle-item",
       key: x
     });
-  }), 64))])) : _ctx.spinnerView === 'spiral' ? (openBlock(), createBlock("i", _hoisted_4)) : _ctx.spinnerView === 'wavedots' ? (openBlock(), createBlock("span", _hoisted_5, [(openBlock(), createBlock(Fragment, null, renderList(5, x => {
-    return createVNode("span", {
+  }), 64))])) : _ctx.spinnerView === 'spiral' ? (openBlock(), createElementBlock("i", _hoisted_4)) : _ctx.spinnerView === 'wavedots' ? (openBlock(), createElementBlock("span", _hoisted_5, [(openBlock(), createElementBlock(Fragment, null, renderList(5, x => {
+    return createElementVNode("span", {
       class: "wave-item",
       key: x
     });
   }), 64))])) : createCommentVNode("", true);
-});
+}
 
 function styleInject(css, ref) {
   if ( ref === void 0 ) ref = {};
@@ -446,8 +446,7 @@ var script = /* #__PURE__ */defineComponent({
         const name = kebabCase(key);
 
         if ( // no slot and the configured default slot is not a Vue component
-        !this.$slots[name] && !config.slots[key].render || // has slot and slot is pure text node
-        this.$slots[name] && this.$slots[name]()[0].type === Text) {
+        !this.$slots[name] && !config.slots[key].render || this.$slots[name] && this.$slots[name]()[0].type === Text) {
           // only apply default styles for pure text slot
           styles[key] = SLOT_STYLES;
         }
@@ -681,58 +680,58 @@ var script = /* #__PURE__ */defineComponent({
 
 });
 
-const _withId = /*#__PURE__*/withScopeId("data-v-ce57e962");
-
 pushScopeId("data-v-ce57e962");
 
 const _hoisted_1 = {
   class: "infinite-loading-container"
 };
 
-const _hoisted_2 = /*#__PURE__*/createVNode("br", null, null, -1);
+const _hoisted_2 = /*#__PURE__*/createElementVNode("br", null, null, -1);
+
+const _hoisted_3 = ["textContent"];
 
 popScopeId();
 
-const render = /*#__PURE__*/_withId((_ctx, _cache, $props, $setup, $data, $options) => {
+function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_spinner = resolveComponent("spinner");
 
-  return openBlock(), createBlock("div", _hoisted_1, [withDirectives(createVNode("div", {
+  return openBlock(), createElementBlock("div", _hoisted_1, [withDirectives(createElementVNode("div", {
     class: "infinite-status-prompt",
-    style: _ctx.slotStyles.spinner
-  }, [renderSlot(_ctx.$slots, "spinner", {
+    style: normalizeStyle(_ctx.slotStyles.spinner)
+  }, [renderSlot(_ctx.$slots, "spinner", normalizeProps(guardReactiveProps({
     isFirstLoad: _ctx.isFirstLoad
-  }, () => [createVNode(_component_spinner, {
+  })), () => [createVNode(_component_spinner, {
     spinner: _ctx.spinner
-  }, null, 8, ["spinner"])])], 4), [[vShow, _ctx.isShowSpinner]]), withDirectives(createVNode("div", {
+  }, null, 8, ["spinner"])])], 4), [[vShow, _ctx.isShowSpinner]]), withDirectives(createElementVNode("div", {
     class: "infinite-status-prompt",
-    style: _ctx.slotStyles.noResults
+    style: normalizeStyle(_ctx.slotStyles.noResults)
   }, [renderSlot(_ctx.$slots, "no-results", {}, () => [_ctx.slots.noResults.render ? (openBlock(), createBlock(resolveDynamicComponent(_ctx.slots.noResults), {
     key: 0
-  })) : (openBlock(), createBlock(Fragment, {
+  })) : (openBlock(), createElementBlock(Fragment, {
     key: 1
-  }, [createTextVNode(toDisplayString(_ctx.slots.noResults), 1)], 64))])], 4), [[vShow, _ctx.isShowNoResults]]), withDirectives(createVNode("div", {
+  }, [createTextVNode(toDisplayString(_ctx.slots.noResults), 1)], 64))])], 4), [[vShow, _ctx.isShowNoResults]]), withDirectives(createElementVNode("div", {
     class: "infinite-status-prompt",
-    style: _ctx.slotStyles.noMore
+    style: normalizeStyle(_ctx.slotStyles.noMore)
   }, [renderSlot(_ctx.$slots, "no-more", {}, () => [_ctx.slots.noMore.render ? (openBlock(), createBlock(resolveDynamicComponent(_ctx.slots.noMore), {
     key: 0
-  })) : (openBlock(), createBlock(Fragment, {
+  })) : (openBlock(), createElementBlock(Fragment, {
     key: 1
-  }, [createTextVNode(toDisplayString(_ctx.slots.noMore), 1)], 64))])], 4), [[vShow, _ctx.isShowNoMore]]), withDirectives(createVNode("div", {
+  }, [createTextVNode(toDisplayString(_ctx.slots.noMore), 1)], 64))])], 4), [[vShow, _ctx.isShowNoMore]]), withDirectives(createElementVNode("div", {
     class: "infinite-status-prompt",
-    style: _ctx.slotStyles.error
+    style: normalizeStyle(_ctx.slotStyles.error)
   }, [renderSlot(_ctx.$slots, "error", {
     trigger: _ctx.attemptLoad
   }, () => [_ctx.slots.error.render ? (openBlock(), createBlock(resolveDynamicComponent(_ctx.slots.error), {
     key: 0,
     trigger: _ctx.attemptLoad
-  }, null, 8, ["trigger"])) : (openBlock(), createBlock(Fragment, {
+  }, null, 8, ["trigger"])) : (openBlock(), createElementBlock(Fragment, {
     key: 1
-  }, [createTextVNode(toDisplayString(_ctx.slots.error) + " ", 1), _hoisted_2, createVNode("button", {
+  }, [createTextVNode(toDisplayString(_ctx.slots.error) + " ", 1), _hoisted_2, createElementVNode("button", {
     class: "btn-try-infinite",
-    onClick: _cache[1] || (_cache[1] = (...args) => _ctx.attemptLoad && _ctx.attemptLoad(...args)),
+    onClick: _cache[0] || (_cache[0] = (...args) => _ctx.attemptLoad && _ctx.attemptLoad(...args)),
     textContent: toDisplayString(_ctx.slots.errorBtnText)
-  }, null, 8, ["textContent"])], 64))])], 4), [[vShow, _ctx.isShowError]])]);
-});
+  }, null, 8, _hoisted_3)], 64))])], 4), [[vShow, _ctx.isShowError]])]);
+}
 
 var css_248z = ".infinite-loading-container[data-v-ce57e962] {\n  clear: both;\n  text-align: center;\n}\n.infinite-loading-container[data-v-ce57e962] *[class^=loading-] {\n  display: inline-block;\n  margin: 5px 0;\n  width: 28px;\n  height: 28px;\n  font-size: 28px;\n  line-height: 28px;\n  border-radius: 50%;\n}\n.btn-try-infinite[data-v-ce57e962] {\n  margin-top: 5px;\n  padding: 5px 10px;\n  color: #999;\n  font-size: 14px;\n  line-height: 1;\n  background: transparent;\n  border: 1px solid #ccc;\n  border-radius: 3px;\n  outline: none;\n  cursor: pointer;\n}\n.btn-try-infinite[data-v-ce57e962]:not(:active):hover {\n  opacity: 0.8;\n}\n";
 styleInject(css_248z);
@@ -757,4 +756,4 @@ var entry_esm = /* #__PURE__ */(() => {
 // also be used as directives, etc. - eg. import { RollupDemoDirective } from 'rollup-demo';
 // export const RollupDemoDirective = directive;
 
-export default entry_esm;
+export { entry_esm as default };
