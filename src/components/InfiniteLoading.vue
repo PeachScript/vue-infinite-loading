@@ -66,6 +66,8 @@ export default /* #__PURE__ */defineComponent({
         ) {
           // only apply default styles for pure text slot
           styles[key] = SLOT_STYLES;
+        } else {
+          styles[key] = {};
         }
       });
 

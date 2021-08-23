@@ -470,6 +470,8 @@ function isVisible(elm) {
         !_this.$slots[name] && !config.slots[key].render || _this.$slots[name] && _this.$slots[name]()[0].type === vue.Text) {
           // only apply default styles for pure text slot
           styles[key] = SLOT_STYLES;
+        } else {
+          styles[key] = {};
         }
       });
       return styles;
@@ -704,7 +706,7 @@ function isVisible(elm) {
       this.scrollParent.removeEventListener('scroll', this.scrollHandler, evt3rdArg);
     }
   }
-});vue.pushScopeId("data-v-ce57e962");
+});vue.pushScopeId("data-v-7456bf16");
 
 var _hoisted_1 = {
   class: "infinite-loading-container"
@@ -765,9 +767,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       textContent: vue.toDisplayString(_ctx.slots.errorBtnText)
     }, null, 8, _hoisted_3)], 64))];
   })], 4), [[vue.vShow, _ctx.isShowError]])]);
-}var css_248z = ".infinite-loading-container[data-v-ce57e962] {\n  clear: both;\n  text-align: center;\n}\n.infinite-loading-container[data-v-ce57e962] *[class^=loading-] {\n  display: inline-block;\n  margin: 5px 0;\n  width: 28px;\n  height: 28px;\n  font-size: 28px;\n  line-height: 28px;\n  border-radius: 50%;\n}\n.btn-try-infinite[data-v-ce57e962] {\n  margin-top: 5px;\n  padding: 5px 10px;\n  color: #999;\n  font-size: 14px;\n  line-height: 1;\n  background: transparent;\n  border: 1px solid #ccc;\n  border-radius: 3px;\n  outline: none;\n  cursor: pointer;\n}\n.btn-try-infinite[data-v-ce57e962]:not(:active):hover {\n  opacity: 0.8;\n}\n";
+}var css_248z = ".infinite-loading-container[data-v-7456bf16] {\n  clear: both;\n  text-align: center;\n}\n.infinite-loading-container[data-v-7456bf16] *[class^=loading-] {\n  display: inline-block;\n  margin: 5px 0;\n  width: 28px;\n  height: 28px;\n  font-size: 28px;\n  line-height: 28px;\n  border-radius: 50%;\n}\n.btn-try-infinite[data-v-7456bf16] {\n  margin-top: 5px;\n  padding: 5px 10px;\n  color: #999;\n  font-size: 14px;\n  line-height: 1;\n  background: transparent;\n  border: 1px solid #ccc;\n  border-radius: 3px;\n  outline: none;\n  cursor: pointer;\n}\n.btn-try-infinite[data-v-7456bf16]:not(:active):hover {\n  opacity: 0.8;\n}\n";
 styleInject(css_248z);script.render = render;
-script.__scopeId = "data-v-ce57e962";// Import vue component
+script.__scopeId = "data-v-7456bf16";// Import vue component
 // IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),
 
