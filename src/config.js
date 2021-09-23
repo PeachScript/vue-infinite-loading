@@ -34,7 +34,7 @@ const system = {
 const slots = {
   noResults: 'No results :(',
   noMore: 'No more data :)',
-  error: 'Opps, something went wrong :(',
+  error: 'Oops, something went wrong :(',
   errorBtnText: 'Retry',
   spinner: '',
 };
