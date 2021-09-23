@@ -84,7 +84,7 @@ This message will be displayed if there is no more data, it means we called the 
 
 ### error
 
-- Default: `Opps, something went wrong :( <br> <button>Retry</button>`
+- Default: `Oops, something went wrong :( <br> <button>Retry</button>`
 - Details: 
 
 This message will be displayed if loading failed, it means we called the `$state.error` method.

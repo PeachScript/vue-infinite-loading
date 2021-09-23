@@ -84,7 +84,7 @@ Vue.js 官方于 v2.6.0 后[废弃 slot 特殊特性](https://cn.vuejs.org/v2/ap
 
 ### error
 
-- 默认值：`Opps, something went wrong :( <br> <button>Retry</button>`
+- 默认值：`Oops, something went wrong :( <br> <button>Retry</button>`
 - 详细：
 
 该信息将会在加载出现错误时呈现给用户，即调用 `$state.error` 方法时。
