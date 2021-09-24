@@ -69,12 +69,11 @@
     "autoprefixer": "^9.1.5",
     "chai": "^3.5.0",
     "cross-env": "^7.0.3",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-formatter-friendly": "^6.0.0",
-    "eslint-loader": "^2.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-vue": "^4.7.1",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-formatter-friendly": "^7.0.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-vue": "^7.18.0",
     "focus-visible": "^4.1.5",
     "husky": "^0.14.3",
     "karma": "^3.0.0",
@@ -128,13 +127,17 @@
     "extends": [
       "airbnb-base",
       "plugin:vue/essential"
-    ]
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2020
+    }
   },
   "eslintIgnore": [
     "build",
     "dev",
     "dist",
     "test/unit/coverage",
+    "test/unit",
     "scripts"
   ]
 }

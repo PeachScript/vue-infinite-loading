@@ -1,4 +1,3 @@
-
 // Import vue component
 import component from './components/InfiniteLoading.vue';
 
