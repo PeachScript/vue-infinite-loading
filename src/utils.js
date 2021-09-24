@@ -108,7 +108,7 @@ export const scrollBarStorage = {
  * @return  {String}
  */
 export function kebabCase(str) {
-  return str.replace(/[A-Z]/g, s => `-${s.toLowerCase()}`);
+  return str.replace(/[A-Z]/g, (s) => `-${s.toLowerCase()}`);
 }
 
 /**
