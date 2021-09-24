@@ -1,4 +1,4 @@
-import { defineComponent, pushScopeId, popScopeId, openBlock, createElementBlock, Fragment, renderList, createElementVNode, createCommentVNode, Text, resolveComponent, withDirectives, normalizeStyle, renderSlot, normalizeProps, guardReactiveProps, createVNode, vShow, createBlock, resolveDynamicComponent, createTextVNode, toDisplayString } from 'vue';
+import { defineComponent, openBlock, createElementBlock, Fragment, renderList, createElementVNode, createCommentVNode, Text, resolveComponent, withDirectives, normalizeStyle, renderSlot, normalizeProps, guardReactiveProps, createVNode, vShow, createBlock, resolveDynamicComponent, createTextVNode, toDisplayString, pushScopeId, popScopeId } from 'vue';
 
 function E () {
   // Keep this empty so it's easier to inherit from
@@ -91,8 +91,6 @@ var script$1 = /* #__PURE__ */defineComponent({
   }
 });
 
-pushScopeId("data-v-18ae5a62");
-
 const _hoisted_1$1 = {
   key: 0,
   class: "loading-default"
@@ -113,9 +111,6 @@ const _hoisted_5 = {
   key: 4,
   class: "loading-wave-dots"
 };
-
-popScopeId();
-
 function render$1(_ctx, _cache, $props, $setup, $data, $options) {
   return _ctx.spinnerView === 'default' ? (openBlock(), createElementBlock("i", _hoisted_1$1)) : _ctx.spinnerView === 'bubbles' ? (openBlock(), createElementBlock("span", _hoisted_2$1, [(openBlock(), createElementBlock(Fragment, null, renderList(8, x => {
     return createElementVNode("span", {
@@ -443,10 +438,12 @@ var script = /* #__PURE__ */defineComponent({
     slotStyles() {
       const styles = {};
       Object.keys(config.slots).forEach(key => {
+        var _this$$slots$name$;
+
         const name = kebabCase(key);
 
         if ( // no slot and the configured default slot is not a Vue component
-        !this.$slots[name] && !config.slots[key].render || this.$slots[name] && this.$slots[name]()[0].type === Text) {
+        !this.$slots[name] && !config.slots[key].render || this.$slots[name] && ((_this$$slots$name$ = this.$slots[name]()[0]) === null || _this$$slots$name$ === void 0 ? void 0 : _this$$slots$name$.type) === Text) {
           // only apply default styles for pure text slot
           styles[key] = SLOT_STYLES;
         } else {
@@ -682,18 +679,15 @@ var script = /* #__PURE__ */defineComponent({
 
 });
 
-pushScopeId("data-v-7456bf16");
+const _withScopeId = n => (pushScopeId("data-v-38327aa8"), n = n(), popScopeId(), n);
 
 const _hoisted_1 = {
   class: "infinite-loading-container"
 };
 
-const _hoisted_2 = /*#__PURE__*/createElementVNode("br", null, null, -1);
+const _hoisted_2 = /*#__PURE__*/_withScopeId(() => /*#__PURE__*/createElementVNode("br", null, null, -1));
 
 const _hoisted_3 = ["textContent"];
-
-popScopeId();
-
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_spinner = resolveComponent("spinner");
 
@@ -735,11 +729,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8, _hoisted_3)], 64))])], 4), [[vShow, _ctx.isShowError]])]);
 }
 
-var css_248z = ".infinite-loading-container[data-v-7456bf16] {\n  clear: both;\n  text-align: center;\n}\n.infinite-loading-container[data-v-7456bf16] *[class^=loading-] {\n  display: inline-block;\n  margin: 5px 0;\n  width: 28px;\n  height: 28px;\n  font-size: 28px;\n  line-height: 28px;\n  border-radius: 50%;\n}\n.btn-try-infinite[data-v-7456bf16] {\n  margin-top: 5px;\n  padding: 5px 10px;\n  color: #999;\n  font-size: 14px;\n  line-height: 1;\n  background: transparent;\n  border: 1px solid #ccc;\n  border-radius: 3px;\n  outline: none;\n  cursor: pointer;\n}\n.btn-try-infinite[data-v-7456bf16]:not(:active):hover {\n  opacity: 0.8;\n}\n";
+var css_248z = ".infinite-loading-container[data-v-38327aa8] {\n  clear: both;\n  text-align: center;\n}\n.infinite-loading-container[data-v-38327aa8] *[class^=loading-] {\n  display: inline-block;\n  margin: 5px 0;\n  width: 28px;\n  height: 28px;\n  font-size: 28px;\n  line-height: 28px;\n  border-radius: 50%;\n}\n.btn-try-infinite[data-v-38327aa8] {\n  margin-top: 5px;\n  padding: 5px 10px;\n  color: #999;\n  font-size: 14px;\n  line-height: 1;\n  background: transparent;\n  border: 1px solid #ccc;\n  border-radius: 3px;\n  outline: none;\n  cursor: pointer;\n}\n.btn-try-infinite[data-v-38327aa8]:not(:active):hover {\n  opacity: 0.8;\n}\n";
 styleInject(css_248z);
 
 script.render = render;
-script.__scopeId = "data-v-7456bf16";
+script.__scopeId = "data-v-38327aa8";
 
 // Import vue component
 // IIFE injects install function into component, allowing component

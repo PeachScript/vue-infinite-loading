@@ -145,9 +145,7 @@ var script$1 = /* #__PURE__ */vue.defineComponent({
       return !SPINNERS.includes(this.spinner) ? 'default' : this.spinner;
     }
   }
-});vue.pushScopeId("data-v-18ae5a62");
-
-var _hoisted_1$1 = {
+});var _hoisted_1$1 = {
   key: 0,
   class: "loading-default"
 };
@@ -167,9 +165,6 @@ var _hoisted_5 = {
   key: 4,
   class: "loading-wave-dots"
 };
-
-vue.popScopeId();
-
 function render$1(_ctx, _cache, $props, $setup, $data, $options) {
   return _ctx.spinnerView === 'default' ? (vue.openBlock(), vue.createElementBlock("i", _hoisted_1$1)) : _ctx.spinnerView === 'bubbles' ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_2$1, [(vue.openBlock(), vue.createElementBlock(vue.Fragment, null, vue.renderList(8, function (x) {
     return vue.createElementVNode("span", {
@@ -464,10 +459,12 @@ function isVisible(elm) {
 
       var styles = {};
       Object.keys(config.slots).forEach(function (key) {
+        var _this$$slots$name$;
+
         var name = kebabCase(key);
 
         if ( // no slot and the configured default slot is not a Vue component
-        !_this.$slots[name] && !config.slots[key].render || _this.$slots[name] && _this.$slots[name]()[0].type === vue.Text) {
+        !_this.$slots[name] && !config.slots[key].render || _this.$slots[name] && ((_this$$slots$name$ = _this.$slots[name]()[0]) === null || _this$$slots$name$ === void 0 ? void 0 : _this$$slots$name$.type) === vue.Text) {
           // only apply default styles for pure text slot
           styles[key] = SLOT_STYLES;
         } else {
@@ -706,18 +703,19 @@ function isVisible(elm) {
       this.scrollParent.removeEventListener('scroll', this.scrollHandler, evt3rdArg);
     }
   }
-});vue.pushScopeId("data-v-7456bf16");
+});var _withScopeId = function _withScopeId(n) {
+  return vue.pushScopeId("data-v-38327aa8"), n = n(), vue.popScopeId(), n;
+};
 
 var _hoisted_1 = {
   class: "infinite-loading-container"
 };
 
-var _hoisted_2 = /*#__PURE__*/vue.createElementVNode("br", null, null, -1);
+var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/vue.createElementVNode("br", null, null, -1);
+});
 
 var _hoisted_3 = ["textContent"];
-
-vue.popScopeId();
-
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_spinner = vue.resolveComponent("spinner");
 
@@ -767,9 +765,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       textContent: vue.toDisplayString(_ctx.slots.errorBtnText)
     }, null, 8, _hoisted_3)], 64))];
   })], 4), [[vue.vShow, _ctx.isShowError]])]);
-}var css_248z = ".infinite-loading-container[data-v-7456bf16] {\n  clear: both;\n  text-align: center;\n}\n.infinite-loading-container[data-v-7456bf16] *[class^=loading-] {\n  display: inline-block;\n  margin: 5px 0;\n  width: 28px;\n  height: 28px;\n  font-size: 28px;\n  line-height: 28px;\n  border-radius: 50%;\n}\n.btn-try-infinite[data-v-7456bf16] {\n  margin-top: 5px;\n  padding: 5px 10px;\n  color: #999;\n  font-size: 14px;\n  line-height: 1;\n  background: transparent;\n  border: 1px solid #ccc;\n  border-radius: 3px;\n  outline: none;\n  cursor: pointer;\n}\n.btn-try-infinite[data-v-7456bf16]:not(:active):hover {\n  opacity: 0.8;\n}\n";
+}var css_248z = ".infinite-loading-container[data-v-38327aa8] {\n  clear: both;\n  text-align: center;\n}\n.infinite-loading-container[data-v-38327aa8] *[class^=loading-] {\n  display: inline-block;\n  margin: 5px 0;\n  width: 28px;\n  height: 28px;\n  font-size: 28px;\n  line-height: 28px;\n  border-radius: 50%;\n}\n.btn-try-infinite[data-v-38327aa8] {\n  margin-top: 5px;\n  padding: 5px 10px;\n  color: #999;\n  font-size: 14px;\n  line-height: 1;\n  background: transparent;\n  border: 1px solid #ccc;\n  border-radius: 3px;\n  outline: none;\n  cursor: pointer;\n}\n.btn-try-infinite[data-v-38327aa8]:not(:active):hover {\n  opacity: 0.8;\n}\n";
 styleInject(css_248z);script.render = render;
-script.__scopeId = "data-v-7456bf16";// Import vue component
+script.__scopeId = "data-v-38327aa8";// Import vue component
 // IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),
 
@@ -785,7 +783,7 @@ var component = /* #__PURE__ */(function () {
 })(); // It's possible to expose named exports when writing components that can
 // also be used as directives, etc. - eg. import { RollupDemoDirective } from 'rollup-demo';
 // export const RollupDemoDirective = directive;
-var namedExports=/*#__PURE__*/Object.freeze({__proto__:null,'default': component});// only expose one global var, with named exports exposed as properties of
+var namedExports=/*#__PURE__*/Object.freeze({__proto__:null,'default':component});// only expose one global var, with named exports exposed as properties of
 // that global var (eg. plugin.namedExport)
 
 Object.entries(namedExports).forEach(function (_ref) {
