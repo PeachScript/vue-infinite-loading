@@ -31,4 +31,4 @@ The final template should be similar to:
 </div>
 ```
 
-No special handling is required in the logic. This plugin should alread work, just like the preview on the right!
+No special handling is required in the logic. This plugin should already work, just like the preview on the right!
