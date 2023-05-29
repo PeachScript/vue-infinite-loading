@@ -74,22 +74,22 @@ export const loopTracker = {
 };
 
 export const scrollBarStorage = {
-  key: '_infiniteScrollHeight',
+  key: '_infiniteScrollPosition',
   getScrollElm(elm) {
     return elm === window ? document.documentElement : elm;
   },
   save(elm) {
     const target = this.getScrollElm(elm);
 
-    // save scroll height on the scroll parent
-    target[this.key] = target.scrollHeight;
+    // save scroll height and top position on the scroll parent
+    target[this.key] = [target.scrollHeight, target.scrollTop];
   },
   restore(elm) {
     const target = this.getScrollElm(elm);
 
     /* istanbul ignore else */
-    if (typeof target[this.key] === 'number') {
-      target.scrollTop = target.scrollHeight - target[this.key] + target.scrollTop;
+    if (typeof target[this.key][0] === 'number' && typeof target[this.key][1] === 'number') {
+      target.scrollTop = target.scrollHeight - target[this.key][0] + target[this.key][1];
     }
 
     this.remove(target);
